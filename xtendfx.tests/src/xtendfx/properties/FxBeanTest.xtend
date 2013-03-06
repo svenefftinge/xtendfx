@@ -3,7 +3,6 @@ package xtendfx.properties
 import com.google.inject.Inject
 import java.lang.reflect.Modifier
 import javafx.beans.property.SimpleStringProperty
-import org.eclipse.xtend.core.tests.RuntimeInjectorProvider
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.xbase.compiler.CompilationTestHelper
@@ -14,7 +13,6 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 @RunWith(typeof(XtextRunner))
-@InjectWith(typeof(RuntimeInjectorProvider))
 class FxBeanTest {
 	
 	@Inject extension CompilationTestHelper

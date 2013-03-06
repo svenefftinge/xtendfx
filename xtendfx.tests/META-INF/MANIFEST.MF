@@ -7,7 +7,6 @@ Bundle-Vendor: itemis AG
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: xtendfx;bundle-version="0.0.1",
  org.eclipse.xtend.core;bundle-version="2.4.0",
- org.eclipse.xtend.core.tests;bundle-version="2.4.0",
  org.eclipse.xtext.junit4;bundle-version="2.4.0",
  org.junit;bundle-version="4.10.0",
  com.google.inject;bundle-version="3.0.0",
