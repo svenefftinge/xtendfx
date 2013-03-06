@@ -24,7 +24,7 @@ class FXAppCompilationParticipant implements TransformationParticipant<MutableCl
 				static = true
 				addParameter("args", ctx.newArrayTypeReference(ctx.string))
 				body = ['''
-					«toJavaCode(applicationType)».launch(args);
+					Â«toJavaCode(applicationType)Â».launch(args);
 				''']
 			]
 		}

@@ -53,17 +53,17 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 				clazz.addMethod('get'+fieldName.toFirstUpper) [
 					returnType = fieldType
 					body = ['''
-						return (this.«propName» != null)? this.«propName».get() : this.«fieldName»;
+						return (this.Â«propNameÂ» != null)? this.Â«propNameÂ».get() : this.Â«fieldNameÂ»;
 					''']
 				]
 				
 				clazz.addMethod('set'+fieldName.toFirstUpper) [
 					addParameter(fieldName, fieldType)
 					body = ['''
-						if («propName» != null) {
-							this.«propName».set(«fieldName»);
+						if (Â«propNameÂ» != null) {
+							this.Â«propNameÂ».set(Â«fieldNameÂ»);
 						} else {
-							this.«fieldName» = «fieldName»;
+							this.Â«fieldNameÂ» = Â«fieldNameÂ»;
 						}
 					''']
 				]
@@ -71,10 +71,10 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 				clazz.addMethod(fieldName+'Property') [
 					returnType = propType
 					body = ['''
-						if ( this.«propName» == null) { 
-							this.«propName» = new «toJavaCode(propType)»(this, "«fieldName»", this.«fieldName»);
+						if ( this.Â«propNameÂ» == null) { 
+							this.Â«propNameÂ» = new Â«toJavaCode(propType)Â»(this, "Â«fieldNameÂ»", this.Â«fieldNameÂ»);
 						}
-						return this.«propName»;
+						return this.Â«propNameÂ»;
 					''']
 				]
 			}
