@@ -1,30 +1,19 @@
 package xtendfx.properties
 
-import com.google.inject.Inject
 import java.lang.reflect.Modifier
 import javafx.beans.property.SimpleStringProperty
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.xbase.compiler.CompilationTestHelper
-import org.junit.Before
+import org.eclipse.xtend.core.compiler.batch.XtendCompilerTester
 import org.junit.Test
-import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
 
-@RunWith(typeof(XtextRunner))
 class FxBeanTest {
 	
-	@Inject extension CompilationTestHelper
-	
-	@Before
-	def void initClassPath() {
-		setJavaCompilerClassPath(typeof(FXBean), typeof(SimpleStringProperty))
-	}
+	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXBean), typeof(SimpleStringProperty))
 	
 	@Test def testAgainstCompiledClass() {
 		'''
-			import xtendfx.beans.FXBean
+			import xtendfx.properties.FXBean
 			
 			@FXBean class MyBean {
 				String stringTypeWithDefault = ""
@@ -41,7 +30,7 @@ class FxBeanTest {
 	
 	@Test def testAgainstJavaSource() {
 		'''
-			import xtendfx.beans.FXBean
+			import xtendfx.properties.FXBean
 			
 			@FXBean class MyBean {
 				String stringTypeWithDefault = ""
@@ -51,7 +40,7 @@ class FxBeanTest {
 		'''.assertCompilesTo('''
 			import javafx.beans.property.SimpleBooleanProperty;
 			import javafx.beans.property.SimpleStringProperty;
-			import xtendfx.beans.FXBean;
+			import xtendfx.properties.FXBean;
 			
 			@FXBean
 			@SuppressWarnings("all")

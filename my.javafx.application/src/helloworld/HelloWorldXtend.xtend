@@ -10,10 +10,10 @@ import xtendfx.FXApp
 	
 	override start(Stage it) throws Exception {
 		title = "Hello World!"
-		scene = new Scene(new StackPane => [it|
-			children += new Button => [it|
+		scene = new Scene(new StackPane => [
+			children += new Button => [
 				text = "Say 'Hello'"
-				onAction = [it|
+				onAction = [
 					println("Hello World")
 				]
 			]

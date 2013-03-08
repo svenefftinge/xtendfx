@@ -9,12 +9,11 @@ import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
 import javafx.beans.property.SimpleLongProperty
 import javafx.beans.property.SimpleStringProperty
+import org.eclipse.xtend.lib.macro.Active
 import org.eclipse.xtend.lib.macro.TransformationContext
 import org.eclipse.xtend.lib.macro.TransformationParticipant
 import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
-import org.eclipse.xtend.lib.macro.declaration.MutableFieldDeclaration
 import org.eclipse.xtend.lib.macro.declaration.TypeReference
-import org.eclipse.xtend.lib.macro.Active
 
 /**
  * An active annotation which turns simple fields into
@@ -35,21 +34,20 @@ annotation FXBean {
 
 class FxBeanCompilationParticipant implements TransformationParticipant<MutableClassDeclaration> {
 	
-	extension TransformationContext ctx
-	
-	override doTransform(List<? extends MutableClassDeclaration> classes, TransformationContext context) {
-		ctx = context
+	override doTransform(List<? extends MutableClassDeclaration> classes, extension TransformationContext context) {
 		for (clazz : classes) {
-			for (f : clazz.members.filter(typeof(MutableFieldDeclaration))) {
+			for (f : clazz.declaredFields) {
 				val fieldName = f.name
 				val fieldType = f.type
 				val propName = f.name+'Property'
-				val propType = f.type.toPropertyType
+				val propType = f.type.toPropertyType(context)
 				
+				// add the property field
 				clazz.addField(propName) [
 					type = propType	
 				]
 				
+				// add the getter
 				clazz.addMethod('get'+fieldName.toFirstUpper) [
 					returnType = fieldType
 					body = ['''
@@ -57,6 +55,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 					''']
 				]
 				
+				// add the setter
 				clazz.addMethod('set'+fieldName.toFirstUpper) [
 					addParameter(fieldName, fieldType)
 					body = ['''
@@ -68,6 +67,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 					''']
 				]
 				
+				// add the property accessor
 				clazz.addMethod(fieldName+'Property') [
 					returnType = propType
 					body = ['''
@@ -82,16 +82,16 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		}
 	}
 	
-	def TypeReference toPropertyType(TypeReference ref) {
+	def TypeReference toPropertyType(TypeReference ref, extension TransformationContext context) {
 		switch ref.toString {
-			case 'boolean' : newTypeReference(typeof(SimpleBooleanProperty).name)
-			case 'double' : newTypeReference(typeof(SimpleDoubleProperty).name)
-			case 'float' : newTypeReference(typeof(SimpleFloatProperty).name)
-			case 'long' : newTypeReference(typeof(SimpleLongProperty).name)
-			case 'String' : newTypeReference(typeof(SimpleStringProperty).name)  
-			case 'int' : newTypeReference(typeof(SimpleIntegerProperty).name)
-			case 'javafx.collections.ObservableList' :  newTypeReference(typeof(SimpleListProperty).name, ref.actualTypeArguments.head)
-			default : newTypeReference(typeof(ObjectProperty).name)
+			case 'boolean' : typeof(SimpleBooleanProperty).newTypeReference
+			case 'double' : typeof(SimpleDoubleProperty).newTypeReference
+			case 'float' : typeof(SimpleFloatProperty).newTypeReference
+			case 'long' : typeof(SimpleLongProperty).newTypeReference
+			case 'String' : typeof(SimpleStringProperty).newTypeReference  
+			case 'int' : typeof(SimpleIntegerProperty).newTypeReference
+			case 'javafx.collections.ObservableList' :  typeof(SimpleListProperty).newTypeReference(ref.actualTypeArguments.head)
+			default : typeof(ObjectProperty).newTypeReference
 		}
 	}
 	

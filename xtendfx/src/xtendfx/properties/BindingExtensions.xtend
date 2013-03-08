@@ -10,6 +10,9 @@ import javafx.beans.property.StringProperty
 import javafx.beans.value.ObservableObjectValue
 import javafx.beans.value.ObservableValue
 
+/**
+ * Overloaded operators for JavaFX bindings.
+ */
 class BindingExtensions {
 	
 	def static <T> void operator_mappedTo(Property<T> left, ObservableValue<? extends T> right) {

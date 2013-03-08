@@ -1,23 +1,14 @@
 package xtendfx
 
-import com.google.inject.Inject
 import javafx.beans.property.SimpleStringProperty
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.xbase.compiler.CompilationTestHelper
-import org.junit.Before
+import org.eclipse.xtend.core.compiler.batch.XtendCompilerTester
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(typeof(XtextRunner))
+import static org.junit.Assert.*
+
 class FXAppTest {
 
-	@Inject extension CompilationTestHelper
-
-	@Before
-	def void initClassPath() {
-		setJavaCompilerClassPath(typeof(FXApp), typeof(SimpleStringProperty))
-	}
+	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXApp), typeof(SimpleStringProperty))
 
 	@Test def testAgainstJavaCode() {
 		'''
@@ -46,5 +37,25 @@ class FXAppTest {
 			  }
 			}
 		''')
+	}
+	
+	@Test def testAgainstAST() {
+		'''
+			import xtendfx.FXApp
+			import javafx.stage.Stage
+			
+			@FXApp class MyFxApp {
+				override start(Stage it) {
+					//TODO
+				}
+			}
+		'''.compile[
+			extension val ctx = transformationContext
+			val unit = compilationUnit
+			val clazz = ctx.findClass('MyFxApp')
+			assertEquals('Application', clazz.superclass.simpleName)
+			val mainMethod = clazz.findMethod('main', ctx.newArrayTypeReference(ctx.string))
+			assertNotNull(mainMethod)
+		]
 	}
 }
