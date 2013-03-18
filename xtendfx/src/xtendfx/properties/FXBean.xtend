@@ -63,11 +63,12 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 	
 	override doTransform(List<? extends MutableClassDeclaration> classes, extension TransformationContext context) {
 		val fxPropertyAnnotation = typeof(FXProperty).findTypeGlobally;
+		val fxImmutableAnnotation = typeof(FXImmutable).findTypeGlobally;
 		for (clazz : classes) {
 			for (f : clazz.declaredFields) {
 				val readonly = f.readonly(fxPropertyAnnotation)
 				val lazy = f.lazy(fxPropertyAnnotation)
-				val immutableType = f.immutableType(fxPropertyAnnotation)
+				val immutableType = f.immutableType(fxImmutableAnnotation)
 				
 				val fieldName = f.simpleName
 				val fieldType = f.type
@@ -199,8 +200,8 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		}
 	}
 	
-	def boolean readonly(MutableFieldDeclaration field, Type annotationType) {
-		val a = field.findAnnotation(annotationType)
+	def boolean readonly(MutableFieldDeclaration field, Type fxPropertyAnnotation) {
+		val a = field.findAnnotation(fxPropertyAnnotation)
 		
 		if( a != null ) {
 			val o = a.getValue("readonly")
@@ -211,8 +212,8 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		return false;
 	}
 	
-	def boolean lazy(MutableFieldDeclaration field, Type annotationType) {
-		val a = field.findAnnotation(annotationType)
+	def boolean lazy(MutableFieldDeclaration field, Type fxPropertyAnnotation) {
+		val a = field.findAnnotation(fxPropertyAnnotation)
 		
 		if( a != null ) {
 			val o = a.getValue("lazy")
@@ -224,7 +225,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		return true;
 	}
 	
-	def boolean immutableType (MutableFieldDeclaration field, Type annotationType) {
+	def boolean immutableType (MutableFieldDeclaration field, Type fxImmutableAnnotation) {
 		/*
 		 * we could be more clever here e.g. java.lang.Integer is also immutable 
 		 * and maybe support custom types who are annotated with @Immutable
@@ -237,7 +238,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 			case 'String' : true  
 			case 'int' : true
 			case 'javafx.collections.ObservableList' :  false
-			default : false
+			default : field.findAnnotation(fxImmutableAnnotation) != null
 		}
 	}
 	

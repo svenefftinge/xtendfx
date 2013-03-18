@@ -34,6 +34,69 @@ class FxBeanTest {
 		]
 	}
 	
+	@Test def testForcedImmutablePropertyAgainstJavaSource() {
+		'''
+			import xtendfx.properties.FXBean
+			import xtendfx.properties.FXProperty
+			import xtendfx.properties.FXImmutable
+			import java.util.Currency
+			
+			@FXBean class MyBean {
+				@FXProperty(readonly=true) @FXImmutable Currency currency
+				@FXProperty(readonly=true) @FXImmutable Currency currencyWithDefault = Currency::getInstance("EUR")
+			}
+		'''.assertCompilesTo('''
+			import java.util.Currency;
+			import javafx.beans.property.ReadOnlyObjectProperty;
+			import javafx.beans.property.ReadOnlyObjectWrapper;
+			import org.eclipse.xtext.xbase.lib.Functions.Function0;
+			import xtendfx.properties.FXBean;
+			
+			@FXBean
+			@SuppressWarnings("all")
+			public class MyBean {
+			  private final static Currency DEFAULT_CURRENCY = null;
+			  
+			  private ReadOnlyObjectWrapper<Currency> currencyProperty;
+			  
+			  public Currency getCurrency() {
+			    return (this.currencyProperty != null)? this.currencyProperty.get() : DEFAULT_CURRENCY;
+			    
+			  }
+			  
+			  public ReadOnlyObjectProperty<Currency> currencyProperty() {
+			    if (this.currencyProperty == null) { 
+			    	this.currencyProperty = new ReadOnlyObjectWrapper<Currency>(this, "currency", DEFAULT_CURRENCY);
+			    }
+			    return this.currencyProperty.getReadOnlyProperty();
+			    
+			  }
+			  
+			  private final static Currency DEFAULT_CURRENCYWITHDEFAULT = new Function0<Currency>() {
+			    public Currency apply() {
+			      Currency _instance = Currency.getInstance("EUR");
+			      return _instance;
+			    }
+			  }.apply();
+			  
+			  private ReadOnlyObjectWrapper<Currency> currencyWithDefaultProperty;
+			  
+			  public Currency getCurrencyWithDefault() {
+			    return (this.currencyWithDefaultProperty != null)? this.currencyWithDefaultProperty.get() : DEFAULT_CURRENCYWITHDEFAULT;
+			    
+			  }
+			  
+			  public ReadOnlyObjectProperty<Currency> currencyWithDefaultProperty() {
+			    if (this.currencyWithDefaultProperty == null) { 
+			    	this.currencyWithDefaultProperty = new ReadOnlyObjectWrapper<Currency>(this, "currencyWithDefault", DEFAULT_CURRENCYWITHDEFAULT);
+			    }
+			    return this.currencyWithDefaultProperty.getReadOnlyProperty();
+			    
+			  }
+			}
+		''');
+	}
+	
 	@Test def testReadOnlyPropertyAgainstJavaSource() {
 		'''
 			import xtendfx.properties.FXBean
