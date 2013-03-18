@@ -23,7 +23,7 @@ class FXAppCompilationParticipant implements TransformationParticipant<MutableCl
 			val applicationType = typeof(Application).newTypeReference
 			
 			// extends Application
-			clazz.superclass = applicationType
+			clazz.extendedClass = applicationType
 			
 			// add main
 			clazz.addMethod("main") [

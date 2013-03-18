@@ -37,9 +37,9 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 	override doTransform(List<? extends MutableClassDeclaration> classes, extension TransformationContext context) {
 		for (clazz : classes) {
 			for (f : clazz.declaredFields) {
-				val fieldName = f.name
+				val fieldName = f.simpleName
 				val fieldType = f.type
-				val propName = f.name+'Property'
+				val propName = f.simpleName+'Property'
 				val propType = f.type.toPropertyType(context)
 				
 				// add the property field
