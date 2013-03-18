@@ -15,7 +15,7 @@ import org.eclipse.xtend.lib.macro.TransformationParticipant
 import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
 import org.eclipse.xtend.lib.macro.declaration.TypeReference
 
-/**
+/** 
  * An active annotation which turns simple fields into
  * lazy JavaFX properties as described  
  * <a href="http://blog.netopyr.com/2011/05/19/creating-javafx-properties/">here</a>.
@@ -41,6 +41,24 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 				val fieldType = f.type
 				val propName = f.simpleName+'Property'
 				val propType = f.type.toPropertyType(context)
+				val immutableType = f.type.immutatableType
+				
+				if( immutableType ) {
+					//FIXME need to create an initializer of null
+//					var tempInit = f.initializer;
+//					if( tempInit == null && f.type.toString.equals("String") ) {
+//						tempInit = null;
+//					}
+					
+//					val init = tempInit;
+					
+					clazz.addField("DEFAULT_" + f.simpleName.toUpperCase) [
+						type = f.type 
+						initializer = f.initializer
+//						final = true
+						static = true
+					]
+				}
 				
 				// add the property field
 				clazz.addField(propName) [
@@ -51,7 +69,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 				clazz.addMethod('get'+fieldName.toFirstUpper) [
 					returnType = fieldType
 					body = ['''
-						return (this.«propName» != null)? this.«propName».get() : this.«fieldName»;
+						return (this.«propName» != null)? this.«propName».get() : «IF immutableType»DEFAULT_«fieldName.toUpperCase»«ELSE»this.«fieldName»«ENDIF»;
 					''']
 				]
 				
@@ -59,11 +77,15 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 				clazz.addMethod('set'+fieldName.toFirstUpper) [
 					addParameter(fieldName, fieldType)
 					body = ['''
+						«IF immutableType»
+							this.«propName»().set(«fieldName»);
+						«ELSE»
 						if («propName» != null) {
 							this.«propName».set(«fieldName»);
 						} else {
 							this.«fieldName» = «fieldName»;
 						}
+						«ENDIF»
 					''']
 				]
 				
@@ -72,17 +94,34 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 					returnType = propType
 					body = ['''
 						if (this.«propName» == null) { 
-							this.«propName» = new «toJavaCode(propType)»(this, "«fieldName»", this.«fieldName»);
+							this.«propName» = new «toJavaCode(propType)»(this, "«fieldName»", «IF immutableType»DEFAULT_«fieldName.toUpperCase»«ELSE»this.«fieldName»«ENDIF»);
 						}
 						return this.«propName»;
 					''']
 				]
+				
+				if( immutableType ) {
+					f.remove
+				}
 			}
 		}
 	}
 	
 	def boolean isImmutatableType (TypeReference ref) {
-		return true;
+		/*
+		 * we could be more clever here e.g. java.lang.Integer is also immutable 
+		 * and maybe support custom types who are annotated with @Immutable
+		 */
+		switch ref.toString {
+			case 'boolean' : true
+			case 'double' : true
+			case 'float' : true
+			case 'long' : true
+			case 'String' : true  
+			case 'int' : true
+			case 'javafx.collections.ObservableList' :  false
+			default : false
+		}
 	}
 	
 	def TypeReference toPropertyType(TypeReference ref, extension TransformationContext context) {

@@ -51,81 +51,69 @@ class FxBeanTest {
 			@FXBean
 			@SuppressWarnings("all")
 			public class MyBean {
-			  private String stringTypeWithDefault = "";
-			  
-			  private String StringType;
-			  
-			  private boolean booleanType;
-			  
 			  private Currency currency;
+			  
+			  private static String DEFAULT_STRINGTYPEWITHDEFAULT = "";
 			  
 			  private SimpleStringProperty stringTypeWithDefaultProperty;
 			  
 			  public String getStringTypeWithDefault() {
-			    return (this.stringTypeWithDefaultProperty != null)? this.stringTypeWithDefaultProperty.get() : this.stringTypeWithDefault;
+			    return (this.stringTypeWithDefaultProperty != null)? this.stringTypeWithDefaultProperty.get() : DEFAULT_STRINGTYPEWITHDEFAULT;
 			    
 			  }
 			  
 			  public void setStringTypeWithDefault(final String stringTypeWithDefault) {
-			    if (stringTypeWithDefaultProperty != null) {
-			    	this.stringTypeWithDefaultProperty.set(stringTypeWithDefault);
-			    } else {
-			    	this.stringTypeWithDefault = stringTypeWithDefault;
-			    }
+			    this.stringTypeWithDefaultProperty().set(stringTypeWithDefault);
 			    
 			  }
 			  
 			  public SimpleStringProperty stringTypeWithDefaultProperty() {
 			    if (this.stringTypeWithDefaultProperty == null) { 
-			    	this.stringTypeWithDefaultProperty = new SimpleStringProperty(this, "stringTypeWithDefault", this.stringTypeWithDefault);
+			    	this.stringTypeWithDefaultProperty = new SimpleStringProperty(this, "stringTypeWithDefault", DEFAULT_STRINGTYPEWITHDEFAULT);
 			    }
 			    return this.stringTypeWithDefaultProperty;
 			    
 			  }
 			  
+			  private static String DEFAULT_STRINGTYPE;
+			  
 			  private SimpleStringProperty StringTypeProperty;
 			  
 			  public String getStringType() {
-			    return (this.StringTypeProperty != null)? this.StringTypeProperty.get() : this.StringType;
+			    return (this.StringTypeProperty != null)? this.StringTypeProperty.get() : DEFAULT_STRINGTYPE;
 			    
 			  }
 			  
 			  public void setStringType(final String StringType) {
-			    if (StringTypeProperty != null) {
-			    	this.StringTypeProperty.set(StringType);
-			    } else {
-			    	this.StringType = StringType;
-			    }
+			    this.StringTypeProperty().set(StringType);
 			    
 			  }
 			  
 			  public SimpleStringProperty StringTypeProperty() {
 			    if (this.StringTypeProperty == null) { 
-			    	this.StringTypeProperty = new SimpleStringProperty(this, "StringType", this.StringType);
+			    	this.StringTypeProperty = new SimpleStringProperty(this, "StringType", DEFAULT_STRINGTYPE);
 			    }
 			    return this.StringTypeProperty;
 			    
 			  }
 			  
+			  private static boolean DEFAULT_BOOLEANTYPE;
+			  
 			  private SimpleBooleanProperty booleanTypeProperty;
 			  
 			  public boolean getBooleanType() {
-			    return (this.booleanTypeProperty != null)? this.booleanTypeProperty.get() : this.booleanType;
+			    return (this.booleanTypeProperty != null)? this.booleanTypeProperty.get() : DEFAULT_BOOLEANTYPE;
 			    
 			  }
 			  
 			  public void setBooleanType(final boolean booleanType) {
-			    if (booleanTypeProperty != null) {
-			    	this.booleanTypeProperty.set(booleanType);
-			    } else {
-			    	this.booleanType = booleanType;
-			    }
+			    this.booleanTypeProperty().set(booleanType);
 			    
 			  }
 			  
 			  public SimpleBooleanProperty booleanTypeProperty() {
 			    if (this.booleanTypeProperty == null) { 
-			    	this.booleanTypeProperty = new SimpleBooleanProperty(this, "booleanType", this.booleanType);
+			    	this.booleanTypeProperty = new SimpleBooleanProperty(this, "booleanType", DEFAULT_BOOLEANTYPE);
 			    }
 			    return this.booleanTypeProperty;
 			    
