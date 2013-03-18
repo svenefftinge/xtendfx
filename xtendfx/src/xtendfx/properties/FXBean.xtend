@@ -1,7 +1,7 @@
 package xtendfx.properties
 
 import java.util.List
-import javafx.beans.property.ObjectProperty
+import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleFloatProperty
@@ -78,8 +78,11 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 					''']
 				]
 			}
-
 		}
+	}
+	
+	def boolean isImmutatableType (TypeReference ref) {
+		return true;
 	}
 	
 	def TypeReference toPropertyType(TypeReference ref, extension TransformationContext context) {
@@ -91,7 +94,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 			case 'String' : typeof(SimpleStringProperty).newTypeReference  
 			case 'int' : typeof(SimpleIntegerProperty).newTypeReference
 			case 'javafx.collections.ObservableList' :  typeof(SimpleListProperty).newTypeReference(ref.actualTypeArguments.head)
-			default : typeof(ObjectProperty).newTypeReference
+			default : typeof(SimpleObjectProperty).newTypeReference(ref)
 		}
 	}
 	

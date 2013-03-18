@@ -14,11 +14,13 @@ class FxBeanTest {
 	@Test def testAgainstCompiledClass() {
 		'''
 			import xtendfx.properties.FXBean
+			import java.util.Currency
 			
 			@FXBean class MyBean {
 				String stringTypeWithDefault = ""
 				String StringType
 				boolean booleanType
+				Currency currency;
 			}
 		'''.compile [
 			compiledClass.getDeclaredField("stringTypeWithDefaultProperty") => [
@@ -31,14 +33,18 @@ class FxBeanTest {
 	@Test def testAgainstJavaSource() {
 		'''
 			import xtendfx.properties.FXBean
+			import java.util.Currency
 			
 			@FXBean class MyBean {
 				String stringTypeWithDefault = ""
 				String StringType
 				boolean booleanType
+				Currency currency
 			}
 		'''.assertCompilesTo('''
+			import java.util.Currency;
 			import javafx.beans.property.SimpleBooleanProperty;
+			import javafx.beans.property.SimpleObjectProperty;
 			import javafx.beans.property.SimpleStringProperty;
 			import xtendfx.properties.FXBean;
 			
@@ -50,6 +56,8 @@ class FxBeanTest {
 			  private String StringType;
 			  
 			  private boolean booleanType;
+			  
+			  private Currency currency;
 			  
 			  private SimpleStringProperty stringTypeWithDefaultProperty;
 			  
@@ -120,6 +128,30 @@ class FxBeanTest {
 			    	this.booleanTypeProperty = new SimpleBooleanProperty(this, "booleanType", this.booleanType);
 			    }
 			    return this.booleanTypeProperty;
+			    
+			  }
+			  
+			  private SimpleObjectProperty<Currency> currencyProperty;
+			  
+			  public Currency getCurrency() {
+			    return (this.currencyProperty != null)? this.currencyProperty.get() : this.currency;
+			    
+			  }
+			  
+			  public void setCurrency(final Currency currency) {
+			    if (currencyProperty != null) {
+			    	this.currencyProperty.set(currency);
+			    } else {
+			    	this.currency = currency;
+			    }
+			    
+			  }
+			  
+			  public SimpleObjectProperty<Currency> currencyProperty() {
+			    if (this.currencyProperty == null) { 
+			    	this.currencyProperty = new SimpleObjectProperty<Currency>(this, "currency", this.currency);
+			    }
+			    return this.currencyProperty;
 			    
 			  }
 			}
