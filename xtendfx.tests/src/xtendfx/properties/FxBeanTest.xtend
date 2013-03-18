@@ -21,7 +21,7 @@ class FxBeanTest {
 				boolean booleanType
 			}
 		'''.compile [
-			compiledClass.declaredField("stringTypeWithDefaultProperty") => [
+			compiledClass.getDeclaredField("stringTypeWithDefaultProperty") => [
 				assertEquals(typeof(SimpleStringProperty), type)
 				assertTrue(Modifier::isPrivate(modifiers))
 			]
