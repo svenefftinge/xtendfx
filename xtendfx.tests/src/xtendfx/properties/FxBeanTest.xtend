@@ -43,9 +43,12 @@ class FxBeanTest {
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;
+			import javafx.beans.property.BooleanProperty;
+			import javafx.beans.property.ObjectProperty;
 			import javafx.beans.property.SimpleBooleanProperty;
 			import javafx.beans.property.SimpleObjectProperty;
 			import javafx.beans.property.SimpleStringProperty;
+			import javafx.beans.property.StringProperty;
 			import xtendfx.properties.FXBean;
 			
 			@FXBean
@@ -53,7 +56,7 @@ class FxBeanTest {
 			public class MyBean {
 			  private Currency currency;
 			  
-			  private static String DEFAULT_STRINGTYPEWITHDEFAULT = "";
+			  private final static String DEFAULT_STRINGTYPEWITHDEFAULT = "";
 			  
 			  private SimpleStringProperty stringTypeWithDefaultProperty;
 			  
@@ -67,7 +70,7 @@ class FxBeanTest {
 			    
 			  }
 			  
-			  public SimpleStringProperty stringTypeWithDefaultProperty() {
+			  public StringProperty stringTypeWithDefaultProperty() {
 			    if (this.stringTypeWithDefaultProperty == null) { 
 			    	this.stringTypeWithDefaultProperty = new SimpleStringProperty(this, "stringTypeWithDefault", DEFAULT_STRINGTYPEWITHDEFAULT);
 			    }
@@ -75,7 +78,7 @@ class FxBeanTest {
 			    
 			  }
 			  
-			  private static String DEFAULT_STRINGTYPE;
+			  private final static String DEFAULT_STRINGTYPE = null;
 			  
 			  private SimpleStringProperty StringTypeProperty;
 			  
@@ -89,7 +92,7 @@ class FxBeanTest {
 			    
 			  }
 			  
-			  public SimpleStringProperty StringTypeProperty() {
+			  public StringProperty StringTypeProperty() {
 			    if (this.StringTypeProperty == null) { 
 			    	this.StringTypeProperty = new SimpleStringProperty(this, "StringType", DEFAULT_STRINGTYPE);
 			    }
@@ -97,7 +100,7 @@ class FxBeanTest {
 			    
 			  }
 			  
-			  private static boolean DEFAULT_BOOLEANTYPE;
+			  private final static boolean DEFAULT_BOOLEANTYPE = false;
 			  
 			  private SimpleBooleanProperty booleanTypeProperty;
 			  
@@ -111,7 +114,7 @@ class FxBeanTest {
 			    
 			  }
 			  
-			  public SimpleBooleanProperty booleanTypeProperty() {
+			  public BooleanProperty booleanTypeProperty() {
 			    if (this.booleanTypeProperty == null) { 
 			    	this.booleanTypeProperty = new SimpleBooleanProperty(this, "booleanType", DEFAULT_BOOLEANTYPE);
 			    }
@@ -135,7 +138,7 @@ class FxBeanTest {
 			    
 			  }
 			  
-			  public SimpleObjectProperty<Currency> currencyProperty() {
+			  public ObjectProperty<Currency> currencyProperty() {
 			    if (this.currencyProperty == null) { 
 			    	this.currencyProperty = new SimpleObjectProperty<Currency>(this, "currency", this.currency);
 			    }
