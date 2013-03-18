@@ -53,7 +53,7 @@ class FXAppTest {
 			extension val ctx = transformationContext
 			val unit = compilationUnit
 			val clazz = ctx.findClass('MyFxApp')
-			assertEquals('Application', clazz.superclass.simpleName)
+			assertEquals('Application', clazz.extendedClass.simpleName)
 			val mainMethod = clazz.findMethod('main', ctx.newArrayTypeReference(ctx.string))
 			assertNotNull(mainMethod)
 		]
