@@ -71,7 +71,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 				clazz.addMethod(fieldName+'Property') [
 					returnType = propType
 					body = ['''
-						if ( this.«propName» == null) { 
+						if (this.«propName» == null) { 
 							this.«propName» = new «toJavaCode(propType)»(this, "«fieldName»", this.«fieldName»);
 						}
 						return this.«propName»;
