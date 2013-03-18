@@ -40,6 +40,7 @@ import javafx.beans.property.ReadOnlyIntegerWrapper
 import javafx.beans.property.ReadOnlyListWrapper
 import javafx.beans.property.ReadOnlyObjectWrapper
 import org.eclipse.xtend.lib.macro.declaration.Visibility
+import org.eclipse.xtend.lib.macro.declaration.Type
 
 /** 
  * An active annotation which turns simple fields into
@@ -61,16 +62,18 @@ annotation FXBean {
 class FxBeanCompilationParticipant implements TransformationParticipant<MutableClassDeclaration> {
 	
 	override doTransform(List<? extends MutableClassDeclaration> classes, extension TransformationContext context) {
+		val fxPropertyAnnotation = typeof(FXProperty).findTypeGlobally;
 		for (clazz : classes) {
 			for (f : clazz.declaredFields) {
+				val readonly = f.readonly(fxPropertyAnnotation)
+				val lazy = f.lazy(fxPropertyAnnotation)
+				val immutableType = f.immutableType(fxPropertyAnnotation)
+				
 				val fieldName = f.simpleName
 				val fieldType = f.type
 				val propName = f.simpleName+'Property'
-				val readonly = f.readonly(context)
-				val lazy = f.lazy(context)
 				val propType = f.type.toPropertyType(readonly,context)
 				val propTypeAPI = f.type.toPropertyType_API(readonly, context)
-				val immutableType = f.type.immutableType
 				
 				if( lazy ) {
 					createLazyField(immutableType, f, clazz, propName, propType, fieldName, fieldType, readonly, propTypeAPI)	
@@ -196,8 +199,8 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		}
 	}
 	
-	def boolean readonly(MutableFieldDeclaration field, extension TransformationContext context) {
-		val a = field.findAnnotation(typeof(FXProperty).findTypeGlobally)
+	def boolean readonly(MutableFieldDeclaration field, Type annotationType) {
+		val a = field.findAnnotation(annotationType)
 		
 		if( a != null ) {
 			val o = a.getValue("readonly")
@@ -208,8 +211,8 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		return false;
 	}
 	
-	def boolean lazy(MutableFieldDeclaration field, extension TransformationContext context) {
-		val a = field.findAnnotation(typeof(FXProperty).findTypeGlobally)
+	def boolean lazy(MutableFieldDeclaration field, Type annotationType) {
+		val a = field.findAnnotation(annotationType)
 		
 		if( a != null ) {
 			val o = a.getValue("lazy")
@@ -221,12 +224,12 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		return true;
 	}
 	
-	def boolean immutableType (TypeReference ref) {
+	def boolean immutableType (MutableFieldDeclaration field, Type annotationType) {
 		/*
 		 * we could be more clever here e.g. java.lang.Integer is also immutable 
 		 * and maybe support custom types who are annotated with @Immutable
 		 */
-		switch ref.toString {
+		switch field.type.toString {
 			case 'boolean' : true
 			case 'double' : true
 			case 'float' : true
