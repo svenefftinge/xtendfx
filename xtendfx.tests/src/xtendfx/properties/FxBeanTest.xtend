@@ -14,13 +14,15 @@ class FxBeanTest {
 	@Test def testAgainstCompiledClass() {
 		'''
 			import xtendfx.properties.FXBean
+			import xtendfx.properties.FXProperty
 			import java.util.Currency
 			
 			@FXBean class MyBean {
 				String stringTypeWithDefault = ""
 				String StringType
 				boolean booleanType
-				Currency currency;
+				Currency currency
+				@FXProperty(readonly=true) Currency currencyReadOnly
 			}
 		'''.compile [
 			compiledClass.getDeclaredField("stringTypeWithDefaultProperty") => [
@@ -33,6 +35,7 @@ class FxBeanTest {
 	@Test def testAgainstJavaSource() {
 		'''
 			import xtendfx.properties.FXBean
+			import xtendfx.properties.FXProperty
 			import java.util.Currency
 			
 			@FXBean class MyBean {
@@ -40,21 +43,28 @@ class FxBeanTest {
 				String StringType
 				boolean booleanType
 				Currency currency
+				@FXProperty(readonly=true) Currency currencyReadOnly
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;
 			import javafx.beans.property.BooleanProperty;
 			import javafx.beans.property.ObjectProperty;
+			import javafx.beans.property.ReadOnlyObjectProperty;
+			import javafx.beans.property.ReadOnlyObjectWrapper;
 			import javafx.beans.property.SimpleBooleanProperty;
 			import javafx.beans.property.SimpleObjectProperty;
 			import javafx.beans.property.SimpleStringProperty;
 			import javafx.beans.property.StringProperty;
 			import xtendfx.properties.FXBean;
+			import xtendfx.properties.FXProperty;
 			
 			@FXBean
 			@SuppressWarnings("all")
 			public class MyBean {
 			  private Currency currency;
+			  
+			  @FXProperty(readonly = true)
+			  private Currency currencyReadOnly;
 			  
 			  private final static String DEFAULT_STRINGTYPEWITHDEFAULT = "";
 			  
@@ -143,6 +153,21 @@ class FxBeanTest {
 			    	this.currencyProperty = new SimpleObjectProperty<Currency>(this, "currency", this.currency);
 			    }
 			    return this.currencyProperty;
+			    
+			  }
+			  
+			  private ReadOnlyObjectWrapper<Currency> currencyReadOnlyProperty;
+			  
+			  public Currency getCurrencyReadOnly() {
+			    return (this.currencyReadOnlyProperty != null)? this.currencyReadOnlyProperty.get() : this.currencyReadOnly;
+			    
+			  }
+			  
+			  public ReadOnlyObjectProperty<Currency> currencyReadOnlyProperty() {
+			    if (this.currencyReadOnlyProperty == null) { 
+			    	this.currencyReadOnlyProperty = new ReadOnlyObjectWrapper<Currency>(this, "currencyReadOnly", this.currencyReadOnly);
+			    }
+			    return this.currencyReadOnlyProperty.getReadOnlyProperty();
 			    
 			  }
 			}
