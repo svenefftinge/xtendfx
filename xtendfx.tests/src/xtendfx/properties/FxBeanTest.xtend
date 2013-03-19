@@ -15,7 +15,8 @@ class FxBeanTest {
 	@Test def testAgainstCompiledClass() {
 		'''
 			import xtendfx.properties.FXBean
-			import xtendfx.properties.FXProperty
+			import xtendfx.properties.Readonly
+			import xtendfx.properties.NoneLazy
 			import java.util.Currency
 			
 			@FXBean class MyBean {
@@ -23,8 +24,8 @@ class FxBeanTest {
 				String StringType
 				boolean booleanType
 				Currency currency
-				@FXProperty(readonly=true) Currency currencyReadOnly = Currency::getInstance("EUR")
-				@FXProperty(lazy=false) Currency currencyGreedy = Currency::getInstance("EUR")
+				@Readonly Currency currencyReadOnly = Currency::getInstance("EUR")
+				@NoneLazy Currency currencyGreedy = Currency::getInstance("EUR")
 			}
 		'''.compile [
 			compiledClass.getDeclaredField("stringTypeWithDefaultProperty") => [
@@ -37,13 +38,13 @@ class FxBeanTest {
 	@Test def testForcedImmutablePropertyAgainstJavaSource() {
 		'''
 			import xtendfx.properties.FXBean
-			import xtendfx.properties.FXProperty
-			import xtendfx.properties.FXImmutable
+			import xtendfx.properties.Readonly
+			import xtendfx.properties.Immutable
 			import java.util.Currency
 			
 			@FXBean class MyBean {
-				@FXProperty(readonly=true) @FXImmutable Currency currency
-				@FXProperty(readonly=true) @FXImmutable Currency currencyWithDefault = Currency::getInstance("EUR")
+				@Readonly @Immutable Currency currency
+				@Readonly @Immutable Currency currencyWithDefault = Currency::getInstance("EUR")
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;
@@ -100,16 +101,16 @@ class FxBeanTest {
 	@Test def testReadOnlyPropertyAgainstJavaSource() {
 		'''
 			import xtendfx.properties.FXBean
-			import xtendfx.properties.FXProperty
+			import xtendfx.properties.Readonly
 			import java.util.Currency
 			
 			@FXBean class MyBean {
-				@FXProperty(readonly=true) String stringType
-				@FXProperty(readonly=true) String stringTypeWithDefault = ""
-				@FXProperty(readonly=true) boolean booleanType
-				@FXProperty(readonly=true) boolean booleanTypeWithDefault
-				@FXProperty(readonly=true) Currency currency
-				@FXProperty(readonly=true) Currency currencyWithDefault = Currency::getInstance("EUR")
+				@Readonly String stringType
+				@Readonly String stringTypeWithDefault = ""
+				@Readonly boolean booleanType
+				@Readonly boolean booleanTypeWithDefault
+				@Readonly Currency currency
+				@Readonly Currency currencyWithDefault = Currency::getInstance("EUR")
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;
@@ -121,15 +122,15 @@ class FxBeanTest {
 			import javafx.beans.property.ReadOnlyStringWrapper;
 			import org.eclipse.xtext.xbase.lib.Functions.Function0;
 			import xtendfx.properties.FXBean;
-			import xtendfx.properties.FXProperty;
+			import xtendfx.properties.Readonly;
 			
 			@FXBean
 			@SuppressWarnings("all")
 			public class MyBean {
-			  @FXProperty(readonly = true)
+			  @Readonly
 			  private Currency currency;
 			  
-			  @FXProperty(readonly = true)
+			  @Readonly
 			  private Currency currencyWithDefault = new Function0<Currency>() {
 			    public Currency apply() {
 			      Currency _instance = Currency.getInstance("EUR");
@@ -241,16 +242,16 @@ class FxBeanTest {
 	@Test def testNoneLazyPropertyAgainstJavaSource() {
 		'''
 			import xtendfx.properties.FXBean
-			import xtendfx.properties.FXProperty
+			import xtendfx.properties.NoneLazy
 			import java.util.Currency
 			
 			@FXBean class MyBean {
-				@FXProperty(lazy=false) String stringType
-				@FXProperty(lazy=false) String stringTypeWithDefault = ""
-				@FXProperty(lazy=false) boolean booleanType
-				@FXProperty(lazy=false) boolean booleanTypeWithDefault
-				@FXProperty(lazy=false) Currency currency
-				@FXProperty(lazy=false) Currency currencyWithDefault = Currency::getInstance("EUR")
+				@NoneLazy String stringType
+				@NoneLazy String stringTypeWithDefault = ""
+				@NoneLazy boolean booleanType
+				@NoneLazy boolean booleanTypeWithDefault
+				@NoneLazy Currency currency
+				@NoneLazy Currency currencyWithDefault = Currency::getInstance("EUR")
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;
@@ -382,7 +383,6 @@ class FxBeanTest {
 	@Test def testAgainstJavaSource() {
 		'''
 			import xtendfx.properties.FXBean
-			import xtendfx.properties.FXProperty
 			import java.util.Currency
 			
 			@FXBean class MyBean {

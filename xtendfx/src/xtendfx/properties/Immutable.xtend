@@ -1,5 +1,5 @@
 package xtendfx.properties
 
-annotation FXImmutable { 
+annotation Immutable { 
 	boolean test = true;
 }

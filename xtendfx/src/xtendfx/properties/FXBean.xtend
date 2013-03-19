@@ -62,12 +62,14 @@ annotation FXBean {
 class FxBeanCompilationParticipant implements TransformationParticipant<MutableClassDeclaration> {
 	
 	override doTransform(List<? extends MutableClassDeclaration> classes, extension TransformationContext context) {
-		val fxPropertyAnnotation = typeof(FXProperty).findTypeGlobally;
-		val fxImmutableAnnotation = typeof(FXImmutable).findTypeGlobally;
+		val fxImmutableAnnotation = typeof(Immutable).findTypeGlobally;
+		val fxReadonlyAnnotation = typeof(Readonly).findTypeGlobally;
+		val fxNoneLazyAnnotation = typeof(NoneLazy).findTypeGlobally;
+		
 		for (clazz : classes) {
 			for (f : clazz.declaredFields) {
-				val readonly = f.readonly(fxPropertyAnnotation)
-				val lazy = f.lazy(fxPropertyAnnotation)
+				val readonly = f.readonly(fxReadonlyAnnotation)
+				val lazy = f.lazy(fxNoneLazyAnnotation)
 				val immutableType = f.immutableType(fxImmutableAnnotation)
 				
 				val fieldName = f.simpleName
@@ -200,29 +202,12 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		}
 	}
 	
-	def boolean readonly(MutableFieldDeclaration field, Type fxPropertyAnnotation) {
-		val a = field.findAnnotation(fxPropertyAnnotation)
-		
-		if( a != null ) {
-			val o = a.getValue("readonly")
-			if( o != null ) 
-				return o as Boolean	
-		}
-		
-		return false;
+	def boolean readonly(MutableFieldDeclaration field, Type readonlyAnnotation) {
+		return field.findAnnotation(readonlyAnnotation) != null
 	}
 	
-	def boolean lazy(MutableFieldDeclaration field, Type fxPropertyAnnotation) {
-		val a = field.findAnnotation(fxPropertyAnnotation)
-		
-		if( a != null ) {
-			val o = a.getValue("lazy")
-			if( o != null ) 
-				return o as Boolean
-			
-		}
-		
-		return true;
+	def boolean lazy(MutableFieldDeclaration field, Type noneLazyAnnotation) {
+		return field.findAnnotation(noneLazyAnnotation) == null;
 	}
 	
 	def boolean immutableType (MutableFieldDeclaration field, Type fxImmutableAnnotation) {
