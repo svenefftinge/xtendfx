@@ -41,6 +41,7 @@ import javafx.beans.property.ReadOnlyListWrapper
 import javafx.beans.property.ReadOnlyObjectWrapper
 import org.eclipse.xtend.lib.macro.declaration.Visibility
 import org.eclipse.xtend.lib.macro.declaration.Type
+import org.eclipse.xtend.lib.macro.declaration.TypeDeclaration
 
 /** 
  * An active annotation which turns simple fields into
@@ -62,15 +63,16 @@ annotation FXBean {
 class FxBeanCompilationParticipant implements TransformationParticipant<MutableClassDeclaration> {
 	
 	override doTransform(List<? extends MutableClassDeclaration> classes, extension TransformationContext context) {
-		val fxImmutableAnnotation = typeof(Immutable).findTypeGlobally;
-		val fxReadonlyAnnotation = typeof(Readonly).findTypeGlobally;
-		val fxNoneLazyAnnotation = typeof(NoneLazy).findTypeGlobally;
+		val fxImmutableAnnotation = typeof(Immutable).findTypeGlobally
+		val dataAnnotation = typeof(Data).findTypeGlobally
+		val fxReadonlyAnnotation = typeof(Readonly).findTypeGlobally
+		val fxNoneLazyAnnotation = typeof(NoneLazy).findTypeGlobally
 		
 		for (clazz : classes) {
 			for (f : clazz.declaredFields) {
 				val readonly = f.readonly(fxReadonlyAnnotation)
 				val lazy = f.lazy(fxNoneLazyAnnotation)
-				val immutableType = f.immutableType(fxImmutableAnnotation)
+				val immutableType = f.immutableType(fxImmutableAnnotation, dataAnnotation)
 				
 				val fieldName = f.simpleName
 				val fieldType = f.type
@@ -210,7 +212,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 		return field.findAnnotation(noneLazyAnnotation) == null;
 	}
 	
-	def boolean immutableType (MutableFieldDeclaration field, Type fxImmutableAnnotation) {
+	def boolean immutableType (MutableFieldDeclaration field, Type fxImmutableAnnotation, Type dataAnnotation) {
 		/*
 		 * we could be more clever here e.g. java.lang.Integer is also immutable 
 		 * and maybe support custom types who are annotated with @Immutable
@@ -223,7 +225,16 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 			case 'String' : true  
 			case 'int' : true
 			case 'javafx.collections.ObservableList' :  false
-			default : field.findAnnotation(fxImmutableAnnotation) != null
+			default : 
+				if( field.findAnnotation(fxImmutableAnnotation) != null ) {
+					return true;
+				} else if( field.type.type instanceof TypeDeclaration ) {
+					val t = field.type.type as TypeDeclaration
+					val rv = t.findAnnotation(fxImmutableAnnotation) != null || t.findAnnotation(dataAnnotation) != null;
+					return rv;
+				} else {
+					return false;
+				}
 		}
 	}
 	
