@@ -10,7 +10,7 @@ import org.eclipse.xtext.xbase.lib.Functions$Function0
 
 class FxBeanTest {
 	
-	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXBean), typeof(SimpleStringProperty), typeof(Function0))
+	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXBean), typeof(ValueObject), typeof(SimpleStringProperty), typeof(Function0))
 	
 	@Test def testAgainstCompiledClass() {
 		'''
@@ -18,6 +18,7 @@ class FxBeanTest {
 			import xtendfx.properties.Readonly
 			import xtendfx.properties.NoneLazy
 			import java.util.Currency
+			import xtendfx.properties.ValueObject
 			
 			@FXBean class MyBean {
 				String stringTypeWithDefault = ""
@@ -26,6 +27,7 @@ class FxBeanTest {
 				Currency currency
 				@Readonly Currency currencyReadOnly = Currency::getInstance("EUR")
 				@NoneLazy Currency currencyGreedy = Currency::getInstance("EUR")
+				ValueObject valueObject
 			}
 		'''.compile [
 			compiledClass.getDeclaredField("stringTypeWithDefaultProperty") => [
@@ -33,6 +35,90 @@ class FxBeanTest {
 				assertTrue(Modifier::isPrivate(modifiers))
 			]
 		]
+	}
+	
+	@Test def testImmutablePropertyAgainstJavaSource() {
+		'''
+			import xtendfx.properties.FXBean
+			import xtendfx.properties.ValueObject
+			
+			@FXBean class MyBean {
+				ValueObject value
+			}
+		'''.assertCompilesTo('''
+			import javafx.beans.property.ObjectProperty;
+			import javafx.beans.property.SimpleObjectProperty;
+			import xtendfx.properties.FXBean;
+			import xtendfx.properties.ValueObject;
+			
+			@FXBean
+			@SuppressWarnings("all")
+			public class MyBean {
+			  private final static ValueObject DEFAULT_VALUE = null;
+			  
+			  private SimpleObjectProperty<ValueObject> valueProperty;
+			  
+			  public ValueObject getValue() {
+			    return (this.valueProperty != null)? this.valueProperty.get() : DEFAULT_VALUE;
+			    
+			  }
+			  
+			  public void setValue(final ValueObject value) {
+			    this.valueProperty().set(value);
+			    
+			  }
+			  
+			  public ObjectProperty<ValueObject> valueProperty() {
+			    if (this.valueProperty == null) { 
+			    	this.valueProperty = new SimpleObjectProperty<ValueObject>(this, "value", DEFAULT_VALUE);
+			    }
+			    return this.valueProperty;
+			    
+			  }
+			}
+		''');
+	}
+	
+	@Test def testDataPropertyAgainstJavaSource() {
+		'''
+			import xtendfx.properties.FXBean
+			import xtendfx.properties.DataObject
+			
+			@FXBean class MyBean {
+				DataObject value
+			}
+		'''.assertCompilesTo('''
+			import javafx.beans.property.ObjectProperty;
+			import javafx.beans.property.SimpleObjectProperty;
+			import xtendfx.properties.DataObject;
+			import xtendfx.properties.FXBean;
+			
+			@FXBean
+			@SuppressWarnings("all")
+			public class MyBean {
+			  private final static DataObject DEFAULT_VALUE = null;
+			  
+			  private SimpleObjectProperty<DataObject> valueProperty;
+			  
+			  public DataObject getValue() {
+			    return (this.valueProperty != null)? this.valueProperty.get() : DEFAULT_VALUE;
+			    
+			  }
+			  
+			  public void setValue(final DataObject value) {
+			    this.valueProperty().set(value);
+			    
+			  }
+			  
+			  public ObjectProperty<DataObject> valueProperty() {
+			    if (this.valueProperty == null) { 
+			    	this.valueProperty = new SimpleObjectProperty<DataObject>(this, "value", DEFAULT_VALUE);
+			    }
+			    return this.valueProperty;
+			    
+			  }
+			}
+		''');
 	}
 	
 	@Test def testForcedImmutablePropertyAgainstJavaSource() {
