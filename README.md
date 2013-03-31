@@ -77,3 +77,6 @@ Here's the full code the three small examples:
  - "Metronome   " [Java](https://github.com/svenefftinge/xtendfx/blob/master/my.javafx.application/src/metronome/MetronomeTransitionJava.java) [Xtend](https://github.com/svenefftinge/xtendfx/blob/master/my.javafx.application/src/metronome/MetronomeTransitionXtend.xtend)
  - "Login Screen" [Java](https://github.com/svenefftinge/xtendfx/blob/master/my.javafx.application/src/login/LoginScreenJava.java) [Xtend](https://github.com/svenefftinge/xtendfx/blob/master/my.javafx.application/src/login/LoginScreenXtend.xtend)
  - "Login Bean  " [Java](https://github.com/svenefftinge/xtendfx/blob/master/my.javafx.application/src/login/LoginBeanJava.java) [Xtend](https://github.com/svenefftinge/xtendfx/blob/master/my.javafx.application/src/login/LoginBeanXtend.xtend)
+
+Btw. we are looking for creative and smart people who want to join the party!
+=============================================================================
