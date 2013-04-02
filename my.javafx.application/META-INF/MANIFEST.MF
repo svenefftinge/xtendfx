@@ -3,8 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Application
 Bundle-SymbolicName: my.javafx.application
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: application.jar,
- Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home/jre/lib/jfxrt.jar
 Export-Package: login
 Require-Bundle: xtendfx
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
