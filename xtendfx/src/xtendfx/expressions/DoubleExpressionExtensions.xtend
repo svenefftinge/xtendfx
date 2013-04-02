@@ -5,6 +5,12 @@ import org.eclipse.xtext.xbase.lib.Pure
 import javafx.beans.value.ObservableNumberValue
 import javafx.beans.binding.DoubleBinding
 
+/** 
+ * Extension methods for {@link DoubleExpression}s. 
+ * Allow to use operators instead of fluent API.
+ * 
+ * @author koehnlein
+ */
 class DoubleExpressionExtensions {
 	
 	@Pure
