@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Application
-Bundle-SymbolicName: my.javafx.application
-Bundle-Version: 1.0.0.qualifier
-Export-Package: login
-Require-Bundle: xtendfx
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-
