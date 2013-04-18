@@ -1,8 +1,10 @@
-package xtendfx.expressions
+package xtendfx.beans.binding
 
 import javafx.beans.value.ObservableNumberValue
 import org.eclipse.xtext.xbase.lib.Pure
 import javafx.beans.binding.NumberExpressionBase
+import javafx.beans.binding.NumberExpression
+import javafx.beans.binding.Bindings
 
 /** 
  * Extension methods for {@link NumberExpression}s. 
@@ -106,5 +108,8 @@ class NumberExpressionExtensions {
 		a.isNotEqualTo(b, EPSILON)
 	}
 	
-	
+	@Pure
+	def static operator_multiply(NumberExpression left, double right) {
+		Bindings::multiply(left, right)
+	}
 }

@@ -1,4 +1,4 @@
-package xtendfx.expressions
+package xtendfx.beans.binding
 
 import javafx.beans.binding.FloatBinding
 import javafx.beans.binding.FloatExpression

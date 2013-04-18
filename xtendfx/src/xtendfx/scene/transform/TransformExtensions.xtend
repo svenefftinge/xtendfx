@@ -1,4 +1,4 @@
-package xtendfx.transform
+package xtendfx.scene.transform
 
 import javafx.geometry.Point3D
 import javafx.scene.transform.Affine

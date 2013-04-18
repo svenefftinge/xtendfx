@@ -1,12 +1,8 @@
-package xtendfx.properties
+package xtendfx.beans.binding
 
-import javafx.beans.binding.Bindings
 import javafx.beans.binding.BooleanBinding
 import javafx.beans.binding.ObjectExpression
-import javafx.beans.binding.StringExpression
 import javafx.beans.property.Property
-import javafx.beans.property.SimpleStringProperty
-import javafx.beans.property.StringProperty
 import javafx.beans.value.ObservableObjectValue
 import javafx.beans.value.ObservableValue
 
@@ -39,11 +35,4 @@ class BindingExtensions {
 		left.isNotEqualTo(right)
 	}
 	
-	def static StringProperty asProperty(String someString) {
-		new SimpleStringProperty(someString)
-	}
-	
-	def static StringExpression operator_plus(StringExpression left, Object right) {
-		return Bindings::concat(left, right)
-	}
 }

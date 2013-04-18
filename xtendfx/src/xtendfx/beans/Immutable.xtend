@@ -1,4 +1,4 @@
-package xtendfx.properties
+package xtendfx.beans
 
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy

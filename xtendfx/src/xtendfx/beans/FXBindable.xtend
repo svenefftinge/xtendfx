@@ -1,47 +1,47 @@
-package xtendfx.properties
+package xtendfx.beans
 
 import java.util.List
-import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.property.BooleanProperty
+import javafx.beans.property.DoubleProperty
+import javafx.beans.property.FloatProperty
+import javafx.beans.property.IntegerProperty
+import javafx.beans.property.ListProperty
+import javafx.beans.property.LongProperty
+import javafx.beans.property.ObjectProperty
+import javafx.beans.property.ReadOnlyBooleanProperty
+import javafx.beans.property.ReadOnlyBooleanWrapper
+import javafx.beans.property.ReadOnlyDoubleProperty
+import javafx.beans.property.ReadOnlyDoubleWrapper
+import javafx.beans.property.ReadOnlyFloatProperty
+import javafx.beans.property.ReadOnlyFloatWrapper
+import javafx.beans.property.ReadOnlyIntegerProperty
+import javafx.beans.property.ReadOnlyIntegerWrapper
+import javafx.beans.property.ReadOnlyListProperty
+import javafx.beans.property.ReadOnlyListWrapper
+import javafx.beans.property.ReadOnlyLongProperty
+import javafx.beans.property.ReadOnlyLongWrapper
+import javafx.beans.property.ReadOnlyObjectProperty
+import javafx.beans.property.ReadOnlyObjectWrapper
+import javafx.beans.property.ReadOnlyStringProperty
+import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleDoubleProperty
 import javafx.beans.property.SimpleFloatProperty
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleListProperty
 import javafx.beans.property.SimpleLongProperty
+import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
+import javafx.beans.property.StringProperty
 import org.eclipse.xtend.lib.macro.Active
 import org.eclipse.xtend.lib.macro.TransformationContext
 import org.eclipse.xtend.lib.macro.TransformationParticipant
 import org.eclipse.xtend.lib.macro.declaration.MutableClassDeclaration
-import org.eclipse.xtend.lib.macro.declaration.TypeReference
 import org.eclipse.xtend.lib.macro.declaration.MutableFieldDeclaration
-import javafx.beans.property.BooleanProperty
-import javafx.beans.property.DoubleProperty
-import javafx.beans.property.FloatProperty
-import javafx.beans.property.LongProperty
-import javafx.beans.property.StringProperty
-import javafx.beans.property.IntegerProperty
-import javafx.beans.property.ListProperty
-import javafx.beans.property.ObjectProperty
-import javafx.beans.property.ReadOnlyBooleanProperty
-import javafx.beans.property.ReadOnlyDoubleProperty
-import javafx.beans.property.ReadOnlyFloatProperty
-import javafx.beans.property.ReadOnlyLongProperty
-import javafx.beans.property.ReadOnlyStringProperty
-import javafx.beans.property.ReadOnlyIntegerProperty
-import javafx.beans.property.ReadOnlyBooleanWrapper
-import javafx.beans.property.ReadOnlyListProperty
-import javafx.beans.property.ReadOnlyObjectProperty
-import javafx.beans.property.ReadOnlyDoubleWrapper
-import javafx.beans.property.ReadOnlyFloatWrapper
-import javafx.beans.property.ReadOnlyLongWrapper
-import javafx.beans.property.ReadOnlyStringWrapper
-import javafx.beans.property.ReadOnlyIntegerWrapper
-import javafx.beans.property.ReadOnlyListWrapper
-import javafx.beans.property.ReadOnlyObjectWrapper
-import org.eclipse.xtend.lib.macro.declaration.Visibility
 import org.eclipse.xtend.lib.macro.declaration.Type
 import org.eclipse.xtend.lib.macro.declaration.TypeDeclaration
+import org.eclipse.xtend.lib.macro.declaration.TypeReference
+import org.eclipse.xtend.lib.macro.declaration.Visibility
 
 /** 
  * An active annotation which turns simple fields into
@@ -57,7 +57,7 @@ import org.eclipse.xtend.lib.macro.declaration.TypeDeclaration
  * </ul>
  */
 @Active(typeof(FxBeanCompilationParticipant))
-annotation FXBean {
+annotation FXBindable {
 }
 
 class FxBeanCompilationParticipant implements TransformationParticipant<MutableClassDeclaration> {

@@ -1,11 +1,11 @@
 package login
 
-import xtendfx.properties.FXBean
+import xtendfx.beans.FXBindable
 
 /**
  * A login bean written in Xtend.
  */
-@FXBean class LoginBeanXtend {
+@FXBindable class LoginBeanXtend {
 	String userName = ""
 	String password
 }

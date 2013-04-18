@@ -1,4 +1,4 @@
-package xtendfx.expressions
+package xtendfx.beans.binding
 
 import javafx.beans.binding.LongBinding
 import javafx.beans.binding.LongExpression

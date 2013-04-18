@@ -10,7 +10,7 @@ import org.junit.Test
 
 import static org.junit.Assert.*
 
-import static extension xtendfx.transform.TransformExtensions.*
+import static extension xtendfx.scene.transform.TransformExtensions.*
 
 /**
  * A smoke test for transform extensions.

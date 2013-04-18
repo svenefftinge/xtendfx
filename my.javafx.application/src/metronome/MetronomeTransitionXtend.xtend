@@ -15,7 +15,7 @@ import xtendfx.FXApp
 import static javafx.animation.Animation$Status.*
 import static javafx.scene.paint.Color.*
 
-import static extension xtendfx.properties.BindingExtensions.*
+import static extension xtendfx.beans.binding.BindingExtensions.*
 
 @FXApp class MetronomeTransitionXtend {
 

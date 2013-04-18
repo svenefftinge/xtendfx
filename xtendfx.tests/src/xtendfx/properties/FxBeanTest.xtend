@@ -3,24 +3,25 @@ package xtendfx.properties
 import java.lang.reflect.Modifier
 import javafx.beans.property.SimpleStringProperty
 import org.eclipse.xtend.core.compiler.batch.XtendCompilerTester
+import org.eclipse.xtext.xbase.lib.Functions$Function0
 import org.junit.Test
+import xtendfx.beans.FXBindable
 
 import static org.junit.Assert.*
-import org.eclipse.xtext.xbase.lib.Functions$Function0
 
-class FxBeanTest {
+class FXBindableTest {
 	
-	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXBean), typeof(ValueObject), typeof(SimpleStringProperty), typeof(Function0))
+	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXBindable), typeof(ValueObject), typeof(SimpleStringProperty), typeof(Function0))
 	
 	@Test def testAgainstCompiledClass() {
 		'''
-			import xtendfx.properties.FXBean
-			import xtendfx.properties.Readonly
-			import xtendfx.properties.NoneLazy
+			import xtendfx.beans.FXBindable
+			import xtendfx.beans.Readonly
+			import xtendfx.beans.NoneLazy
 			import java.util.Currency
 			import xtendfx.properties.ValueObject
 			
-			@FXBean class MyBean {
+			@FXBindable class MyBean {
 				String stringTypeWithDefault = ""
 				String StringType
 				boolean booleanType
@@ -39,19 +40,19 @@ class FxBeanTest {
 	
 	@Test def testImmutablePropertyAgainstJavaSource() {
 		'''
-			import xtendfx.properties.FXBean
+			import xtendfx.beans.FXBindable
 			import xtendfx.properties.ValueObject
 			
-			@FXBean class MyBean {
+			@FXBindable class MyBean {
 				ValueObject value
 			}
 		'''.assertCompilesTo('''
 			import javafx.beans.property.ObjectProperty;
 			import javafx.beans.property.SimpleObjectProperty;
-			import xtendfx.properties.FXBean;
+			import xtendfx.beans.FXBindable;
 			import xtendfx.properties.ValueObject;
 			
-			@FXBean
+			@FXBindable
 			@SuppressWarnings("all")
 			public class MyBean {
 			  private final static ValueObject DEFAULT_VALUE = null;
@@ -81,19 +82,19 @@ class FxBeanTest {
 	
 	@Test def testDataPropertyAgainstJavaSource() {
 		'''
-			import xtendfx.properties.FXBean
+			import xtendfx.beans.FXBindable
 			import xtendfx.properties.DataObject
 			
-			@FXBean class MyBean {
+			@FXBindable class MyBean {
 				DataObject value
 			}
 		'''.assertCompilesTo('''
 			import javafx.beans.property.ObjectProperty;
 			import javafx.beans.property.SimpleObjectProperty;
+			import xtendfx.beans.FXBindable;
 			import xtendfx.properties.DataObject;
-			import xtendfx.properties.FXBean;
 			
-			@FXBean
+			@FXBindable
 			@SuppressWarnings("all")
 			public class MyBean {
 			  private final static DataObject DEFAULT_VALUE = null;
@@ -123,12 +124,12 @@ class FxBeanTest {
 	
 	@Test def testForcedImmutablePropertyAgainstJavaSource() {
 		'''
-			import xtendfx.properties.FXBean
-			import xtendfx.properties.Readonly
-			import xtendfx.properties.Immutable
+			import xtendfx.beans.FXBindable
+			import xtendfx.beans.Readonly
+			import xtendfx.beans.Immutable
 			import java.util.Currency
 			
-			@FXBean class MyBean {
+			@FXBindable class MyBean {
 				@Readonly @Immutable Currency currency
 				@Readonly @Immutable Currency currencyWithDefault = Currency::getInstance("EUR")
 			}
@@ -137,9 +138,9 @@ class FxBeanTest {
 			import javafx.beans.property.ReadOnlyObjectProperty;
 			import javafx.beans.property.ReadOnlyObjectWrapper;
 			import org.eclipse.xtext.xbase.lib.Functions.Function0;
-			import xtendfx.properties.FXBean;
+			import xtendfx.beans.FXBindable;
 			
-			@FXBean
+			@FXBindable
 			@SuppressWarnings("all")
 			public class MyBean {
 			  private final static Currency DEFAULT_CURRENCY = null;
@@ -186,11 +187,11 @@ class FxBeanTest {
 	
 	@Test def testReadOnlyPropertyAgainstJavaSource() {
 		'''
-			import xtendfx.properties.FXBean
-			import xtendfx.properties.Readonly
+			import xtendfx.beans.FXBindable
+			import xtendfx.beans.Readonly
 			import java.util.Currency
 			
-			@FXBean class MyBean {
+			@FXBindable class MyBean {
 				@Readonly String stringType
 				@Readonly String stringTypeWithDefault = ""
 				@Readonly boolean booleanType
@@ -207,10 +208,10 @@ class FxBeanTest {
 			import javafx.beans.property.ReadOnlyStringProperty;
 			import javafx.beans.property.ReadOnlyStringWrapper;
 			import org.eclipse.xtext.xbase.lib.Functions.Function0;
-			import xtendfx.properties.FXBean;
-			import xtendfx.properties.Readonly;
+			import xtendfx.beans.FXBindable;
+			import xtendfx.beans.Readonly;
 			
-			@FXBean
+			@FXBindable
 			@SuppressWarnings("all")
 			public class MyBean {
 			  @Readonly
@@ -327,11 +328,11 @@ class FxBeanTest {
 	
 	@Test def testNoneLazyPropertyAgainstJavaSource() {
 		'''
-			import xtendfx.properties.FXBean
-			import xtendfx.properties.NoneLazy
+			import xtendfx.beans.FXBindable
+			import xtendfx.beans.NoneLazy
 			import java.util.Currency
 			
-			@FXBean class MyBean {
+			@FXBindable class MyBean {
 				@NoneLazy String stringType
 				@NoneLazy String stringTypeWithDefault = ""
 				@NoneLazy boolean booleanType
@@ -347,9 +348,9 @@ class FxBeanTest {
 			import javafx.beans.property.SimpleObjectProperty;
 			import javafx.beans.property.SimpleStringProperty;
 			import javafx.beans.property.StringProperty;
-			import xtendfx.properties.FXBean;
+			import xtendfx.beans.FXBindable;
 			
-			@FXBean
+			@FXBindable
 			@SuppressWarnings("all")
 			public class MyBean {
 			  private SimpleStringProperty stringTypeProperty = new SimpleStringProperty(this, "stringType");
@@ -468,10 +469,10 @@ class FxBeanTest {
 	
 	@Test def testAgainstJavaSource() {
 		'''
-			import xtendfx.properties.FXBean
+			import xtendfx.beans.FXBindable
 			import java.util.Currency
 			
-			@FXBean class MyBean {
+			@FXBindable class MyBean {
 				String stringTypeWithDefault = ""
 				String StringType
 				boolean booleanType
@@ -485,9 +486,9 @@ class FxBeanTest {
 			import javafx.beans.property.SimpleObjectProperty;
 			import javafx.beans.property.SimpleStringProperty;
 			import javafx.beans.property.StringProperty;
-			import xtendfx.properties.FXBean;
+			import xtendfx.beans.FXBindable;
 			
-			@FXBean
+			@FXBindable
 			@SuppressWarnings("all")
 			public class MyBean {
 			  private Currency currency;

@@ -2,12 +2,10 @@ package login
 
 import javafx.geometry.Insets
 import javafx.geometry.Pos
-import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
-import javafx.scene.layout.GridPane
 import javafx.scene.layout.HBox
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
@@ -16,7 +14,10 @@ import javafx.scene.text.Text
 import javafx.stage.Stage
 import xtendfx.FXApp
 
-import static extension xtendfx.properties.BindingExtensions.*
+import static xtendfx.scene.SceneBuilder.*
+
+import static extension xtendfx.beans.binding.BindingExtensions.*
+import static extension xtendfx.beans.binding.StringExpressionExtensions.*
 
 @FXApp class LoginScreenXtend {
 
@@ -29,8 +30,9 @@ import static extension xtendfx.properties.BindingExtensions.*
 	 */
 	override start(Stage it) throws Exception {
 		title = "JavaFX Welcome"
-
-		scene = new Scene(new GridPane => [
+		width = 300
+		height = 250
+		scene = GridPaneScene [
 			alignment = Pos::CENTER
 			hgap = 10
 			vgap = 10
@@ -60,7 +62,7 @@ import static extension xtendfx.properties.BindingExtensions.*
 				]
 			], 1, 4)
 			add(actiontarget = new Text, 1, 6)
-		], 300, 275)
+		]
 		show
 	}
 
