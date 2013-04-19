@@ -2,6 +2,9 @@ package login;
 
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * http://blog.netopyr.com/2011/05/19/creating-javafx-properties/ 
+ */
 class LoginBeanJava {
 
 	private String userName = "";

@@ -6,11 +6,28 @@ import javafx.scene.Node
 import javafx.scene.Scene
 import javafx.scene.layout.Pane
 import javafx.scene.layout.GridPane
+import javafx.scene.control.Button
+import javafx.scene.layout.StackPane
+import javafx.stage.Stage
 
 class SceneBuilder {
 	
 	def static Scene Scene((Scene)=>void init) {
 		new Scene(new Group) => init
+	}
+	
+	def static Scene StackedScene(Stage parent, (StackPane)=>void init) {
+		val stackPane = new StackPane
+		val result = new Scene(stackPane) 
+		init.apply(stackPane)
+		parent.scene = result
+		return result
+	}
+	
+	def static Button Button(Pane parent, (Button)=>void init) {
+		val button = new Button() => init
+		parent.children += button
+		return button
 	}
 	
 	def static Scene GridPaneScene((GridPane)=>void init) {
@@ -26,5 +43,5 @@ class SceneBuilder {
 			Pane  : r.children
 			default : throw new IllegalStateException("no root set")
 		}
-	}	
+	}
 }

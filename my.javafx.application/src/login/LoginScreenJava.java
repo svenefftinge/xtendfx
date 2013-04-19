@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 
 public class LoginScreenJava extends Application {
 
-	private final LoginBeanXtend login = new LoginBeanXtend();
+	private final LoginBeanJava login = new LoginBeanJava();
 
 	private final StringExpression welcomeMessage = 
 			new SimpleStringProperty("Welcome ").concat(login.userNameProperty()).concat("!");

@@ -103,7 +103,7 @@ public class MetronomeTransitionJava extends Application {
 		stopButton.disableProperty().bind(anim.statusProperty().isEqualTo(Animation.Status.STOPPED));
 
 		stage.setScene(scene);
-		stage.setTitle("Metronome with Lambda Expressions");
+		stage.setTitle("Metronome");
 		stage.show();
 	}
 	

@@ -5,6 +5,8 @@ import javafx.util.Duration
 import javafx.animation.KeyFrame
 import javafx.event.EventHandler
 import javafx.event.ActionEvent
+import javafx.animation.KeyValue
+import javafx.beans.value.WritableValue
 
 class TimelineExtensions {
 	
@@ -14,5 +16,13 @@ class TimelineExtensions {
 	
 	def static at(Timeline timeLine, Duration time, EventHandler<ActionEvent> action) {
 		timeLine.keyFrames.add(new KeyFrame(time, action))
+	}
+	
+	def static at(Timeline timeLine, Duration time, KeyValue... keyValues) {
+		timeLine.keyFrames.add(new KeyFrame(time, keyValues))
+	}
+	
+	def static <T> KeyValue operator_spaceship(WritableValue<T> left, T right) {
+		new KeyValue<T>(left,right)
 	}
 }

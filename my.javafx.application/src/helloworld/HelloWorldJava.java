@@ -18,7 +18,7 @@ public class HelloWorldJava extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Hello World!");
         Button btn = new Button();
-        btn.setText("Say 'Hello World'");
+        btn.setText("Say \"Hello World\"");
         btn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override

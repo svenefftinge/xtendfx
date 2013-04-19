@@ -7,17 +7,15 @@ import javafx.stage.Stage
 import xtendfx.FXApp
 
 import static java.lang.Math.*
+import static javafx.beans.binding.Bindings.*
 import static javafx.scene.paint.Color.*
 
+import static extension xtendfx.animation.TimelineExtensions.*
+import static extension xtendfx.beans.binding.BindingExtensions.*
 import static extension xtendfx.scene.SceneBuilder.*
 import static extension xtendfx.util.DurationExtensions.*
-import static extension javafx.beans.binding.Bindings.*
-import static extension xtendfx.beans.binding.BindingExtensions.*
-import static extension xtendfx.beans.binding.NumberExpressionExtensions.*
-import static extension xtendfx.animation.TimelineExtensions.*
 
 @FXApp class VanishingCircles {
-
 	override start(Stage it) {
 		val stage = it
 		title = "Vanishing Circles"
@@ -25,10 +23,10 @@ import static extension xtendfx.animation.TimelineExtensions.*
 		height = 600
 		scene = Scene [
 			fill = BLACK
-			children += (0 .. 50).map [
+			children += (0 .. 10).map [
 				new Circle => [
-					centerXProperty -> stage.widthProperty * random
-					centerYProperty -> stage.heightProperty * random
+					centerX = stage.width * random
+					centerY = stage.height * random
 					radius = 150
 					fill = color(random, random, random, 0.2)
 					effect = new BoxBlur(10, 10, 3)
@@ -38,24 +36,23 @@ import static extension xtendfx.animation.TimelineExtensions.*
 					// add this for event listeners:
 					val circle = it
 					onMouseClicked = [
-						circle.radius = 0
+						Timeline [
+							at(3.seconds, circle.radiusProperty <=> 0)
+						]
 					]
 				]
 			]
 		]
-
 		Timeline [
 			cycleCount = Timeline::INDEFINITE
 			autoReverse = true
-			at(4.seconds) [
-				stage.scene.children.filter(typeof(Circle)).forEach [
-					centerXProperty -> stage.widthProperty * random
-					centerYProperty -> stage.heightProperty * random
-				]
-			]
+			at(40.seconds,
+				stage.scene.children.filter(typeof(Circle)).map[#[
+					centerXProperty <=> stage.width * random,
+					centerYProperty <=> stage.height * random
+				]].flatten
+			)
 		].play
-
 		show
 	}
-
 }
