@@ -30,7 +30,7 @@ class Brick extends Parent {
     }
 
     def int getType() {
-        return type;
+        return type
     }
 
     def boolean kick() {

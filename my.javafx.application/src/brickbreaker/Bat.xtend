@@ -18,11 +18,11 @@ class Bat extends Parent {
 
     int size
     int width
-    int height;
+    int height
 
-    ImageView leftImageView;
-    ImageView centerImageView;
-    ImageView rightImageView;
+    ImageView leftImageView
+    ImageView centerImageView
+    ImageView rightImageView
 
     def int getSize() {
         return size
