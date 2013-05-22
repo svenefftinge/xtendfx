@@ -139,26 +139,26 @@ class Config {
     def static void initialize() {
         for (String imageName : IMAGES_NAMES) {
             val image = new Image(typeof(Config).getResourceAsStream(IMAGE_DIR+imageName))
-            if (image.isError()) {
-                System::out.println("Image "+imageName+" not found")
+            if (image.error) {
+                println("Image "+imageName+" not found")
             }
-            images.add(image)
+            images += image
         }
         for (String imageName : BRICKS_IMAGES) {
             val url = IMAGE_DIR+"brick/"+imageName
             val image = new Image(typeof(Config).getResourceAsStream(url))
             if (image.isError()) {
-                System::out.println("Image "+url+" not found")
+                println("Image "+url+" not found")
             }
-            bricksImages.add(image)
+            bricksImages += image
         }
         for (String imageName : BONUSES_IMAGES) {
             val url = IMAGE_DIR+"bonus/"+imageName
             val image = new Image(typeof(Config).getResourceAsStream(url))
-            if (image.isError()) {
-                System::out.println("Image "+url+" not found")
+            if (image.error) {
+                println("Image "+url+" not found")
             }
-            bonusesImages.add(image)
+            bonusesImages+=image
         }
     }
 

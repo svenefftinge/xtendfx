@@ -15,10 +15,10 @@ class Ball extends Parent {
     ImageView imageView
 
     new() {
-        imageView = new ImageView()
-        getChildren().add(imageView)
+        imageView = new ImageView
+        children += imageView
         setSize(DEFAULT_SIZE)
-        setMouseTransparent(true)
+        mouseTransparent = true;
     }
 
     def int getSize() {
@@ -31,8 +31,8 @@ class Ball extends Parent {
 
     def void setSize(int newSize) {
         size = newSize
-        imageView.setImage(Config::getImages().get(Config::IMAGE_BALL_0 + size))
-        diameter = (imageView.getImage().getWidth() - Config::SHADOW_WIDTH) as int
+        imageView.image = Config::getImages().get(Config::IMAGE_BALL_0 + size)
+        diameter = (imageView.image.width - Config::SHADOW_WIDTH) as int
     }
 
 }

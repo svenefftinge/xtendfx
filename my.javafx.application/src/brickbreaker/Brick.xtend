@@ -23,10 +23,10 @@ class Brick extends Parent {
     private ImageView content
 
     new(int type) {
-        content = new ImageView()
-        getChildren().add(content)
-        changeType(type)
-        setMouseTransparent(true)
+        content = new ImageView
+        children += content
+        setType(type)
+        mouseTransparent = true;
     }
 
     def int getType() {
@@ -38,17 +38,17 @@ class Brick extends Parent {
             return false
         }
         if (type == TYPE_BROKEN1) {
-            changeType(TYPE_BROKEN2)
+            setType(TYPE_BROKEN2)
             return false
         }
         return true
     }
 
-    def private void changeType(int newType) {
+    def private void setType(int newType) {
         this.type = newType
         val image = Config::getBricksImages().get(type)
-        content.setImage(image)
-        content.setFitWidth(Config::FIELD_WIDTH/15)
+        content.image = image
+        content.fitWidth = Config::FIELD_WIDTH / 15
     }
 
     

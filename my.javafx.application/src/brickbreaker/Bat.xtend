@@ -39,26 +39,29 @@ class Bat extends Parent {
     def void setSize(int newSize) {
         this.size = newSize
         width = size * 12 + 45
-        val rightWidth = RIGHT.getWidth() - Config::SHADOW_WIDTH
-        val centerWidth = width - LEFT.getWidth() - rightWidth
-        centerImageView.setViewport(new Rectangle2D(
-            (CENTER.getWidth() - centerWidth) / 2, 0, centerWidth, CENTER.getHeight()))
-        rightImageView.setTranslateX(width - rightWidth)
+        val rightWidth = RIGHT.width - Config::SHADOW_WIDTH
+        val centerWidth = width - LEFT.width - rightWidth
+        centerImageView.viewport = new Rectangle2D((CENTER.width - centerWidth) / 2, 0, centerWidth, CENTER.height)
+        rightImageView.translateX = width - rightWidth
     }
 
     new() {
-        height = (CENTER.getHeight() - Config::SHADOW_HEIGHT) as int 
-        val group = new Group()
-        leftImageView = new ImageView()
-        leftImageView.setImage(LEFT)
-        centerImageView = new ImageView()
-        centerImageView.setImage(CENTER)
-        centerImageView.setTranslateX(LEFT.getWidth())
-        rightImageView = new ImageView()
-        rightImageView.setImage(RIGHT)
+        height = (CENTER.height - Config::SHADOW_HEIGHT) as int 
+        val group = new Group => [
+        	children += leftImageView = new ImageView => [
+        		image = LEFT
+        	]
+        	children += centerImageView = new ImageView => [
+        		image=CENTER
+        		translateX = LEFT.width
+        	]
+        	children += rightImageView = new ImageView => [
+        		image = RIGHT
+        	] 	 
+        ]
+        
         setSize(DEFAULT_SIZE)
-        group.getChildren().addAll(leftImageView, centerImageView, rightImageView)
-        getChildren().add(group)
-        setMouseTransparent(true)
+        children+=group
+        mouseTransparent = true
     }
 }

@@ -48,12 +48,12 @@ class Bonus extends Parent {
 
     new (int type) {
         content = new ImageView()
-        getChildren().add(content)
+        children += content
         this.type = type
         val image = Config::getBonusesImages().get(type)
-        width = (image.getWidth() - Config::SHADOW_WIDTH) as int
-        height = (image.getHeight() - Config::SHADOW_HEIGHT) as int
-        content.setImage(image)
+        width = (image.width - Config::SHADOW_WIDTH) as int
+        height = (image.height - Config::SHADOW_HEIGHT) as int
+        content.image = image
         setMouseTransparent(true)
     }
 
