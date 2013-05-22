@@ -5,7 +5,7 @@ import java.util.Arrays
 import javafx.collections.FXCollections
 
 class LevelData {
-	private static final String NEXT_LEVEL = "---";
+	private static final String NEXT_LEVEL = "---"
 
     private static final String[] LEVELS_DATA = #[
         "",
@@ -161,34 +161,34 @@ class LevelData {
         "    2   2 2    ",
         "    2   2 2    ",
         "    2   2 2    "
-    ];
+    ]
 
-    private static ObservableList<Integer> levelsOffsets;
+    private static ObservableList<Integer> levelsOffsets
 
     def static int getLevelsCount() {
-        initLevelsOffsets();
-        return levelsOffsets.size() - 1;
+        initLevelsOffsets()
+        return levelsOffsets.size() - 1
     }
 
     def static String[] getLevelData(int level) {
-        initLevelsOffsets();
+        initLevelsOffsets()
         if (level < 1 || level > getLevelsCount()) {
-            return null;
+            return null
         } else {
-            return Arrays::copyOfRange(LEVELS_DATA, levelsOffsets.get(level - 1) + 1, levelsOffsets.get(level));
+            return Arrays::copyOfRange(LEVELS_DATA, levelsOffsets.get(level - 1) + 1, levelsOffsets.get(level))
         }
     }
 
     def private static void initLevelsOffsets() {
         if (levelsOffsets == null) {
-            levelsOffsets = FXCollections::<Integer>observableArrayList();
-            levelsOffsets.add(-1);
+            levelsOffsets = FXCollections::<Integer>observableArrayList()
+            levelsOffsets.add(-1)
             for (int i : 0 ..< LEVELS_DATA.length) {
                 if (LEVELS_DATA.get(i).equals(NEXT_LEVEL)) {
-                    levelsOffsets.add(i);
+                    levelsOffsets.add(i)
                 }
             }
-            levelsOffsets.add(LEVELS_DATA.length + 1);
+            levelsOffsets.add(LEVELS_DATA.length + 1)
         }
     }
 	

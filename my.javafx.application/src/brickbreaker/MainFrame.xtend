@@ -3,82 +3,82 @@ package brickbreaker
 import javafx.scene.Group
 
 class MainFrame { // Instance of scene root node
-	Group root;
+	Group root
 
 	// Instance of splash (if exists)
-	Splash splash;
+	Splash splash
 
 	// Instance of level (if exists)
-	Level level;
+	Level level
 
 	// Number of lifes
-	int lifeCount;
+	int lifeCount
 
 	// Current score
-	int score;
+	int score
 
 	new(Group root) {
-		this.root = root;
+		this.root = root
 	}
 
 	def int getState() {
-		return state;
+		return state
 	}
 
 	def int getScore() {
-		return score;
+		return score
 	}
 
 	def void setScore(int score) {
-		this.score = score;
+		this.score = score
 	}
 
 	def int getLifeCount() {
-		return lifeCount;
+		return lifeCount
 	}
 
 	def void increaseLives() {
-		lifeCount = Math::min(lifeCount + 1, Config::MAX_LIVES);
+		lifeCount = Math::min(lifeCount + 1, Config::MAX_LIVES)
 	}
 
 	def void decreaseLives() {
-		lifeCount = lifeCount - 1;
+		lifeCount = lifeCount - 1
 	}
 
 	// Initializes game (lifes, scores etc)
 	def void startGame() {
-		lifeCount = 3;
-		score = 0;
-		changeState(1);
+		lifeCount = 3
+		score = 0
+		changeState(1)
 	}
 
 	// Current state of the game. The next values are available
 	// 0 - Splash
-	public static final int SPLASH = 0;
+	public static final int SPLASH = 0
 
 	// 1..Level.LEVEL_COUNT - Level
-	int state = SPLASH;
+	int state = SPLASH
 
 	def void changeState(int newState) {
-		this.state = newState;
+		this.state = newState
 		if (splash != null) {
-			splash.stop();
+			splash.stop()
 		}
 		if (level != null) {
-			level.stop();
+			level.stop()
 		}
 		if (state < 1 || state > LevelData::getLevelsCount()) {
-			root.getChildren().remove(level);
-			level = null;
-			splash = new Splash();
-			root.getChildren().add(splash);
-			splash.start();
+			root.getChildren().remove(level)
+			level = null
+			splash = new Splash()
+			root.getChildren().add(splash)
+			splash.start()
 		} else {
-			root.getChildren().remove(splash);
-			splash = null;
-			level = new Level(state);
-			root.getChildren().add(level);
-			level.start();
+			root.getChildren().remove(splash)
+			splash = null
+			level = new Level(state)
+			root.getChildren().add(level)
+			level.start()
 		}
 	}
 

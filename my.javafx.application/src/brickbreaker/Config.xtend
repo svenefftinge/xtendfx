@@ -7,40 +7,40 @@ import javafx.collections.FXCollections
 
 class Config {
 	
-    public static final Duration ANIMATION_TIME = Duration::millis(40);
-    public static final int MAX_LIVES = 9;
+    public static final Duration ANIMATION_TIME = Duration::millis(40)
+    public static final int MAX_LIVES = 9
     // Screen info
-    public static final int FIELD_BRICK_IN_ROW = 15;
+    public static final int FIELD_BRICK_IN_ROW = 15
 
-    public static final String IMAGE_DIR = "images/desktop/";
+    public static final String IMAGE_DIR = "images/desktop/"
 
-    public static final int WINDOW_BORDER_X = 32; // on desktop platform
-    public static final int WINDOW_BORDER_Y = 24; // on desktop platform
-    public static final int TITLE_BAR_HEIGHT = 0; // on desktop platform
-    public static final int SCREEN_WIDTH = 960;
-    public static final int SCREEN_HEIGHT = 720;
+    public static final int WINDOW_BORDER_X = 32 // on desktop platform
+    public static final int WINDOW_BORDER_Y = 24 // on desktop platform
+    public static final int TITLE_BAR_HEIGHT = 0 // on desktop platform
+    public static final int SCREEN_WIDTH = 960
+    public static final int SCREEN_HEIGHT = 720
 
-    public static final int INFO_TEXT_SPACE = 10;
+    public static final int INFO_TEXT_SPACE = 10
 
     // Game field info
-    public static final int BRICK_WIDTH = 48;
-    public static final int BRICK_HEIGHT = 24;
-    public static final int SHADOW_WIDTH = 10;
-    public static final int SHADOW_HEIGHT = 16;
+    public static final int BRICK_WIDTH = 48
+    public static final int BRICK_HEIGHT = 24
+    public static final int SHADOW_WIDTH = 10
+    public static final int SHADOW_HEIGHT = 16
 
-    public static final double BALL_MIN_SPEED = 6;
-    public static final double BALL_MAX_SPEED = BRICK_HEIGHT;
-    public static final double BALL_MIN_COORD_SPEED = 2;
-    public static final double BALL_SPEED_INC = 0.5f;
+    public static final double BALL_MIN_SPEED = 6
+    public static final double BALL_MAX_SPEED = BRICK_HEIGHT
+    public static final double BALL_MIN_COORD_SPEED = 2
+    public static final double BALL_SPEED_INC = 0.5f
 
-    public static final int BAT_Y = SCREEN_HEIGHT - 40;
-    public static final int BAT_SPEED = 8;
+    public static final int BAT_Y = SCREEN_HEIGHT - 40
+    public static final int BAT_SPEED = 8
 
-    public static final int BONUS_SPEED = 3;
+    public static final int BONUS_SPEED = 3
 
-    public static final int FIELD_WIDTH = FIELD_BRICK_IN_ROW * BRICK_WIDTH;
-    public static final int FIELD_HEIGHT = FIELD_WIDTH;
-    public static final int FIELD_Y = SCREEN_HEIGHT - FIELD_HEIGHT;
+    public static final int FIELD_WIDTH = FIELD_BRICK_IN_ROW * BRICK_WIDTH
+    public static final int FIELD_HEIGHT = FIELD_WIDTH
+    public static final int FIELD_Y = SCREEN_HEIGHT - FIELD_HEIGHT
 
     static final String[] BRICKS_IMAGES = #[
         "blue.png",
@@ -56,15 +56,15 @@ class Config {
         "violet.png",
         "white.png",
         "yellow.png"
-    ];
+    ]
 
-    static ObservableList<Image> bricksImages = FXCollections::<Image>observableArrayList();
+    static ObservableList<Image> bricksImages = FXCollections::<Image>observableArrayList()
 
     def static ObservableList<Image> getBricksImages() {
-        return bricksImages;
+        return bricksImages
     }
 
-    private static final String[] BONUSES_IMAGES = #[
+    static final String[] BONUSES_IMAGES = #[
         "ballslow.png",
         "ballfast.png",
         "catch.png",
@@ -74,36 +74,36 @@ class Config {
         "ballreduce.png",
         "strike.png",
         "extralife.png"
-    ];
+    ]
 
-    static ObservableList<Image> bonusesImages = FXCollections::<Image>observableArrayList();
+    static ObservableList<Image> bonusesImages = FXCollections::<Image>observableArrayList()
 
     def static ObservableList<Image> getBonusesImages() {
-        return bonusesImages;
+        return bonusesImages
     }
 
-    public static final int IMAGE_BACKGROUND = 0;
-    public static final int IMAGE_BAT_LEFT = 1;
-    public static final int IMAGE_BAT_CENTER = 2;
-    public static final int IMAGE_BAT_RIGHT = 3;
-    public static final int IMAGE_BALL_0 = 4;
-    public static final int IMAGE_BALL_1 = 5;
-    public static final int IMAGE_BALL_2 = 6;
-    public static final int IMAGE_BALL_3 = 7;
-    public static final int IMAGE_BALL_4 = 8;
-    public static final int IMAGE_BALL_5 = 9;
-    public static final int IMAGE_LOGO = 10;
-    public static final int IMAGE_SPLASH_BRICK = 11;
-    public static final int IMAGE_SPLASH_BRICKSHADOW = 12;
-    public static final int IMAGE_SPLASH_BREAKER = 13;
-    public static final int IMAGE_SPLASH_BREAKERSHADOW = 14;
-    public static final int IMAGE_SPLASH_PRESSANYKEY = 15;
-    public static final int IMAGE_SPLASH_PRESSANYKEYSHADOW = 16;
-    public static final int IMAGE_SPLASH_STRIKE = 17;
-    public static final int IMAGE_SPLASH_STRIKESHADOW = 18;
-    public static final int IMAGE_SPLASH_SUN = 19;
-    public static final int IMAGE_READY = 20;
-    public static final int IMAGE_GAMEOVER = 21;
+    public static final int IMAGE_BACKGROUND = 0
+    public static final int IMAGE_BAT_LEFT = 1
+    public static final int IMAGE_BAT_CENTER = 2
+    public static final int IMAGE_BAT_RIGHT = 3
+    public static final int IMAGE_BALL_0 = 4
+    public static final int IMAGE_BALL_1 = 5
+    public static final int IMAGE_BALL_2 = 6
+    public static final int IMAGE_BALL_3 = 7
+    public static final int IMAGE_BALL_4 = 8
+    public static final int IMAGE_BALL_5 = 9
+    public static final int IMAGE_LOGO = 10
+    public static final int IMAGE_SPLASH_BRICK = 11
+    public static final int IMAGE_SPLASH_BRICKSHADOW = 12
+    public static final int IMAGE_SPLASH_BREAKER = 13
+    public static final int IMAGE_SPLASH_BREAKERSHADOW = 14
+    public static final int IMAGE_SPLASH_PRESSANYKEY = 15
+    public static final int IMAGE_SPLASH_PRESSANYKEYSHADOW = 16
+    public static final int IMAGE_SPLASH_STRIKE = 17
+    public static final int IMAGE_SPLASH_STRIKESHADOW = 18
+    public static final int IMAGE_SPLASH_SUN = 19
+    public static final int IMAGE_READY = 20
+    public static final int IMAGE_GAMEOVER = 21
 
     private static final String[] IMAGES_NAMES = #[
         "background.png",
@@ -128,41 +128,41 @@ class Config {
         "splash/sun.png",
         "ready.png",
         "gameover.png"
-    ];
+    ]
 
-    static ObservableList<Image> images = FXCollections::<Image>observableArrayList();
+    static ObservableList<Image> images = FXCollections::<Image>observableArrayList()
 
     def static ObservableList<Image> getImages() {
-        return images;
+        return images
     }
 
     def static void initialize() {
         for (String imageName : IMAGES_NAMES) {
-            val image = new Image(typeof(Config).getResourceAsStream(IMAGE_DIR+imageName));
+            val image = new Image(typeof(Config).getResourceAsStream(IMAGE_DIR+imageName))
             if (image.isError()) {
-                System::out.println("Image "+imageName+" not found");
+                System::out.println("Image "+imageName+" not found")
             }
-            images.add(image);
+            images.add(image)
         }
         for (String imageName : BRICKS_IMAGES) {
-            val url = IMAGE_DIR+"brick/"+imageName;
-            val image = new Image(typeof(Config).getResourceAsStream(url));
+            val url = IMAGE_DIR+"brick/"+imageName
+            val image = new Image(typeof(Config).getResourceAsStream(url))
             if (image.isError()) {
-                System::out.println("Image "+url+" not found");
+                System::out.println("Image "+url+" not found")
             }
-            bricksImages.add(image);
+            bricksImages.add(image)
         }
         for (String imageName : BONUSES_IMAGES) {
-            val url = IMAGE_DIR+"bonus/"+imageName;
-            val image = new Image(typeof(Config).getResourceAsStream(url));
+            val url = IMAGE_DIR+"bonus/"+imageName
+            val image = new Image(typeof(Config).getResourceAsStream(url))
             if (image.isError()) {
-                System::out.println("Image "+url+" not found");
+                System::out.println("Image "+url+" not found")
             }
-            bonusesImages.add(image);
+            bonusesImages.add(image)
         }
     }
 
-    new() {
+    private new() {
         
     }
 	

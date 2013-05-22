@@ -29,10 +29,10 @@ class Bonus extends Parent {
         "LIFE"
     ];
 
-    private int type;
-    private int width;
-    private int height;
-    private ImageView content;
+    int type;
+    int width;
+    int height;
+    ImageView content;
 
     def int getHeight() {
         return height;
