@@ -13,8 +13,10 @@ import javafx.stage.Stage
 
 class SceneBuilder {
 	
-	def static Scene Scene((Scene)=>void init) {
-		new Scene(new Group) => init
+	def static Scene Scene(Stage parent, (Scene)=>void init) {
+		val scene = new Scene(new Group) => init
+		parent.scene = scene
+		return scene
 	}
 	
 	def static Scene StackedScene(Stage parent, (StackPane)=>void init) {

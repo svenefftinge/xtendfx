@@ -21,7 +21,7 @@ import static extension xtendfx.util.DurationExtensions.*
 		title = "Vanishing Circles"
 		width = 800
 		height = 600
-		scene = Scene [
+		Scene [
 			fill = BLACK
 			children += (0 .. 10).map [
 				new Circle => [
