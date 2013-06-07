@@ -12,9 +12,9 @@ class Bat extends Parent {
 
     public static final int MAX_SIZE = 7
 
-    static final Image LEFT = Config.getImages().get(Config.IMAGE_BAT_LEFT)
-    static final Image CENTER = Config.getImages().get(Config.IMAGE_BAT_CENTER)
-    static final Image RIGHT = Config.getImages().get(Config.IMAGE_BAT_RIGHT)
+    static final Image LEFT = Config.IMAGE_BAT_LEFT
+    static final Image CENTER = Config.IMAGE_BAT_CENTER
+    static final Image RIGHT = Config.IMAGE_BAT_RIGHT
 
     int size
     int width

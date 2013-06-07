@@ -82,88 +82,50 @@ class Config {
         return bonusesImages
     }
 
-    public static final int IMAGE_BACKGROUND = 0
-    public static final int IMAGE_BAT_LEFT = 1
-    public static final int IMAGE_BAT_CENTER = 2
-    public static final int IMAGE_BAT_RIGHT = 3
-    public static final int IMAGE_BALL_0 = 4
-    public static final int IMAGE_BALL_1 = 5
-    public static final int IMAGE_BALL_2 = 6
-    public static final int IMAGE_BALL_3 = 7
-    public static final int IMAGE_BALL_4 = 8
-    public static final int IMAGE_BALL_5 = 9
-    public static final int IMAGE_LOGO = 10
-    public static final int IMAGE_SPLASH_BRICK = 11
-    public static final int IMAGE_SPLASH_BRICKSHADOW = 12
-    public static final int IMAGE_SPLASH_BREAKER = 13
-    public static final int IMAGE_SPLASH_BREAKERSHADOW = 14
-    public static final int IMAGE_SPLASH_PRESSANYKEY = 15
-    public static final int IMAGE_SPLASH_PRESSANYKEYSHADOW = 16
-    public static final int IMAGE_SPLASH_STRIKE = 17
-    public static final int IMAGE_SPLASH_STRIKESHADOW = 18
-    public static final int IMAGE_SPLASH_SUN = 19
-    public static final int IMAGE_READY = 20
-    public static final int IMAGE_GAMEOVER = 21
+    public static val IMAGE_BACKGROUND = image("background.png")
+    public static val IMAGE_BAT_LEFT = image("bat/left.png")
+    public static val IMAGE_BAT_CENTER = image("bat/center.png")
+    public static val IMAGE_BAT_RIGHT = image("bat/right.png")
+    public static val IMAGE_BALL_0 = image("ball/ball0.png")
+    public static val IMAGE_BALL_1 = image("ball/ball1.png")
+    public static val IMAGE_BALL_2 = image("ball/ball2.png")
+    public static val IMAGE_BALL_3 = image("ball/ball3.png")
+    public static val IMAGE_BALL_4 = image("ball/ball4.png")
+    public static val IMAGE_BALL_5 = image("ball/ball5.png")
+    public static val IMAGE_LOGO = image("logo.png")
+    public static val IMAGE_SPLASH_BRICK = image("splash/brick.png")
+    public static val IMAGE_SPLASH_BRICKSHADOW = image("splash/brickshadow.png")
+    public static val IMAGE_SPLASH_BREAKER = image("splash/breaker.png")
+    public static val IMAGE_SPLASH_BREAKERSHADOW = image("splash/breakershadow.png")
+    public static val IMAGE_SPLASH_PRESSANYKEY = image("splash/pressanykey.png")
+    public static val IMAGE_SPLASH_PRESSANYKEYSHADOW = image("splash/pressanykeyshadow.png")
+    public static val IMAGE_SPLASH_STRIKE = image("splash/strike.png")
+    public static val IMAGE_SPLASH_STRIKESHADOW = image("splash/strikeshadow.png")
+    public static val IMAGE_SPLASH_SUN = image("splash/sun.png")
+    public static val IMAGE_READY = image("ready.png")
+    public static val IMAGE_GAMEOVER = image("gameover.png")
 
-    private static final String[] IMAGES_NAMES = #[
-        "background.png",
-        "bat/left.png",
-        "bat/center.png",
-        "bat/right.png",
-        "ball/ball0.png",
-        "ball/ball1.png",
-        "ball/ball2.png",
-        "ball/ball3.png",
-        "ball/ball4.png",
-        "ball/ball5.png",
-        "logo.png",
-        "splash/brick.png",
-        "splash/brickshadow.png",
-        "splash/breaker.png",
-        "splash/breakershadow.png",
-        "splash/pressanykey.png",
-        "splash/pressanykeyshadow.png",
-        "splash/strike.png",
-        "splash/strikeshadow.png",
-        "splash/sun.png",
-        "ready.png",
-        "gameover.png"
-    ]
-
-    static ObservableList<Image> images = FXCollections.<Image>observableArrayList()
-
-    def static ObservableList<Image> getImages() {
-        return images
+    private static def Image image(String imageName) {
+    	loadImage(IMAGE_DIR+imageName)
     }
+
+    private static def Image loadImage(String imagePath) {
+    	val image = new Image(Config.getResourceAsStream(imagePath))
+        if (image.error) {
+            println("Image "+imagePath+" not found")
+        }
+        return image
+    } 
 
     def static void initialize() {
-        for (String imageName : IMAGES_NAMES) {
-            val image = new Image(Config.getResourceAsStream(IMAGE_DIR+imageName))
-            if (image.error) {
-                println("Image "+imageName+" not found")
-            }
-            images += image
-        }
         for (String imageName : BRICKS_IMAGES) {
-            val url = IMAGE_DIR+"brick/"+imageName
-            val image = new Image(Config.getResourceAsStream(url))
-            if (image.isError()) {
-                println("Image "+url+" not found")
-            }
-            bricksImages += image
+            bricksImages += loadImage(IMAGE_DIR+"brick/"+imageName)
         }
         for (String imageName : BONUSES_IMAGES) {
-            val url = IMAGE_DIR+"bonus/"+imageName
-            val image = new Image(Config.getResourceAsStream(url))
-            if (image.error) {
-                println("Image "+url+" not found")
-            }
-            bonusesImages+=image
+            bonusesImages += loadImage(IMAGE_DIR+"bonus/"+imageName)
         }
     }
 
-    private new() {
-        
-    }
+    private new() { }
 	
 }

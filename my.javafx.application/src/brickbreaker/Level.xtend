@@ -419,7 +419,7 @@ class Level extends Parent {
             state = GAME_OVER
             ball.visible = false
             bat.visible = false
-            message.setImage(Config.images.get(Config.IMAGE_GAMEOVER))
+            message.setImage(Config.IMAGE_GAMEOVER)
             message.setTranslateX((Config.FIELD_WIDTH - message.getImage().getWidth()) / 2)
             message.setTranslateY(Config.FIELD_Y +
                 (Config.FIELD_HEIGHT - message.getImage().getHeight()) / 2)
@@ -489,7 +489,7 @@ class Level extends Parent {
         verLine.setImage(new Image(Level.getResourceAsStream(Config.IMAGE_DIR+"vline.png")))
         verLine.setTranslateX(3)
         val logo = new ImageView()
-        logo.setImage(Config.images.get(Config.IMAGE_LOGO))
+        logo.setImage(Config.IMAGE_LOGO)
         logo.setTranslateX(30)
         logo.setTranslateY(30)
 //        Text legend = new Text()
@@ -534,7 +534,7 @@ class Level extends Parent {
         bat.setTranslateY(Config.BAT_Y)
         bat.visible = false
         message = new ImageView()
-        message.setImage(Config.images.get(Config.IMAGE_READY))
+        message.setImage(Config.IMAGE_READY)
         message.setTranslateX((Config.FIELD_WIDTH - message.getImage().getWidth()) / 2)
         message.setTranslateY(Config.FIELD_Y +
             (Config.FIELD_HEIGHT - message.getImage().getHeight()) / 2)
@@ -545,7 +545,7 @@ class Level extends Parent {
         initInfoPanel
         group.children += new ImageView => [
 	        focusTraversable = true
-	        image = Config.images.get(Config.IMAGE_BACKGROUND)
+	        image = Config.IMAGE_BACKGROUND
 	        fitWidth = Config.SCREEN_WIDTH
 	        fitHeight = Config.SCREEN_HEIGHT
 	        onMouseMoved = [moveBat(x - bat.width / 2)]

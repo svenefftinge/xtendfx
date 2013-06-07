@@ -31,7 +31,14 @@ class Ball extends Parent {
 
     def void setSize(int newSize) {
         size = newSize
-        imageView.image = Config.getImages().get(Config.IMAGE_BALL_0 + size)
+        imageView.image = switch newSize {
+        	case 1 : Config.IMAGE_BALL_1
+        	case 2 : Config.IMAGE_BALL_2
+        	case 3 : Config.IMAGE_BALL_3
+        	case 4 : Config.IMAGE_BALL_4
+        	case 5 : Config.IMAGE_BALL_5
+        	default : Config.IMAGE_BALL_0
+        }
         diameter = (imageView.image.width - Config.SHADOW_WIDTH) as int
     }
 

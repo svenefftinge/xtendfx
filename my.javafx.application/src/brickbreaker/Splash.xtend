@@ -112,7 +112,7 @@ class Splash extends Parent {
         initTimeline
         background = new ImageView => [
 	        focusTraversable = true
-	        image = Config.getImages().get(Config.IMAGE_BACKGROUND)
+	        image = Config.IMAGE_BACKGROUND
 	        fitWidth = Config.SCREEN_WIDTH
 	        fitHeight = Config.SCREEN_HEIGHT
 	        onMousePressed = [
@@ -125,30 +125,30 @@ class Splash extends Parent {
         ]
         
         brick = new ImageView => [
-	        image  = Config.getImages().get(Config.IMAGE_SPLASH_BRICK)
+	        image  = Config.IMAGE_SPLASH_BRICK
 	        translateX = -1000
 	        translateY = image.height
         ]
         
         brickShadow = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_BRICKSHADOW)
+	        image = Config.IMAGE_SPLASH_BRICKSHADOW
 	        translateX = -1000        	
         ]
         
         
         breaker = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_BREAKER)
+	        image = Config.IMAGE_SPLASH_BREAKER
 	        translateX = -1000
 	        translateY = brick.translateY + brick.image.height * 5 / 4        	
         ]
         
         breakerShadow = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_BREAKERSHADOW)
+	        image = Config.IMAGE_SPLASH_BREAKERSHADOW
 	        translateX = -1000	
         ]
         
         strike = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_STRIKE)
+	        image = Config.IMAGE_SPLASH_STRIKE
 	        translateY = brick.translateY -
 	            (image.height - brick.image.height) / 2
 	        visible = false        	
@@ -157,24 +157,24 @@ class Splash extends Parent {
         val y = breaker.translateY + breaker.image.height
         
         pressanykey = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_PRESSANYKEY)
+	        image = Config.IMAGE_SPLASH_PRESSANYKEY
 	        translateX = (Config.SCREEN_WIDTH - image.width) / 2
 	        translateY = y + (Config.SCREEN_HEIGHT - y) / 2
         	opacity = 0
         ]
         
         strikeShadow = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_STRIKESHADOW)
+	        image = Config.IMAGE_SPLASH_STRIKESHADOW
 	        translateX = -1000	
         ]
         
         pressanykeyShadow = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_PRESSANYKEYSHADOW)
+	        image = Config.IMAGE_SPLASH_PRESSANYKEYSHADOW
 	        translateX = -1000	
         ]
         
         sun = new ImageView => [
-	        image = Config.getImages().get(Config.IMAGE_SPLASH_SUN)
+	        image = Config.IMAGE_SPLASH_SUN
 	        translateX = -1000        	
         ]
         
