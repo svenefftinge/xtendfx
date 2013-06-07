@@ -4,9 +4,10 @@ import javafx.collections.ObservableList
 import javafx.scene.Group
 import javafx.scene.Node
 import javafx.scene.Scene
-import javafx.scene.layout.Pane
-import javafx.scene.layout.GridPane
 import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.layout.GridPane
+import javafx.scene.layout.Pane
 import javafx.scene.layout.StackPane
 import javafx.stage.Stage
 
@@ -28,6 +29,12 @@ class SceneBuilder {
 		val button = new Button() => init
 		parent.children += button
 		return button
+	}
+	
+	def static Label Label(Pane parent, (Label)=>void init) {
+		val label = new Label() => init
+		parent.children += label
+		return label
 	}
 	
 	def static Scene GridPaneScene((GridPane)=>void init) {
