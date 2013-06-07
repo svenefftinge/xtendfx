@@ -18,6 +18,10 @@ class TimelineExtensions {
 		timeLine.keyFrames.add(new KeyFrame(time, action))
 	}
 	
+	def static at(Timeline timeLine, Duration time, EventHandler<ActionEvent> action, KeyValue... keyValues) {
+		timeLine.keyFrames.add(new KeyFrame(time, action, keyValues))
+	}
+	
 	def static at(Timeline timeLine, Duration time, KeyValue... keyValues) {
 		timeLine.keyFrames.add(new KeyFrame(time, keyValues))
 	}

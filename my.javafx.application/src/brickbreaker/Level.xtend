@@ -1,25 +1,27 @@
 package brickbreaker
 
-import javafx.scene.Parent
 import java.util.ArrayList
-import javafx.scene.Group
-import javafx.scene.image.ImageView
+import javafx.animation.KeyValue
 import javafx.animation.Timeline
-import javafx.scene.input.KeyCode
 import javafx.application.Platform
+import javafx.scene.Group
+import javafx.scene.Parent
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
+import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
-import javafx.scene.image.Image
-import javafx.animation.KeyFrame
-import javafx.util.Duration
-import javafx.animation.KeyValue
+
+import static brickbreaker.Main.*
+
+import static extension xtendfx.animation.TimelineExtensions.*
+import static extension xtendfx.util.DurationExtensions.*
 
 class Level extends Parent {
 
-	private static final double MOB_SCALING = 1.5f
-    private static final MainFrame mainFrame = Main::getMainFrame()
+	static val MOB_SCALING = 1.5f
 
-    private ArrayList<Brick> bricks 
+    ArrayList<Brick> bricks 
     private int brickCount
     private ArrayList<Brick> fadeBricks
     private ArrayList<Bonus> bonuses 
@@ -32,90 +34,87 @@ class Level extends Parent {
     // 1 - ball is catched
     // 2 - playing
     // 3 - game over
-    private static final int STARTING_LEVEL = 0
-    private static final int BALL_CATCHED = 1
-    private static final int PLAYING = 2
-    private static final int GAME_OVER = 3
+    static val STARTING_LEVEL = 0
+    static val BALL_CATCHED = 1
+    static val PLAYING = 2
+    static val GAME_OVER = 3
 
-    private int state
-    private int batDirection
-    private double ballDirX
-    private double ballDirY
-    private int levelNumber
-    private Bat bat
-    private Ball ball
-//    private Text roundCaption
-//    private Text round
-//    private Text scoreCaption
-//    private Text score
-//    private Text livesCaption
-    private ImageView message
-    private Timeline startingTimeline
-    private Timeline timeline
-    private Group infoPanel
+    int state
+    int batDirection
+    double ballDirX
+    double ballDirY
+    int levelNumber
+    Bat bat
+    Ball ball
+//    Text roundCaption
+//    Text round
+//    Text scoreCaption
+//    Text score
+//    Text livesCaption
+    ImageView message
+    Timeline startingTimeline
+    Timeline timeline
+    Group infoPanel
 
     new(int levelNumber) {
-        group = new Group()
-        getChildren().add(group)
+        children += group = new Group 
         initContent(levelNumber)
     }
 	
-	def private void initStartingTimeline() {
-		startingTimeline = new Timeline()
-		val kf1 = new KeyFrame(Duration::millis(500), [
-			message.setVisible(true)
-            state = STARTING_LEVEL
-            bat.setVisible(false)
-            ball.setVisible(false)
-		], new KeyValue(message.opacityProperty(), 0))
-		
-		val kf2 = new KeyFrame(Duration::millis(1500), new KeyValue(message.opacityProperty(), 1))
-		val kf3 = new KeyFrame(Duration::millis(3000), new KeyValue(message.opacityProperty(), 1))
-		val kf4 = new KeyFrame(Duration::millis(4000), [ 
-        	message.setVisible(false)
-
-                bat.setTranslateX((Config::FIELD_WIDTH - bat.getWidth()) / 2.0)
-                ball.setTranslateX((Config::FIELD_WIDTH - ball.getDiameter()) / 2.0)
-                ball.setTranslateY(Config::BAT_Y - ball.getDiameter())
-                ballDirX = (Utils::random(2) * 2 - 1) * Config::BALL_MIN_COORD_SPEED
-                ballDirY = -Config::BALL_MIN_SPEED
-
-                bat.setVisible(true)
-                ball.setVisible(true)
-                state = BALL_CATCHED
-        ], new KeyValue(message.opacityProperty(), 0))
-        startingTimeline.getKeyFrames().addAll(kf1, kf2, kf3, kf4)
+	private def void initStartingTimeline() {
+		startingTimeline = Timeline [
+			at (500.millis, [
+				message.visible = true
+	            state = STARTING_LEVEL
+	            bat.visible = false
+	            ball.visible = false
+			], new KeyValue(message.opacityProperty, 0))
+			
+			at (1500.millis, new KeyValue(message.opacityProperty, 1))
+			at (3000.millis, new KeyValue(message.opacityProperty, 1))
+			at (4000.millis, [ 
+	        	message.visible = false
+	            bat.translateX = (Config.FIELD_WIDTH - bat.width) / 2.0
+	            ball.translateX = (Config.FIELD_WIDTH - ball.diameter) / 2.0
+	            ball.translateY = Config.BAT_Y - ball.diameter
+	            ballDirX = (Utils.random(2) * 2 - 1) * Config.BALL_MIN_COORD_SPEED
+	            ballDirY = -Config.BALL_MIN_SPEED
+	
+	            bat.visible = true
+	            ball.visible = true
+	            state = BALL_CATCHED
+	        ], new KeyValue(message.opacityProperty, 0))
+		]
 	}
 
-    def private void initTimeline() {
-        timeline = new Timeline()
-        timeline.setCycleCount(Timeline::INDEFINITE)
-        val kf = new KeyFrame(Config::ANIMATION_TIME,
-        	[ e |
+    private def void initTimeline() {
+        timeline = Timeline [
+        	cycleCount = Timeline.INDEFINITE
+        	at (Config.ANIMATION_TIME, [
         		// Process fadeBricks
                 val brickIterator = fadeBricks.iterator()
-                while (brickIterator.hasNext()) {
-                    val brick = brickIterator.next()
-                    brick.setOpacity(brick.getOpacity() - 0.1)
-                    if (brick.getOpacity() <= 0) {
-                        brick.setVisible(false)
-                        brickIterator.remove()
+                while (brickIterator.hasNext) {
+                    val brick = brickIterator.next
+                    brick.opacity = brick.opacity - 0.1
+                    if (brick.opacity <= 0) {
+                        brick.visible = false
+                        brickIterator.remove
                     }
                 }
                 // Move bat if needed
                 if (batDirection != 0 && state != STARTING_LEVEL) {
-                    moveBat(bat.getTranslateX() + batDirection)
+                    moveBat(bat.translateX + batDirection)
                 }
                 // Process bonuses
-                val bonusIterator = bonuses.iterator()
-                while (bonusIterator.hasNext()) {
-                    val bonus = bonusIterator.next()
-                    if (bonus.getTranslateY() > Config::SCREEN_HEIGHT) {
-                        bonus.setVisible(false)
+                val bonusIterator = bonuses.iterator
+                while (bonusIterator.hasNext) {
+                    val bonus = bonusIterator.next
+                    if (bonus.getTranslateY() > Config.SCREEN_HEIGHT) {
+                        bonus.visible = false
                         bonusIterator.remove()
                         group.getChildren().remove(bonus)
                     } else {
-                        bonus.setTranslateY(bonus.getTranslateY() + Config::BONUS_SPEED)
+                        bonus.setTranslateY(bonus.getTranslateY() + Config.BONUS_SPEED)
                         if (bonus.getTranslateX() + bonus.getWidth() > bat.getTranslateX() &&
                                 bonus.getTranslateX() < bat.getTranslateX() + bat.getWidth() &&
                                 bonus.getTranslateY() + bonus.getHeight() > bat.getTranslateY() &&
@@ -123,45 +122,45 @@ class Level extends Parent {
                             // Bonus is catched
                             updateScore(100)
                             catchedBonus = bonus.getType()
-                            bonus.setVisible(false)
+                            bonus.visible = false
                             bonusIterator.remove()
                             group.getChildren().remove(bonus)
-                            if (bonus.getType() == Bonus::TYPE_SLOW) {
+                            if (bonus.getType() == Bonus.TYPE_SLOW) {
                                 ballDirX = ballDirX / 1.5
                                 ballDirY = ballDirY / 1.5
                                 correctBallSpeed()
-                            } else if (bonus.getType() == Bonus::TYPE_FAST) {
+                            } else if (bonus.getType() == Bonus.TYPE_FAST) {
                                 ballDirX = ballDirX * 1.5
                                 ballDirY = ballDirY * 1.5
                                 correctBallSpeed()
-                            } else if (bonus.getType() == Bonus::TYPE_GROW_BAT) {
-                                if (bat.getSize() < Bat::MAX_SIZE) {
+                            } else if (bonus.getType() == Bonus.TYPE_GROW_BAT) {
+                                if (bat.getSize() < Bat.MAX_SIZE) {
                                     bat.size = bat.size + 1
-                                    if (bat.getTranslateX() + bat.getWidth() > Config::FIELD_WIDTH) {
-                                        bat.setTranslateX(Config::FIELD_WIDTH - bat.getWidth())
+                                    if (bat.getTranslateX() + bat.getWidth() > Config.FIELD_WIDTH) {
+                                        bat.setTranslateX(Config.FIELD_WIDTH - bat.getWidth())
                                     }
                                 }
-                            } else if (bonus.getType() == Bonus::TYPE_REDUCE_BAT) {
+                            } else if (bonus.getType() == Bonus.TYPE_REDUCE_BAT) {
                                 if (bat.getSize() > 0) {
                                     val oldWidth = bat.getWidth()
                                     bat.size = bat.size - 1
                                     bat.setTranslateX(bat.getTranslateX() + ((oldWidth - bat.getWidth()) / 2))
                                 }
-                            } else if (bonus.getType() == Bonus::TYPE_GROW_BALL) {
-                                if (ball.getSize() < Ball::MAX_SIZE) {
+                            } else if (bonus.getType() == Bonus.TYPE_GROW_BALL) {
+                                if (ball.getSize() < Ball.MAX_SIZE) {
                                     ball.size = ball.getSize() + 1
                                     if (state == BALL_CATCHED) {
-                                        ball.setTranslateY(Config::BAT_Y - ball.getDiameter())
+                                        ball.setTranslateY(Config.BAT_Y - ball.getDiameter())
                                     }
                                 }
-                            } else if (bonus.getType() == Bonus::TYPE_REDUCE_BALL) {
+                            } else if (bonus.getType() == Bonus.TYPE_REDUCE_BALL) {
                                 if (ball.getSize() > 0) {
                                     ball.size = ball.getSize() - 1
                                     if (state == BALL_CATCHED) {
-                                        ball.setTranslateY(Config::BAT_Y - ball.getDiameter())
+                                        ball.setTranslateY(Config.BAT_Y - ball.getDiameter())
                                     }
                                 }
-                            } else if (bonus.getType() == Bonus::TYPE_LIFE) {
+                            } else if (bonus.getType() == Bonus.TYPE_LIFE) {
                                 mainFrame.increaseLives()
                                 updateLives()
                             }
@@ -179,50 +178,50 @@ class Level extends Parent {
                     newX = -newX
                     inverseX = true
                 }
-                val BALL_MAX_X = Config::FIELD_WIDTH - ball.getDiameter()
+                val BALL_MAX_X = Config.FIELD_WIDTH - ball.getDiameter()
                 if (newX > BALL_MAX_X) {
                     newX = BALL_MAX_X - (newX - BALL_MAX_X)
                     inverseX = true
                 }
-                if (newY < Config::FIELD_Y) {
-                    newY = 2 * Config::FIELD_Y - newY
+                if (newY < Config.FIELD_Y) {
+                    newY = 2 * Config.FIELD_Y - newY
                     inverseY = true
                 }
                 // Determine hit bat and ball
                 if (ballDirY > 0 &&
-                        ball.getTranslateY() + ball.getDiameter() < Config::BAT_Y &&
-                        newY + ball.getDiameter() >= Config::BAT_Y &&
+                        ball.getTranslateY() + ball.getDiameter() < Config.BAT_Y &&
+                        newY + ball.getDiameter() >= Config.BAT_Y &&
                         newX >= bat.getTranslateX() - ball.getDiameter() &&
                         newX < bat.getTranslateX() + bat.getWidth() + ball.getDiameter()) {
                     inverseY = true
                     // Speed up ball
-                    val speed = Math::sqrt(ballDirX * ballDirX + ballDirY * ballDirY)
-                    ballDirX = ballDirX * (speed + Config::BALL_SPEED_INC) / speed
-                    ballDirY = ballDirY * (speed + Config::BALL_SPEED_INC) / speed
+                    val speed = Math.sqrt(ballDirX * ballDirX + ballDirY * ballDirY)
+                    ballDirX = ballDirX * (speed + Config.BALL_SPEED_INC) / speed
+                    ballDirY = ballDirY * (speed + Config.BALL_SPEED_INC) / speed
                     // Correct ballDirX and ballDirY
                     val offsetX = newX + ball.getDiameter() / 2 - bat.getTranslateX() - bat.getWidth() / 2
                     // Don't change direction if center of bat was used
-                    if (Math::abs(offsetX) > bat.getWidth() / 4) {
+                    if (Math.abs(offsetX) > bat.getWidth() / 4) {
                         ballDirX = ballDirX + offsetX / 5
-                        val MAX_COORD_SPEED = Math::sqrt(speed * speed -
-                            Config::BALL_MIN_COORD_SPEED * Config::BALL_MIN_COORD_SPEED)
-                        if (Math::abs(ballDirX) > MAX_COORD_SPEED) {
-                            ballDirX = Utils::sign(ballDirX) * MAX_COORD_SPEED
+                        val MAX_COORD_SPEED = Math.sqrt(speed * speed -
+                            Config.BALL_MIN_COORD_SPEED * Config.BALL_MIN_COORD_SPEED)
+                        if (Math.abs(ballDirX) > MAX_COORD_SPEED) {
+                            ballDirX = Utils.sign(ballDirX) * MAX_COORD_SPEED
                         }
-                        ballDirY = Utils::sign(ballDirY) *
-                            Math::sqrt(speed * speed - ballDirX * ballDirX)
+                        ballDirY = Utils.sign(ballDirY) *
+                            Math.sqrt(speed * speed - ballDirX * ballDirX)
                     }
                     correctBallSpeed()
-                    if (catchedBonus == Bonus::TYPE_CATCH) {
-                        newY = Config::BAT_Y - ball.getDiameter()
+                    if (catchedBonus == Bonus.TYPE_CATCH) {
+                        newY = Config.BAT_Y - ball.getDiameter()
                         state = BALL_CATCHED
                     }
                 }
                 // Determine hit ball and brick
-                var firstCol = (newX / Config::BRICK_WIDTH) as int
-                var secondCol = ((newX + ball.getDiameter()) / Config::BRICK_WIDTH) as int
-                var firstRow = ((newY - Config::FIELD_Y) / Config::BRICK_HEIGHT) as int
-                var secondRow = ((newY - Config::FIELD_Y + ball.getDiameter()) / Config::BRICK_HEIGHT) as int
+                var firstCol = (newX / Config.BRICK_WIDTH) as int
+                var secondCol = ((newX + ball.getDiameter()) / Config.BRICK_WIDTH) as int
+                var firstRow = ((newY - Config.FIELD_Y) / Config.BRICK_HEIGHT) as int
+                var secondRow = ((newY - Config.FIELD_Y + ball.getDiameter()) / Config.BRICK_HEIGHT) as int
                 if (ballDirX > 0) {
                     val temp = secondCol
                     secondCol = firstCol
@@ -237,14 +236,14 @@ class Level extends Parent {
                 val horBrick = getBrick(secondRow, firstCol)
                 if (vertBrick != null) {
                     kickBrick(firstRow, secondCol)
-                    if (catchedBonus != Bonus::TYPE_STRIKE) {
+                    if (catchedBonus != Bonus.TYPE_STRIKE) {
                         inverseY = true
                     }
                 }
                 if (horBrick != null &&
                         (firstCol != secondCol || firstRow != secondRow)) {
                     kickBrick(secondRow, firstCol)
-                    if (catchedBonus != Bonus::TYPE_STRIKE) {
+                    if (catchedBonus != Bonus.TYPE_STRIKE) {
                         inverseX = true
                     }
                 }
@@ -254,26 +253,26 @@ class Level extends Parent {
                             diagBrick != horBrick) {
                         kickBrick(firstRow, firstCol)
                         if (vertBrick == null && horBrick == null &&
-                                catchedBonus != Bonus::TYPE_STRIKE) {
+                                catchedBonus != Bonus.TYPE_STRIKE) {
                             inverseX = true
                             inverseY = true
                         }
                     }
                 }
-                ball.setTranslateX(newX)
-                ball.setTranslateY(newY)
+                ball.translateX = newX
+                ball.translateY = newY
                 if (inverseX) {
                     ballDirX = - ballDirX
                 }
                 if (inverseY) {
                     ballDirY = - ballDirY
                 }
-                if (ball.getTranslateY() > Config::SCREEN_HEIGHT) {
+                if (ball.getTranslateY() > Config.SCREEN_HEIGHT) {
                     // Ball was lost
-                    lostLife()
+                    lostLife
                 }
         	])
-        timeline.getKeyFrames().add(kf)
+        ]
     }
 
     def void start() {
@@ -290,18 +289,18 @@ class Level extends Parent {
     }
 
     def private void initLevel() {
-        val level = LevelData::getLevelData(levelNumber)
+        val level = LevelData.getLevelData(levelNumber)
         for (row: 0 ..< level.length) {
-            for (col : 0 ..< Config::FIELD_BRICK_IN_ROW) {
+            for (col : 0 ..< Config.FIELD_BRICK_IN_ROW) {
                 val rowString = level.get(row)
                 var Brick brick = null
                 if (rowString != null && col < rowString.length()) {
                     val type = rowString.substring(col, col + 1)
                     if (!type.equals(" ")) {
-                        brick = new Brick(Brick::getBrickType(type))
-                        brick.setTranslateX(col * Config::BRICK_WIDTH)
-                        brick.setTranslateY(Config::FIELD_Y + row * Config::BRICK_HEIGHT)
-                        if (brick.getType() != Brick::TYPE_GREY) {
+                        brick = new Brick(Brick.getBrickType(type))
+                        brick.setTranslateX(col * Config.BRICK_WIDTH)
+                        brick.setTranslateY(Config.FIELD_Y + row * Config.BRICK_HEIGHT)
+                        if (brick.getType() != Brick.TYPE_GREY) {
                             brickCount = brickCount + 1
                         }
                     }
@@ -312,8 +311,8 @@ class Level extends Parent {
     }
 
     def private Brick getBrick(int row, int col) {
-        val i = row * Config::FIELD_BRICK_IN_ROW + col
-        if (col < 0 || col >= Config::FIELD_BRICK_IN_ROW || row < 0 || i >= bricks.size()) {
+        val i = row * Config.FIELD_BRICK_IN_ROW + col
+        if (col < 0 || col >= Config.FIELD_BRICK_IN_ROW || row < 0 || i >= bricks.size()) {
             return null
         } else {
             return bricks.get(i)
@@ -330,15 +329,15 @@ class Level extends Parent {
         if (x < 0) {
             x = 0
         }
-        if (x + bat.getWidth() > Config::FIELD_WIDTH) {
-            x = Config::FIELD_WIDTH - bat.getWidth()
+        if (x + bat.getWidth() > Config.FIELD_WIDTH) {
+            x = Config.FIELD_WIDTH - bat.getWidth()
         }
         if (state == BALL_CATCHED) {
             var ballX = ball.getTranslateX() + x - bat.getTranslateX()
             if (ballX < 0) {
                 ballX = 0
             }
-            var BALL_MAX_X = Config::FIELD_WIDTH - ball.getDiameter()
+            var BALL_MAX_X = Config.FIELD_WIDTH - ball.getDiameter()
             if (ballX > BALL_MAX_X) {
                 ballX = BALL_MAX_X
             }
@@ -349,23 +348,23 @@ class Level extends Parent {
 
     def private void kickBrick(int row, int col) {
         val brick = getBrick(row, col)
-        if (brick == null || (catchedBonus != Bonus::TYPE_STRIKE && !brick.kick())) {
+        if (brick == null || (catchedBonus != Bonus.TYPE_STRIKE && !brick.kick())) {
             return
         }
         updateScore(10)
-        if (brick.getType() != Brick::TYPE_GREY) {
+        if (brick.getType() != Brick.TYPE_GREY) {
             brickCount = brickCount - 1
             if (brickCount == 0) {
                 mainFrame.changeState(mainFrame.getState() + 1)
             }
         }
-        bricks.set(row * Config::FIELD_BRICK_IN_ROW + col, null)
+        bricks.set(row * Config.FIELD_BRICK_IN_ROW + col, null)
         fadeBricks.add(brick)
-        if (Utils::random(8) == 0 && bonuses.size() < 5) {
-            val bonus = new Bonus(Utils::random(Bonus::COUNT))
+        if (Utils.random(8) == 0 && bonuses.size() < 5) {
+            val bonus = new Bonus(Utils.random(Bonus.COUNT))
             bonus.setTranslateY(brick.getTranslateY())
             bonus.setVisible(true)
-            bonus.setTranslateX(brick.getTranslateX() + (Config::BRICK_WIDTH - bonus.getWidth()) / 2)
+            bonus.setTranslateX(brick.getTranslateX() + (Config.BRICK_WIDTH - bonus.getWidth()) / 2)
             group.getChildren().add(bonus)
             bonuses.add(bonus)
         }
@@ -381,8 +380,8 @@ class Level extends Parent {
         val maxVisibleLifes = 9
         val scale = 0.8
 
-        for (life : lives.size() ..< Math::min(mainFrame.getLifeCount(), maxVisibleLifes)) {
-            val lifeBonus = new Bonus(Bonus::TYPE_LIFE)
+        for (life : lives.size() ..< Math.min(mainFrame.getLifeCount(), maxVisibleLifes)) {
+            val lifeBonus = new Bonus(Bonus.TYPE_LIFE)
             lifeBonus.setScaleX(scale)
             lifeBonus.setScaleY(scale)
             lifeBonus.setTranslateX(57.0 + (life % 3) * lifeBonus.getWidth())
@@ -394,23 +393,23 @@ class Level extends Parent {
     }
 
     def private void correctBallSpeed() {
-        var speed = Math::sqrt(ballDirX * ballDirX + ballDirY * ballDirY)
-        if (speed > Config::BALL_MAX_SPEED) {
-            ballDirX = ballDirX * Config::BALL_MAX_SPEED / speed
-            ballDirY = ballDirY * Config::BALL_MAX_SPEED / speed
-            speed = Config::BALL_MAX_SPEED
+        var speed = Math.sqrt(ballDirX * ballDirX + ballDirY * ballDirY)
+        if (speed > Config.BALL_MAX_SPEED) {
+            ballDirX = ballDirX * Config.BALL_MAX_SPEED / speed
+            ballDirY = ballDirY * Config.BALL_MAX_SPEED / speed
+            speed = Config.BALL_MAX_SPEED
         }
-        if (speed < Config::BALL_MIN_SPEED) {
-            ballDirX = ballDirX * Config::BALL_MIN_SPEED / speed
-            ballDirY = ballDirY * Config::BALL_MIN_SPEED / speed
-            speed = Config::BALL_MIN_SPEED
+        if (speed < Config.BALL_MIN_SPEED) {
+            ballDirX = ballDirX * Config.BALL_MIN_SPEED / speed
+            ballDirY = ballDirY * Config.BALL_MIN_SPEED / speed
+            speed = Config.BALL_MIN_SPEED
         }
-        if (Math::abs(ballDirX) < Config::BALL_MIN_COORD_SPEED) {
-            ballDirX = Utils::sign(ballDirX) * Config::BALL_MIN_COORD_SPEED
-            ballDirY = Utils::sign(ballDirY) * Math::sqrt(speed * speed - ballDirX * ballDirX)
-        } else if (Math::abs(ballDirY) < Config::BALL_MIN_COORD_SPEED) {
-            ballDirY = Utils::sign(ballDirY) * Config::BALL_MIN_COORD_SPEED
-            ballDirX = Utils::sign(ballDirX) * Math::sqrt(speed * speed - ballDirY * ballDirY)
+        if (Math.abs(ballDirX) < Config.BALL_MIN_COORD_SPEED) {
+            ballDirX = Utils.sign(ballDirX) * Config.BALL_MIN_COORD_SPEED
+            ballDirY = Utils.sign(ballDirY) * Math.sqrt(speed * speed - ballDirX * ballDirX)
+        } else if (Math.abs(ballDirY) < Config.BALL_MIN_COORD_SPEED) {
+            ballDirY = Utils.sign(ballDirY) * Config.BALL_MIN_COORD_SPEED
+            ballDirX = Utils.sign(ballDirX) * Math.sqrt(speed * speed - ballDirY * ballDirY)
         }
     }
 
@@ -418,25 +417,25 @@ class Level extends Parent {
         mainFrame.decreaseLives()
         if (mainFrame.getLifeCount() < 0) {
             state = GAME_OVER
-            ball.setVisible(false)
-            bat.setVisible(false)
-            message.setImage(Config::getImages().get(Config::IMAGE_GAMEOVER))
-            message.setTranslateX((Config::FIELD_WIDTH - message.getImage().getWidth()) / 2)
-            message.setTranslateY(Config::FIELD_Y +
-                (Config::FIELD_HEIGHT - message.getImage().getHeight()) / 2)
+            ball.visible = false
+            bat.visible = false
+            message.setImage(Config.images.get(Config.IMAGE_GAMEOVER))
+            message.setTranslateX((Config.FIELD_WIDTH - message.getImage().getWidth()) / 2)
+            message.setTranslateY(Config.FIELD_Y +
+                (Config.FIELD_HEIGHT - message.getImage().getHeight()) / 2)
             message.setVisible(true)
             message.setOpacity(1)
         } else {
             updateLives()
-            bat.size = Bat::DEFAULT_SIZE
-            ball.size = Ball::DEFAULT_SIZE
-            bat.setTranslateX((Config::FIELD_WIDTH - bat.getWidth()) / 2)
-            ball.setTranslateX(Config::FIELD_WIDTH / 2 - ball.getDiameter() / 2)
-            ball.setTranslateY(Config::BAT_Y - ball.getDiameter())
+            bat.size = Bat.DEFAULT_SIZE
+            ball.size = Ball.DEFAULT_SIZE
+            bat.setTranslateX((Config.FIELD_WIDTH - bat.getWidth()) / 2)
+            ball.setTranslateX(Config.FIELD_WIDTH / 2 - ball.getDiameter() / 2)
+            ball.setTranslateY(Config.BAT_Y - ball.getDiameter())
             state = BALL_CATCHED
             catchedBonus = 0
-            ballDirX = (Utils::random(2) * 2 - 1) * Config::BALL_MIN_COORD_SPEED
-            ballDirY = - Config::BALL_MIN_SPEED
+            ballDirX = (Utils.random(2) * 2 - 1) * Config.BALL_MIN_COORD_SPEED
+            ballDirY = - Config.BALL_MIN_SPEED
         }
     }
 
@@ -480,17 +479,17 @@ class Level extends Parent {
 //        livesCaption.setFill(Color.rgb(51, 102, 51))
 //        livesCaption.setTextOrigin(VPos.TOP)
 //        livesCaption.setFont(f)
-        val INFO_LEGEND_COLOR = Color::rgb(0, 114, 188)
-        val infoWidth = Config::SCREEN_WIDTH - Config::FIELD_WIDTH
+//        val INFO_LEGEND_COLOR = Color.rgb(0, 114, 188)
+        val infoWidth = Config.SCREEN_WIDTH - Config.FIELD_WIDTH
         val black = new Rectangle()
         black.setWidth(infoWidth)
-        black.setHeight(Config::SCREEN_HEIGHT)
-        black.setFill(Color::BLACK)
+        black.setHeight(Config.SCREEN_HEIGHT)
+        black.setFill(Color.BLACK)
         val verLine = new ImageView()
-        verLine.setImage(new Image(typeof(Level).getResourceAsStream(Config::IMAGE_DIR+"vline.png")))
+        verLine.setImage(new Image(typeof(Level).getResourceAsStream(Config.IMAGE_DIR+"vline.png")))
         verLine.setTranslateX(3)
         val logo = new ImageView()
-        logo.setImage(Config::getImages().get(Config::IMAGE_LOGO))
+        logo.setImage(Config.images.get(Config.IMAGE_LOGO))
         logo.setTranslateX(30)
         logo.setTranslateY(30)
 //        Text legend = new Text()
@@ -502,7 +501,7 @@ class Level extends Parent {
 //        legend.setFont(new Font("Impact", 18))
         infoPanel.getChildren().addAll(black, verLine, logo/*, roundCaption,
                 round, scoreCaption, score, livesCaption, legend*/)
-        for (i : 0 ..< Bonus::COUNT) {
+        for (i : 0 ..< Bonus.COUNT) {
             val bonus = new Bonus(i)
 //            Text text = new Text()
 //            text.setTranslateX(100)
@@ -517,7 +516,7 @@ class Level extends Parent {
             // Workaround JFXC-2379
             infoPanel.getChildren().addAll(bonus) //, text)
         }
-        infoPanel.setTranslateX(Config::FIELD_WIDTH)
+        infoPanel.setTranslateX(Config.FIELD_WIDTH)
     }
 
     def private void initContent(int level) {
@@ -530,78 +529,78 @@ class Level extends Parent {
         fadeBricks = new ArrayList<Brick>()
         bonuses = new ArrayList<Bonus>()
         ball = new Ball()
-        ball.setVisible(false)
+        ball.visible = false
         bat = new Bat()
-        bat.setTranslateY(Config::BAT_Y)
-        bat.setVisible(false)
+        bat.setTranslateY(Config.BAT_Y)
+        bat.visible = false
         message = new ImageView()
-        message.setImage(Config::getImages().get(Config::IMAGE_READY))
-        message.setTranslateX((Config::FIELD_WIDTH - message.getImage().getWidth()) / 2)
-        message.setTranslateY(Config::FIELD_Y +
-            (Config::FIELD_HEIGHT - message.getImage().getHeight()) / 2)
-        message.setVisible(false)
-        initLevel()
-        initStartingTimeline()
-        initTimeline()
-        initInfoPanel()
-        val background = new ImageView()
-        background.setFocusTraversable(true)
-        background.setImage(Config::getImages().get(Config::IMAGE_BACKGROUND))
-        background.setFitWidth(Config::SCREEN_WIDTH)
-        background.setFitHeight(Config::SCREEN_HEIGHT)
-        background.setOnMouseMoved([me | moveBat(me.getX() - bat.getWidth() / 2)])
-        background.setOnMouseDragged([me | moveBat(me.getX() - bat.getWidth() / 2)])
-        background.setOnMousePressed([me |
-        	if (state == PLAYING) {
+        message.setImage(Config.images.get(Config.IMAGE_READY))
+        message.setTranslateX((Config.FIELD_WIDTH - message.getImage().getWidth()) / 2)
+        message.setTranslateY(Config.FIELD_Y +
+            (Config.FIELD_HEIGHT - message.getImage().getHeight()) / 2)
+        message.visible = false
+        initLevel
+        initStartingTimeline
+        initTimeline
+        initInfoPanel
+        group.children += new ImageView => [
+	        focusTraversable = true
+	        image = Config.images.get(Config.IMAGE_BACKGROUND)
+	        fitWidth = Config.SCREEN_WIDTH
+	        fitHeight = Config.SCREEN_HEIGHT
+	        onMouseMoved = [moveBat(x - bat.width / 2)]
+	        onMouseDragged = [moveBat(x - bat.width / 2)]
+	        onMousePressed = [
+	        	if (state == PLAYING) {
                     // Support touch-only devices like some mobile phones
-                    moveBat(me.getX() - bat.getWidth() / 2)
+                    moveBat(x - bat.width / 2)
                 }
                 if (state == BALL_CATCHED) {
                     state = PLAYING
                 }
                 if (state == GAME_OVER) {
-                    mainFrame.changeState(MainFrame::SPLASH)
+                    mainFrame.changeState(MainFrame.SPLASH)
                 }
-        ])
-        background.setOnKeyPressed([ke |
-        	if ((ke.getCode() == KeyCode::POWER) || (ke.getCode() == KeyCode::X)) {
-                    Platform::exit()
+	        ]
+	        onKeyPressed = [
+	        	if ((code === KeyCode.POWER) || (code === KeyCode.X)) {
+                    Platform.exit
                 }
-                if (state == BALL_CATCHED && (ke.getCode() == KeyCode::SPACE ||
-                        ke.getCode() == KeyCode::ENTER || ke.getCode() == KeyCode::PLAY)) {
+                if (state == BALL_CATCHED && (code == KeyCode.SPACE ||
+                        code == KeyCode.ENTER || code == KeyCode.PLAY)) {
                     state = PLAYING
                 }
                 if (state == GAME_OVER) {
-                    mainFrame.changeState(MainFrame::SPLASH)
+                    mainFrame.changeState(MainFrame.SPLASH)
                 }
-                if (state == PLAYING && ke.getCode() == KeyCode::Q) {
+                if (state == PLAYING && code == KeyCode.Q) {
                     // Lost life
                     lostLife()
                     return
                 }
-                if ((ke.getCode() == KeyCode::LEFT || ke.getCode() == KeyCode::TRACK_PREV)) {
-                    batDirection = - Config::BAT_SPEED
+                if ((code == KeyCode.LEFT || code == KeyCode.TRACK_PREV)) {
+                    batDirection = - Config.BAT_SPEED
                 }
-                if ((ke.getCode() == KeyCode::RIGHT || ke.getCode() == KeyCode::TRACK_NEXT)) {
-                    batDirection = Config::BAT_SPEED
+                if ((code == KeyCode.RIGHT || code == KeyCode.TRACK_NEXT)) {
+                    batDirection = Config.BAT_SPEED
                 }
-        ])
-        background.setOnKeyReleased([ke |
-        	if (ke.getCode() == KeyCode::LEFT || ke.getCode() == KeyCode::RIGHT ||
-                    ke.getCode() == KeyCode::TRACK_PREV || ke.getCode() == KeyCode::TRACK_NEXT) {
+	        ]
+	        onKeyReleased = [
+	        	if (code == KeyCode.LEFT || code == KeyCode.RIGHT ||
+                    code == KeyCode.TRACK_PREV || code == KeyCode.TRACK_NEXT) {
                     batDirection = 0
                 }
-        ])
-        group.getChildren().add(background)
-        for (row : 0 ..< bricks.size()/Config::FIELD_BRICK_IN_ROW) {
-            for (col : 0 ..< Config::FIELD_BRICK_IN_ROW) {
+	        ]
+        ]
+        for (row : 0 ..< bricks.size()/Config.FIELD_BRICK_IN_ROW) {
+            for (col : 0 ..< Config.FIELD_BRICK_IN_ROW) {
                 val b = getBrick(row, col)
                 if (b != null) { //tmp
-                    group.getChildren().add(b)
+                    group.children += b
                 }
             }
         }
 
-        group.getChildren().addAll(message, ball, bat, infoPanel)
+        group.children.addAll(message, ball, bat, infoPanel)
     }
 }
