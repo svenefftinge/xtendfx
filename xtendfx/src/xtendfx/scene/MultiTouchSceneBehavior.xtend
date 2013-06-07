@@ -56,14 +56,14 @@ class MultiTouchSceneBehavior {
 		rotateHandler = [
 			paneTransform.rotate(angle, sceneX, sceneY)
 		]
-		scene.addEventHandler(ZoomEvent::ZOOM_STARTED, zoomStartHandler)
-		scene.addEventHandler(ZoomEvent::ZOOM, zoomHandler)
-		scene.addEventHandler(ZoomEvent::ZOOM_FINISHED, zoomHandler)
-		scene.addEventHandler(ScrollEvent::SCROLL, scrollHandler)
-		scene.addEventHandler(ScrollEvent::SCROLL_FINISHED, scrollHandler)
-		scene.addEventHandler(RotateEvent::ROTATION_STARTED, rotateHandler)
-		scene.addEventHandler(RotateEvent::ROTATE, rotateHandler)
-		scene.addEventHandler(RotateEvent::ROTATION_FINISHED, rotateHandler)
+		scene.addEventHandler(ZoomEvent.ZOOM_STARTED, zoomStartHandler)
+		scene.addEventHandler(ZoomEvent.ZOOM, zoomHandler)
+		scene.addEventHandler(ZoomEvent.ZOOM_FINISHED, zoomHandler)
+		scene.addEventHandler(ScrollEvent.SCROLL, scrollHandler)
+		scene.addEventHandler(ScrollEvent.SCROLL_FINISHED, scrollHandler)
+		scene.addEventHandler(RotateEvent.ROTATION_STARTED, rotateHandler)
+		scene.addEventHandler(RotateEvent.ROTATE, rotateHandler)
+		scene.addEventHandler(RotateEvent.ROTATION_FINISHED, rotateHandler)
 	}
 }
 
