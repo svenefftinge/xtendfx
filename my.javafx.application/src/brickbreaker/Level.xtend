@@ -486,7 +486,7 @@ class Level extends Parent {
         black.setHeight(Config.SCREEN_HEIGHT)
         black.setFill(Color.BLACK)
         val verLine = new ImageView()
-        verLine.setImage(new Image(typeof(Level).getResourceAsStream(Config.IMAGE_DIR+"vline.png")))
+        verLine.setImage(new Image(Level.getResourceAsStream(Config.IMAGE_DIR+"vline.png")))
         verLine.setTranslateX(3)
         val logo = new ImageView()
         logo.setImage(Config.images.get(Config.IMAGE_LOGO))

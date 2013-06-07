@@ -7,7 +7,7 @@ import javafx.collections.FXCollections
 
 class Config {
 	
-    public static final Duration ANIMATION_TIME = Duration::millis(40)
+    public static final Duration ANIMATION_TIME = Duration.millis(40)
     public static final int MAX_LIVES = 9
     // Screen info
     public static final int FIELD_BRICK_IN_ROW = 15
@@ -58,7 +58,7 @@ class Config {
         "yellow.png"
     ]
 
-    static ObservableList<Image> bricksImages = FXCollections::<Image>observableArrayList()
+    static ObservableList<Image> bricksImages = FXCollections.<Image>observableArrayList()
 
     def static ObservableList<Image> getBricksImages() {
         return bricksImages
@@ -76,7 +76,7 @@ class Config {
         "extralife.png"
     ]
 
-    static ObservableList<Image> bonusesImages = FXCollections::<Image>observableArrayList()
+    static ObservableList<Image> bonusesImages = FXCollections.<Image>observableArrayList()
 
     def static ObservableList<Image> getBonusesImages() {
         return bonusesImages
@@ -130,7 +130,7 @@ class Config {
         "gameover.png"
     ]
 
-    static ObservableList<Image> images = FXCollections::<Image>observableArrayList()
+    static ObservableList<Image> images = FXCollections.<Image>observableArrayList()
 
     def static ObservableList<Image> getImages() {
         return images
@@ -138,7 +138,7 @@ class Config {
 
     def static void initialize() {
         for (String imageName : IMAGES_NAMES) {
-            val image = new Image(typeof(Config).getResourceAsStream(IMAGE_DIR+imageName))
+            val image = new Image(Config.getResourceAsStream(IMAGE_DIR+imageName))
             if (image.error) {
                 println("Image "+imageName+" not found")
             }
@@ -146,7 +146,7 @@ class Config {
         }
         for (String imageName : BRICKS_IMAGES) {
             val url = IMAGE_DIR+"brick/"+imageName
-            val image = new Image(typeof(Config).getResourceAsStream(url))
+            val image = new Image(Config.getResourceAsStream(url))
             if (image.isError()) {
                 println("Image "+url+" not found")
             }
@@ -154,7 +154,7 @@ class Config {
         }
         for (String imageName : BONUSES_IMAGES) {
             val url = IMAGE_DIR+"bonus/"+imageName
-            val image = new Image(typeof(Config).getResourceAsStream(url))
+            val image = new Image(Config.getResourceAsStream(url))
             if (image.error) {
                 println("Image "+url+" not found")
             }

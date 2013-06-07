@@ -3,7 +3,7 @@ package xtendfx.properties
 import java.lang.reflect.Modifier
 import javafx.beans.property.SimpleStringProperty
 import org.eclipse.xtend.core.compiler.batch.XtendCompilerTester
-import org.eclipse.xtext.xbase.lib.Functions$Function0
+import org.eclipse.xtext.xbase.lib.Functions.Function0
 import org.junit.Test
 import xtendfx.beans.FXBindable
 
@@ -11,7 +11,7 @@ import static org.junit.Assert.*
 
 class FXBindableTest {
 	
-	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXBindable), typeof(ValueObject), typeof(SimpleStringProperty), typeof(Function0))
+	static extension XtendCompilerTester compiler = XtendCompilerTester.newXtendCompilerTester(FXBindable, ValueObject, SimpleStringProperty, Function0)
 	
 	@Test def testAgainstCompiledClass() {
 		'''
@@ -26,14 +26,14 @@ class FXBindableTest {
 				String StringType
 				boolean booleanType
 				Currency currency
-				@Readonly Currency currencyReadOnly = Currency::getInstance("EUR")
-				@NoneLazy Currency currencyGreedy = Currency::getInstance("EUR")
+				@Readonly Currency currencyReadOnly = Currency.getInstance("EUR")
+				@NoneLazy Currency currencyGreedy = Currency.getInstance("EUR")
 				ValueObject valueObject
 			}
 		'''.compile [
 			compiledClass.getDeclaredField("stringTypeWithDefaultProperty") => [
-				assertEquals(typeof(SimpleStringProperty), type)
-				assertTrue(Modifier::isPrivate(modifiers))
+				assertEquals(SimpleStringProperty, type)
+				assertTrue(Modifier.isPrivate(modifiers))
 			]
 		]
 	}
@@ -131,7 +131,7 @@ class FXBindableTest {
 			
 			@FXBindable class MyBean {
 				@Readonly @Immutable Currency currency
-				@Readonly @Immutable Currency currencyWithDefault = Currency::getInstance("EUR")
+				@Readonly @Immutable Currency currencyWithDefault = Currency.getInstance("EUR")
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;
@@ -197,7 +197,7 @@ class FXBindableTest {
 				@Readonly boolean booleanType
 				@Readonly boolean booleanTypeWithDefault
 				@Readonly Currency currency
-				@Readonly Currency currencyWithDefault = Currency::getInstance("EUR")
+				@Readonly Currency currencyWithDefault = Currency.getInstance("EUR")
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;
@@ -338,7 +338,7 @@ class FXBindableTest {
 				@NoneLazy boolean booleanType
 				@NoneLazy boolean booleanTypeWithDefault
 				@NoneLazy Currency currency
-				@NoneLazy Currency currencyWithDefault = Currency::getInstance("EUR")
+				@NoneLazy Currency currencyWithDefault = Currency.getInstance("EUR")
 			}
 		'''.assertCompilesTo('''
 			import java.util.Currency;

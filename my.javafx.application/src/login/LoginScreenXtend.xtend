@@ -33,12 +33,12 @@ import static extension xtendfx.beans.binding.StringExpressionExtensions.*
 		width = 300
 		height = 250
 		scene = GridPaneScene [
-			alignment = Pos::CENTER
+			alignment = Pos.CENTER
 			hgap = 10
 			vgap = 10
 			padding = new Insets(25, 25, 25, 25)
 			add(new Text => [
-				font = Font::font("Tahoma", FontWeight::NORMAL, 20)
+				font = Font.font("Tahoma", FontWeight.NORMAL, 20)
 				textProperty -> welcomeMessage
 			], 0, 0, 2, 1)
 	
@@ -53,10 +53,10 @@ import static extension xtendfx.beans.binding.StringExpressionExtensions.*
 			], 1, 2)
 	
 			add(new HBox(10) => [
-				alignment = Pos::BOTTOM_RIGHT
+				alignment = Pos.BOTTOM_RIGHT
 				children += new Button("Sign in") => [
 					onAction = [
-						actiontarget.fill = Color::FIREBRICK
+						actiontarget.fill = Color.FIREBRICK
 						actiontarget.text = "Sign in button pressed"
 					]
 				]

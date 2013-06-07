@@ -56,17 +56,17 @@ import org.eclipse.xtend.lib.macro.declaration.Visibility
  *  <li> and an accessor to the JavaFX property.
  * </ul>
  */
-@Active(typeof(FxBeanCompilationParticipant))
+@Active(FxBeanCompilationParticipant)
 annotation FXBindable {
 }
 
 class FxBeanCompilationParticipant implements TransformationParticipant<MutableClassDeclaration> {
 	
 	override doTransform(List<? extends MutableClassDeclaration> classes, extension TransformationContext context) {
-		val fxImmutableAnnotation = typeof(Immutable).findTypeGlobally
-		val dataAnnotation = typeof(Data).findTypeGlobally
-		val fxReadonlyAnnotation = typeof(Readonly).findTypeGlobally
-		val fxNoneLazyAnnotation = typeof(NoneLazy).findTypeGlobally
+		val fxImmutableAnnotation = Immutable.findTypeGlobally
+		val dataAnnotation = Data.findTypeGlobally
+		val fxReadonlyAnnotation = Readonly.findTypeGlobally
+		val fxNoneLazyAnnotation = NoneLazy.findTypeGlobally
 		
 		for (clazz : classes) {
 			for (f : clazz.declaredFields) {
@@ -103,7 +103,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 			
 			clazz.addMethod("_init"+fieldName.toFirstUpper) [
 				returnType = fieldType
-				visibility = Visibility::PRIVATE
+				visibility = Visibility.PRIVATE
 				static = true
 				final = true
 				body = f.initializer
@@ -252,25 +252,25 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 	def TypeReference toPropertyType_API(TypeReference ref, boolean readonly, extension TransformationContext context) {
 		if( readonly ) {
 			switch ref.toString {
-				case 'boolean' : typeof(ReadOnlyBooleanProperty).newTypeReference
-				case 'double' : typeof(ReadOnlyDoubleProperty).newTypeReference
-				case 'float' : typeof(ReadOnlyFloatProperty).newTypeReference
-				case 'long' : typeof(ReadOnlyLongProperty).newTypeReference
-				case 'String' : typeof(ReadOnlyStringProperty).newTypeReference  
-				case 'int' : typeof(ReadOnlyIntegerProperty).newTypeReference
-				case 'javafx.collections.ObservableList' :  typeof(ReadOnlyListProperty).newTypeReference(ref.actualTypeArguments.head)
-				default : typeof(ReadOnlyObjectProperty).newTypeReference(ref)
+				case 'boolean' : ReadOnlyBooleanProperty.newTypeReference
+				case 'double' : ReadOnlyDoubleProperty.newTypeReference
+				case 'float' : ReadOnlyFloatProperty.newTypeReference
+				case 'long' : ReadOnlyLongProperty.newTypeReference
+				case 'String' : ReadOnlyStringProperty.newTypeReference  
+				case 'int' : ReadOnlyIntegerProperty.newTypeReference
+				case 'javafx.collections.ObservableList' :  ReadOnlyListProperty.newTypeReference(ref.actualTypeArguments.head)
+				default : ReadOnlyObjectProperty.newTypeReference(ref)
 			}
 		} else {
 			switch ref.toString {
-				case 'boolean' : typeof(BooleanProperty).newTypeReference
-				case 'double' : typeof(DoubleProperty).newTypeReference
-				case 'float' : typeof(FloatProperty).newTypeReference
-				case 'long' : typeof(LongProperty).newTypeReference
-				case 'String' : typeof(StringProperty).newTypeReference  
-				case 'int' : typeof(IntegerProperty).newTypeReference
-				case 'javafx.collections.ObservableList' :  typeof(ListProperty).newTypeReference(ref.actualTypeArguments.head)
-				default : typeof(ObjectProperty).newTypeReference(ref)
+				case 'boolean' : BooleanProperty.newTypeReference
+				case 'double' : DoubleProperty.newTypeReference
+				case 'float' : FloatProperty.newTypeReference
+				case 'long' : LongProperty.newTypeReference
+				case 'String' : StringProperty.newTypeReference  
+				case 'int' : IntegerProperty.newTypeReference
+				case 'javafx.collections.ObservableList' :  ListProperty.newTypeReference(ref.actualTypeArguments.head)
+				default : ObjectProperty.newTypeReference(ref)
 			}			
 		}
 	}
@@ -278,25 +278,25 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 	def TypeReference toPropertyType(TypeReference ref, boolean readonly, extension TransformationContext context) {
 		if( readonly ) {
 			switch ref.toString {
-				case 'boolean' : typeof(ReadOnlyBooleanWrapper).newTypeReference
-				case 'double' : typeof(ReadOnlyDoubleWrapper).newTypeReference
-				case 'float' : typeof(ReadOnlyFloatWrapper).newTypeReference
-				case 'long' : typeof(ReadOnlyLongWrapper).newTypeReference
-				case 'String' : typeof(ReadOnlyStringWrapper).newTypeReference  
-				case 'int' : typeof(ReadOnlyIntegerWrapper).newTypeReference
-				case 'javafx.collections.ObservableList' :  typeof(ReadOnlyListWrapper).newTypeReference(ref.actualTypeArguments.head)
-				default : typeof(ReadOnlyObjectWrapper).newTypeReference(ref)
+				case 'boolean' : ReadOnlyBooleanWrapper.newTypeReference
+				case 'double' : ReadOnlyDoubleWrapper.newTypeReference
+				case 'float' : ReadOnlyFloatWrapper.newTypeReference
+				case 'long' : ReadOnlyLongWrapper.newTypeReference
+				case 'String' : ReadOnlyStringWrapper.newTypeReference  
+				case 'int' : ReadOnlyIntegerWrapper.newTypeReference
+				case 'javafx.collections.ObservableList' :  ReadOnlyListWrapper.newTypeReference(ref.actualTypeArguments.head)
+				default : ReadOnlyObjectWrapper.newTypeReference(ref)
 			}
 		} else {
 			switch ref.toString {
-				case 'boolean' : typeof(SimpleBooleanProperty).newTypeReference
-				case 'double' : typeof(SimpleDoubleProperty).newTypeReference
-				case 'float' : typeof(SimpleFloatProperty).newTypeReference
-				case 'long' : typeof(SimpleLongProperty).newTypeReference
-				case 'String' : typeof(SimpleStringProperty).newTypeReference  
-				case 'int' : typeof(SimpleIntegerProperty).newTypeReference
-				case 'javafx.collections.ObservableList' :  typeof(SimpleListProperty).newTypeReference(ref.actualTypeArguments.head)
-				default : typeof(SimpleObjectProperty).newTypeReference(ref)
+				case 'boolean' : SimpleBooleanProperty.newTypeReference
+				case 'double' : SimpleDoubleProperty.newTypeReference
+				case 'float' : SimpleFloatProperty.newTypeReference
+				case 'long' : SimpleLongProperty.newTypeReference
+				case 'String' : SimpleStringProperty.newTypeReference  
+				case 'int' : SimpleIntegerProperty.newTypeReference
+				case 'javafx.collections.ObservableList' :  SimpleListProperty.newTypeReference(ref.actualTypeArguments.head)
+				default : SimpleObjectProperty.newTypeReference(ref)
 			}			
 		}
 

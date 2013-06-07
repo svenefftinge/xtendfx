@@ -12,9 +12,9 @@ class Bat extends Parent {
 
     public static final int MAX_SIZE = 7
 
-    static final Image LEFT = Config::getImages().get(Config::IMAGE_BAT_LEFT)
-    static final Image CENTER = Config::getImages().get(Config::IMAGE_BAT_CENTER)
-    static final Image RIGHT = Config::getImages().get(Config::IMAGE_BAT_RIGHT)
+    static final Image LEFT = Config.getImages().get(Config.IMAGE_BAT_LEFT)
+    static final Image CENTER = Config.getImages().get(Config.IMAGE_BAT_CENTER)
+    static final Image RIGHT = Config.getImages().get(Config.IMAGE_BAT_RIGHT)
 
     int size
     int width
@@ -39,14 +39,14 @@ class Bat extends Parent {
     def void setSize(int newSize) {
         this.size = newSize
         width = size * 12 + 45
-        val rightWidth = RIGHT.width - Config::SHADOW_WIDTH
+        val rightWidth = RIGHT.width - Config.SHADOW_WIDTH
         val centerWidth = width - LEFT.width - rightWidth
         centerImageView.viewport = new Rectangle2D((CENTER.width - centerWidth) / 2, 0, centerWidth, CENTER.height)
         rightImageView.translateX = width - rightWidth
     }
 
     new() {
-        height = (CENTER.height - Config::SHADOW_HEIGHT) as int 
+        height = (CENTER.height - Config.SHADOW_HEIGHT) as int 
         val group = new Group => [
         	children += leftImageView = new ImageView => [
         		image = LEFT

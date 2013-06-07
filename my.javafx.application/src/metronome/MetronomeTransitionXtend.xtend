@@ -12,7 +12,7 @@ import javafx.stage.Stage
 import javafx.util.Duration
 import xtendfx.FXApp
 
-import static javafx.animation.Animation$Status.*
+import static javafx.animation.Animation.Status.*
 import static javafx.scene.paint.Color.*
 
 import static extension xtendfx.beans.binding.BindingExtensions.*
@@ -36,9 +36,9 @@ import static extension xtendfx.beans.binding.BindingExtensions.*
 		node = circle
 		fromX = 0
 		toX = 200
-		interpolator = Interpolator::LINEAR
+		interpolator = Interpolator.LINEAR
 		autoReverse = true
-		cycleCount = Timeline::INDEFINITE
+		cycleCount = Timeline.INDEFINITE
 	]
 
 	override void start(Stage it) {

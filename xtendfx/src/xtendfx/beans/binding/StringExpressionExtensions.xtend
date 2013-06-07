@@ -12,6 +12,6 @@ class StringExpressionExtensions {
 	}
 	
 	def static StringExpression operator_plus(StringExpression left, Object right) {
-		return Bindings::concat(left, right)
+		return Bindings.concat(left, right)
 	}
 }

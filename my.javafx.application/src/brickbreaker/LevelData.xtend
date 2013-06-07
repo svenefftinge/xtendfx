@@ -175,13 +175,13 @@ class LevelData {
         if (level < 1 || level > getLevelsCount()) {
             return null
         } else {
-            return Arrays::copyOfRange(LEVELS_DATA, levelsOffsets.get(level - 1) + 1, levelsOffsets.get(level))
+            return Arrays.copyOfRange(LEVELS_DATA, levelsOffsets.get(level - 1) + 1, levelsOffsets.get(level))
         }
     }
 
     def private static void initLevelsOffsets() {
         if (levelsOffsets == null) {
-            levelsOffsets = FXCollections::<Integer>observableArrayList()
+            levelsOffsets = FXCollections.<Integer>observableArrayList()
             levelsOffsets.add(-1)
             for (int i : 0 ..< LEVELS_DATA.length) {
                 if (LEVELS_DATA.get(i).equals(NEXT_LEVEL)) {

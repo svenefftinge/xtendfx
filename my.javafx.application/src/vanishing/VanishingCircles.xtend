@@ -44,10 +44,10 @@ import static extension xtendfx.util.DurationExtensions.*
 			]
 		]
 		Timeline [
-			cycleCount = Timeline::INDEFINITE
+			cycleCount = Timeline.INDEFINITE
 			autoReverse = true
 			at(40.seconds,
-				stage.scene.children.filter(typeof(Circle)).map[#[
+				stage.scene.children.filter(Circle).map[#[
 					centerXProperty <=> stage.width * random,
 					centerYProperty <=> stage.height * random
 				]].flatten

@@ -14,23 +14,23 @@ class Main extends Application {
     }
     
     override void start(Stage stage) {
-        Config::initialize()
+        Config.initialize()
         val root = new Group()
         mainFrame = new MainFrame(root)
         stage.setTitle("Brick Breaker")
         stage.setResizable(false)
-        root.setTranslateX(Config::WINDOW_BORDER_X)
-        root.setTranslateY(Config::WINDOW_BORDER_Y)
-        stage.setWidth(Config::SCREEN_WIDTH + 2*Config::WINDOW_BORDER_X)
-        stage.setHeight(Config::SCREEN_HEIGHT+ 2*Config::WINDOW_BORDER_Y + Config::TITLE_BAR_HEIGHT)
+        root.setTranslateX(Config.WINDOW_BORDER_X)
+        root.setTranslateY(Config.WINDOW_BORDER_Y)
+        stage.setWidth(Config.SCREEN_WIDTH + 2*Config.WINDOW_BORDER_X)
+        stage.setHeight(Config.SCREEN_HEIGHT+ 2*Config.WINDOW_BORDER_Y + Config.TITLE_BAR_HEIGHT)
         val scene = new Scene(root)
-        scene.setFill(Color::BLACK)
+        scene.setFill(Color.BLACK)
         stage.setScene(scene)
-        mainFrame.changeState(MainFrame::SPLASH)
+        mainFrame.changeState(MainFrame.SPLASH)
         stage.show()
     }
 
     def static void main(String[] args) {
-        Application::launch(args)
+        Application.launch(args)
     }
 }

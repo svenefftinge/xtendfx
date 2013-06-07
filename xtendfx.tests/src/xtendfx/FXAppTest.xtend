@@ -8,7 +8,7 @@ import static org.junit.Assert.*
 
 class FXAppTest {
 
-	static extension XtendCompilerTester compiler = XtendCompilerTester::newXtendCompilerTester(typeof(FXApp), typeof(SimpleStringProperty))
+	static extension XtendCompilerTester compiler = XtendCompilerTester.newXtendCompilerTester(FXApp, SimpleStringProperty)
 
 	@Test def testAgainstJavaCode() {
 		'''

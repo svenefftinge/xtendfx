@@ -12,8 +12,8 @@ class Splash extends Parent {
     static final int STATE_SHOW_STRIKE = 1
     static final int STATE_SUN = 2
 
-    static final int SUN_AMPLITUDE_X = Config::SCREEN_WIDTH * 2 / 3
-    static final int SUN_AMPLITUDE_Y = Config::SCREEN_WIDTH / 2
+    static final int SUN_AMPLITUDE_X = Config.SCREEN_WIDTH * 2 / 3
+    static final int SUN_AMPLITUDE_Y = Config.SCREEN_WIDTH / 2
     
     ImageView background 
     ImageView brick
@@ -33,12 +33,12 @@ class Splash extends Parent {
 
     def private void initTimeline() {
         timeline = new Timeline
-        timeline.cycleCount = Timeline::INDEFINITE
-        val kf = new KeyFrame(Config::ANIMATION_TIME, [
+        timeline.cycleCount = Timeline.INDEFINITE
+        val kf = new KeyFrame(Config.ANIMATION_TIME, [
         	if (state == STATE_SHOW_TITLE) {
                     stateArg = stateArg + 1
-                    val center = Config::SCREEN_WIDTH / 2
-                    val offset = (Math::cos(stateArg / 4.0) * (40 - stateArg) / 40 * center) as int
+                    val center = Config.SCREEN_WIDTH / 2
+                    val offset = (Math.cos(stateArg / 4.0) * (40 - stateArg) / 40 * center) as int
                     brick.translateX = center - brick.image.width / 2 + offset
                     breaker.translateX = center - breaker.image.width / 2 - offset
                     if (stateArg == 40) {
@@ -72,8 +72,8 @@ class Splash extends Parent {
                     pressanykey.opacity = pressanykey.opacity + 0.05f
                 }
                 stateArg = stateArg - 1
-                val x = SUN_AMPLITUDE_X * Math::cos(stateArg / 100.0)
-                val y = SUN_AMPLITUDE_Y * Math::sin(stateArg / 100.0)
+                val x = SUN_AMPLITUDE_X * Math.cos(stateArg / 100.0)
+                val y = SUN_AMPLITUDE_Y * Math.sin(stateArg / 100.0)
                 if (y < 0) {
                     for ( node : NODES_SHADOWS) {
                         // Workaround RT-1976
@@ -81,8 +81,8 @@ class Splash extends Parent {
                     }
                     return
                 }
-                val sunX = Config::SCREEN_WIDTH / 2 + x
-                val sunY = Config::SCREEN_HEIGHT / 2 - y
+                val sunX = Config.SCREEN_WIDTH / 2 + x
+                val sunY = Config.SCREEN_HEIGHT / 2 - y
                 sun.translateX = sunX - sun.image.width / 2
                 sun.translateY = sunY - sun.image.height / 2
                 sun.rotate = -stateArg
@@ -112,43 +112,43 @@ class Splash extends Parent {
         initTimeline
         background = new ImageView => [
 	        focusTraversable = true
-	        image = Config::getImages().get(Config::IMAGE_BACKGROUND)
-	        fitWidth = Config::SCREEN_WIDTH
-	        fitHeight = Config::SCREEN_HEIGHT
+	        image = Config.getImages().get(Config.IMAGE_BACKGROUND)
+	        fitWidth = Config.SCREEN_WIDTH
+	        fitHeight = Config.SCREEN_HEIGHT
 	        onMousePressed = [
-	        	Main::getMainFrame().startGame()
+	        	Main.getMainFrame().startGame()
 	        	
 	        ]
 	        onKeyPressed = [
-	        	Main::getMainFrame().startGame()
+	        	Main.getMainFrame().startGame()
 	        ] 
         ]
         
         brick = new ImageView => [
-	        image  = Config::getImages().get(Config::IMAGE_SPLASH_BRICK)
+	        image  = Config.getImages().get(Config.IMAGE_SPLASH_BRICK)
 	        translateX = -1000
 	        translateY = image.height
         ]
         
         brickShadow = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_BRICKSHADOW)
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_BRICKSHADOW)
 	        translateX = -1000        	
         ]
         
         
         breaker = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_BREAKER)
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_BREAKER)
 	        translateX = -1000
 	        translateY = brick.translateY + brick.image.height * 5 / 4        	
         ]
         
         breakerShadow = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_BREAKERSHADOW)
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_BREAKERSHADOW)
 	        translateX = -1000	
         ]
         
         strike = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_STRIKE)
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_STRIKE)
 	        translateY = brick.translateY -
 	            (image.height - brick.image.height) / 2
 	        visible = false        	
@@ -157,24 +157,24 @@ class Splash extends Parent {
         val y = breaker.translateY + breaker.image.height
         
         pressanykey = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_PRESSANYKEY)
-	        translateX = (Config::SCREEN_WIDTH - image.width) / 2
-	        translateY = y + (Config::SCREEN_HEIGHT - y) / 2
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_PRESSANYKEY)
+	        translateX = (Config.SCREEN_WIDTH - image.width) / 2
+	        translateY = y + (Config.SCREEN_HEIGHT - y) / 2
         	opacity = 0
         ]
         
         strikeShadow = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_STRIKESHADOW)
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_STRIKESHADOW)
 	        translateX = -1000	
         ]
         
         pressanykeyShadow = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_PRESSANYKEYSHADOW)
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_PRESSANYKEYSHADOW)
 	        translateX = -1000	
         ]
         
         sun = new ImageView => [
-	        image = Config::getImages().get(Config::IMAGE_SPLASH_SUN)
+	        image = Config.getImages().get(Config.IMAGE_SPLASH_SUN)
 	        translateX = -1000        	
         ]
         

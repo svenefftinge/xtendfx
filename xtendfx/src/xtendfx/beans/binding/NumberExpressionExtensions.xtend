@@ -110,6 +110,6 @@ class NumberExpressionExtensions {
 	
 	@Pure
 	def static operator_multiply(NumberExpression left, double right) {
-		Bindings::multiply(left, right)
+		Bindings.multiply(left, right)
 	}
 }

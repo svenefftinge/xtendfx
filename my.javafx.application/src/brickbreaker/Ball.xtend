@@ -31,8 +31,8 @@ class Ball extends Parent {
 
     def void setSize(int newSize) {
         size = newSize
-        imageView.image = Config::getImages().get(Config::IMAGE_BALL_0 + size)
-        diameter = (imageView.image.width - Config::SHADOW_WIDTH) as int
+        imageView.image = Config.getImages().get(Config.IMAGE_BALL_0 + size)
+        diameter = (imageView.image.width - Config.SHADOW_WIDTH) as int
     }
 
 }

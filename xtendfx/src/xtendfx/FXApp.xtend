@@ -10,7 +10,7 @@ import org.eclipse.xtend.lib.macro.AbstractClassProcessor
  * Lets a class extend {@link javafx.application.Application} and
  * adds a main method calling Application#launch
  */
-@Active(typeof(FXAppCompilationParticipant))
+@Active(FXAppCompilationParticipant)
 annotation FXApp {
 }
 
@@ -18,7 +18,7 @@ class FXAppCompilationParticipant extends AbstractClassProcessor {
 
 	override doTransform(MutableClassDeclaration annotatedClass, extension TransformationContext ctx) {
 
-		val applicationType = typeof(Application).newTypeReference
+		val applicationType = Application.newTypeReference
 
 		// extends Application
 		annotatedClass.extendedClass = applicationType

@@ -5,16 +5,16 @@ import javafx.util.Duration
 class DurationExtensions {
 	
 	def static millis(double d) {
-		Duration::millis(d)
+		Duration.millis(d)
 	}
 	def static seconds(double d) {
-		Duration::seconds(d)
+		Duration.seconds(d)
 	}
 	def static minutes(double d) {
-		Duration::minutes(d)
+		Duration.minutes(d)
 	}
 	def static hours(double d) {
-		Duration::hours(d)
+		Duration.hours(d)
 	}
 	
 	def static operator_multiply(Duration d, double times) {

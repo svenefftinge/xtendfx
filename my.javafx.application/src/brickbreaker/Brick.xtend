@@ -46,9 +46,9 @@ class Brick extends Parent {
 
     def private void setType(int newType) {
         this.type = newType
-        val image = Config::getBricksImages().get(type)
+        val image = Config.getBricksImages().get(type)
         content.image = image
-        content.fitWidth = Config::FIELD_WIDTH / 15
+        content.fitWidth = Config.FIELD_WIDTH / 15
     }
 
     
@@ -79,7 +79,7 @@ class Brick extends Parent {
         } else if (s.equals("Y")) {
             return TYPE_YELLOW
         } else {
-            System::out.println("Unknown brick type '{s}'")
+            System.out.println("Unknown brick type '{s}'")
             return TYPE_WHITE
         }
     }

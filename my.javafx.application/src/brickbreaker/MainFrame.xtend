@@ -38,7 +38,7 @@ class MainFrame { // Instance of scene root node
 	}
 
 	def void increaseLives() {
-		lifeCount = Math::min(lifeCount + 1, Config::MAX_LIVES)
+		lifeCount = Math.min(lifeCount + 1, Config.MAX_LIVES)
 	}
 
 	def void decreaseLives() {
@@ -67,7 +67,7 @@ class MainFrame { // Instance of scene root node
 		if (level != null) {
 			level.stop()
 		}
-		if (state < 1 || state > LevelData::getLevelsCount()) {
+		if (state < 1 || state > LevelData.getLevelsCount()) {
 			root.getChildren().remove(level)
 			level = null
 			splash = new Splash()
