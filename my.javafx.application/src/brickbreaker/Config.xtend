@@ -1,13 +1,12 @@
 package brickbreaker
 
-import javafx.util.Duration
 import javafx.collections.ObservableList
 import javafx.scene.image.Image
 import javafx.collections.FXCollections
 
 class Config {
 	
-    public static final Duration ANIMATION_TIME = Duration.millis(40)
+    public static final double ANIMATION_TIME_SCALE = 0.5
     public static final int MAX_LIVES = 9
     // Screen info
     public static final int FIELD_BRICK_IN_ROW = 15
@@ -28,10 +27,10 @@ class Config {
     public static final int SHADOW_WIDTH = 10
     public static final int SHADOW_HEIGHT = 16
 
-    public static final double BALL_MIN_SPEED = 6
+    public static final double BALL_MIN_SPEED = 3
     public static final double BALL_MAX_SPEED = BRICK_HEIGHT
     public static final double BALL_MIN_COORD_SPEED = 2
-    public static final double BALL_SPEED_INC = 0.5f
+    public static final double BALL_SPEED_INC = 0.1f
 
     public static final int BAT_Y = SCREEN_HEIGHT - 40
     public static final int BAT_SPEED = 8

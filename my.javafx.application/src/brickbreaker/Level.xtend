@@ -16,6 +16,8 @@ import static brickbreaker.Main.*
 
 import static extension xtendfx.animation.TimelineExtensions.*
 import static extension xtendfx.util.DurationExtensions.*
+import javafx.animation.AnimationTimer
+import xtendfx.animation.DelegatingAnimationTimer
 
 class Level extends Parent {
 
@@ -53,7 +55,7 @@ class Level extends Parent {
 //    Text livesCaption
     ImageView message
     Timeline startingTimeline
-    Timeline timeline
+    AnimationTimer timeline
     Group infoPanel
 
     new(int levelNumber) {
@@ -88,9 +90,7 @@ class Level extends Parent {
 	}
 
     private def void initTimeline() {
-        timeline = Timeline [
-        	cycleCount = Timeline.INDEFINITE
-        	at (Config.ANIMATION_TIME, [
+    	timeline = new DelegatingAnimationTimer [
         		// Process fadeBricks
                 val brickIterator = fadeBricks.iterator()
                 while (brickIterator.hasNext) {
@@ -270,14 +270,13 @@ class Level extends Parent {
                 if (ball.getTranslateY() > Config.SCREEN_HEIGHT) {
                     // Ball was lost
                     lostLife
-                }
-        	])
-        ]
+                }    		
+    	]
     }
 
     def void start() {
         startingTimeline.play()
-        timeline.play()
+        timeline.start
         group.getChildren().get(0).requestFocus()
         updateScore(0)
         updateLives()

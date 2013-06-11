@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView
 import javafx.animation.Timeline
 import javafx.animation.KeyFrame
 import javafx.scene.Group
+import javafx.util.Duration
 
 class Splash extends Parent {
 
@@ -34,7 +35,7 @@ class Splash extends Parent {
     def private void initTimeline() {
         timeline = new Timeline
         timeline.cycleCount = Timeline.INDEFINITE
-        val kf = new KeyFrame(Config.ANIMATION_TIME, [
+        val kf = new KeyFrame(Duration::millis(40), [
         	if (state == STATE_SHOW_TITLE) {
                     stateArg = stateArg + 1
                     val center = Config.SCREEN_WIDTH / 2
