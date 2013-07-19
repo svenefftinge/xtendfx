@@ -2,7 +2,7 @@ XtendFX
 =======
 
 XtendFX is a little library making JavaFX programming in Java and Xtend a joy.
-Here's the typical (JavaFX hello world)[http://docs.oracle.com/javafx/2/get_started/hello_world.htm] written in Xtend :
+Here's the typical [JavaFX hello world](http://docs.oracle.com/javafx/2/get_started/hello_world.htm) written in Xtend :
 
 ```xtend
 @FXApp class HelloWorldXtend {
