@@ -23,7 +23,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<xtend.version>2.4.2-SNAPSHOT</xtend.version>
+		<xtend.version>2.4.2</xtend.version>
 	</properties>
 
 	<build>
@@ -93,7 +93,7 @@
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.standalone</artifactId>
-			<version>2.4.0-SNAPSHOT</version>
+			<version>${xtend.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>xtendfx</groupId>
