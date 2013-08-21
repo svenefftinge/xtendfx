@@ -1,7 +1,9 @@
 package brickbreaker
 
+import java.util.Random
+
 class Utils {
-	static final java.util.Random RANDOM = new java.util.Random()
+	static val RANDOM = new Random
 
     // Returns random integer number from 0 to max - 1
     def static int random(int max) {
@@ -10,13 +12,10 @@ class Utils {
 
     // Returns sign of the value
     def static int sign(double n) {
-        if (n == 0) {
-            return 0
-        }
-        if (n > 0) {
-            return 1
-        } else {
-            return -1
-        }
+    	switch null {
+    		case n == 0 : 0
+    		case n > 0 : 1
+    		default : -1
+    	}
     }
 }

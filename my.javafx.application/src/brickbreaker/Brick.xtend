@@ -3,84 +3,69 @@ package brickbreaker
 import javafx.scene.Parent
 import javafx.scene.image.ImageView
 
-class Brick extends Parent { 
+class Brick extends Parent {
 
-    public static final int TYPE_BLUE = 0
-    public static final int TYPE_BROKEN1 = 1
-    public static final int TYPE_BROKEN2 = 2
-    public static final int TYPE_BROWN = 3
-    public static final int TYPE_CYAN = 4
-    public static final int TYPE_GREEN = 5
-    public static final int TYPE_GREY = 6
-    public static final int TYPE_MAGENTA = 7
-    public static final int TYPE_ORANGE = 8
-    public static final int TYPE_RED = 9
-    public static final int TYPE_VIOLET = 10
-    public static final int TYPE_WHITE = 11
-    public static final int TYPE_YELLOW = 12
+	public static val TYPE_BLUE = 0
+	public static val TYPE_BROKEN1 = 1
+	public static val TYPE_BROKEN2 = 2
+	public static val TYPE_BROWN = 3
+	public static val TYPE_CYAN = 4
+	public static val TYPE_GREEN = 5
+	public static val TYPE_GREY = 6
+	public static val TYPE_MAGENTA = 7
+	public static val TYPE_ORANGE = 8
+	public static val TYPE_RED = 9
+	public static val TYPE_VIOLET = 10
+	public static val TYPE_WHITE = 11
+	public static val TYPE_YELLOW = 12
 
-    private int type
-    private ImageView content
+	@Property int type
+	ImageView content
 
-    new(int type) {
-        content = new ImageView
-        children += content
-        setType(type)
-        mouseTransparent = true;
-    }
+	new(int type) {
+		content = new ImageView
+		children += content
+		this.type = type
+		mouseTransparent = true;
+	}
 
-    def int getType() {
-        return type
-    }
+	def boolean kick() {
+		switch type {
+			case TYPE_GREY:
+				false
+			case TYPE_GREY: {
+				type = TYPE_BROKEN2
+				false
+			}
+			default:
+				true
+		}
+	}
 
-    def boolean kick() {
-        if (type == TYPE_GREY) {
-            return false
-        }
-        if (type == TYPE_BROKEN1) {
-            setType(TYPE_BROKEN2)
-            return false
-        }
-        return true
-    }
+	def private void setType(int newType) {
+		_type = newType
+		content.image = Config.bricksImages.get(_type)
+		content.fitWidth = Config.FIELD_WIDTH / 15
+	}
 
-    def private void setType(int newType) {
-        this.type = newType
-        val image = Config.getBricksImages().get(type)
-        content.image = image
-        content.fitWidth = Config.FIELD_WIDTH / 15
-    }
-
-    
-
-    def static int getBrickType(String s) {
-        if (s.equals("L")) {
-            return TYPE_BLUE
-        } else if (s.equals("2")) {
-            return TYPE_BROKEN1
-        } else if (s.equals("B")) {
-            return TYPE_BROWN
-        } else if (s.equals("C")) {
-            return TYPE_CYAN
-        } else if (s.equals("G")) {
-            return TYPE_GREEN
-        } else if (s.equals("0")) {
-            return TYPE_GREY
-        } else if (s.equals("M")) {
-            return TYPE_MAGENTA
-        } else if (s.equals("O")) {
-            return TYPE_ORANGE
-        } else if (s.equals("R")) {
-            return TYPE_RED
-        } else if (s.equals("V")) {
-            return TYPE_VIOLET
-        } else if (s.equals("W")) {
-            return TYPE_WHITE
-        } else if (s.equals("Y")) {
-            return TYPE_YELLOW
-        } else {
-            System.out.println("Unknown brick type '{s}'")
-            return TYPE_WHITE
-        }
-    }
+	def static int getBrickType(String s) {
+		switch s {
+			case "L": TYPE_BLUE
+			case "2": TYPE_BROKEN1
+			case "B": TYPE_BROWN
+			case "C": TYPE_CYAN
+			case "G": TYPE_GREEN
+			case "0": TYPE_GREY
+			case "M": TYPE_MAGENTA
+			case "O": TYPE_ORANGE
+			case "R": TYPE_RED
+			case "V": TYPE_VIOLET
+			case "W": TYPE_WHITE
+			case "Y": TYPE_YELLOW
+			default: {
+				println('''Unknown brick type "«s»"''')
+				TYPE_WHITE
+			}
+		}
+	}
 }

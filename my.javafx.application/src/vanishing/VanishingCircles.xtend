@@ -16,6 +16,7 @@ import static extension xtendfx.scene.SceneBuilder.*
 import static extension xtendfx.util.DurationExtensions.*
 
 @FXApp class VanishingCircles { 
+	
 	override start(Stage it) {
 		val stage = it
 		title = "Vanishing Circles"

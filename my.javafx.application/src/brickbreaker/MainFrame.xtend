@@ -3,7 +3,7 @@ package brickbreaker
 import javafx.scene.Group
 
 class MainFrame { // Instance of scene root node
-	Group root
+	val Group root
 
 	// Instance of splash (if exists)
 	Splash splash
@@ -15,7 +15,7 @@ class MainFrame { // Instance of scene root node
 	int lifeCount
 
 	// Current score
-	int score
+	@Property int score
 
 	new(Group root) {
 		this.root = root
@@ -23,14 +23,6 @@ class MainFrame { // Instance of scene root node
 
 	def int getState() {
 		return state
-	}
-
-	def int getScore() {
-		return score
-	}
-
-	def void setScore(int score) {
-		this.score = score
 	}
 
 	def int getLifeCount() {
@@ -60,25 +52,24 @@ class MainFrame { // Instance of scene root node
 	int state = SPLASH
 
 	def void changeState(int newState) {
-		this.state = newState
+		state = newState
 		if (splash != null) {
-			splash.stop()
+			splash.stop
 		}
 		if (level != null) {
-			level.stop()
+			level.stop
 		}
-		if (state < 1 || state > LevelData.getLevelsCount()) {
-			root.getChildren().remove(level)
+		if (state < 1 || state > LevelData.levelsCount) {
+			root.children -= level
 			level = null
-			splash = new Splash()
-			root.getChildren().add(splash)
-			splash.start()
+			root.children += splash = new Splash
+			splash.start
 		} else {
-			root.getChildren().remove(splash)
+			root.children -= splash
 			splash = null
 			level = new Level(state)
-			root.getChildren().add(level)
-			level.start()
+			root.children += level
+			level.start
 		}
 	}
 

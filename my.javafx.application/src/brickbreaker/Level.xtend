@@ -1,6 +1,7 @@
 package brickbreaker
 
 import java.util.ArrayList
+import javafx.animation.AnimationTimer
 import javafx.animation.KeyValue
 import javafx.animation.Timeline
 import javafx.application.Platform
@@ -16,20 +17,18 @@ import static brickbreaker.Main.*
 
 import static extension xtendfx.animation.TimelineExtensions.*
 import static extension xtendfx.util.DurationExtensions.*
-import javafx.animation.AnimationTimer
-import xtendfx.animation.DelegatingAnimationTimer
 
 class Level extends Parent {
 
 	static val MOB_SCALING = 1.5f
 
     ArrayList<Brick> bricks 
-    private int brickCount
-    private ArrayList<Brick> fadeBricks
-    private ArrayList<Bonus> bonuses 
-    private Group group
-    private ArrayList<Bonus> lives
-    private int catchedBonus
+    int brickCount
+    ArrayList<Brick> fadeBricks
+    ArrayList<Bonus> bonuses 
+    Group group
+    ArrayList<Bonus> lives
+    int catchedBonus
 
     // States
     // 0 - starting level
@@ -287,7 +286,7 @@ class Level extends Parent {
         timeline.stop()
     }
 
-    def private void initLevel() {
+    private def void initLevel() {
         val level = LevelData.getLevelData(levelNumber)
         for (row: 0 ..< level.length) {
             for (col : 0 ..< Config.FIELD_BRICK_IN_ROW) {
@@ -309,7 +308,7 @@ class Level extends Parent {
         }
     }
 
-    def private Brick getBrick(int row, int col) {
+    private def Brick getBrick(int row, int col) {
         val i = row * Config.FIELD_BRICK_IN_ROW + col
         if (col < 0 || col >= Config.FIELD_BRICK_IN_ROW || row < 0 || i >= bricks.size()) {
             return null
@@ -318,25 +317,25 @@ class Level extends Parent {
         }
     }
 
-    def private void updateScore(int inc) {
+    private def void updateScore(int inc) {
         mainFrame.setScore(mainFrame.getScore() + inc)
 //        score.setText(mainFrame.getScore() + "")
     }
 
-    def private void moveBat(double newX) {
+    private def void moveBat(double newX) {
         var x = newX
         if (x < 0) {
             x = 0
         }
-        if (x + bat.getWidth() > Config.FIELD_WIDTH) {
-            x = Config.FIELD_WIDTH - bat.getWidth()
+        if (x + bat.width > Config.FIELD_WIDTH) {
+            x = Config.FIELD_WIDTH - bat.width
         }
         if (state == BALL_CATCHED) {
-            var ballX = ball.getTranslateX() + x - bat.getTranslateX()
+            var ballX = ball.translateX + x - bat.translateX
             if (ballX < 0) {
                 ballX = 0
             }
-            var BALL_MAX_X = Config.FIELD_WIDTH - ball.getDiameter()
+            var BALL_MAX_X = Config.FIELD_WIDTH - ball.diameter
             if (ballX > BALL_MAX_X) {
                 ballX = BALL_MAX_X
             }
