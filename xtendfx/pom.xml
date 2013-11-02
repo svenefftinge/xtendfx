@@ -88,9 +88,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		  <groupId>com.oracle</groupId>
-		  <artifactId>javafx</artifactId>
-		  <version>2.2.21</version>
+			<groupId>localhost</groupId>
+			<artifactId>javafx</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
 		</dependency>
 	</dependencies>
 
