@@ -22,7 +22,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<xtend.version>2.4.3-SNAPSHOT</xtend.version>
+		<xtend.version>2.5.1-SNAPSHOT</xtend.version>
 	</properties>
 
 	<build>
@@ -98,11 +98,6 @@
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
 			<version>${xtend.version}</version>
-		</dependency>
-		<dependency>
-		  <groupId>com.oracle</groupId>
-		  <artifactId>javafx</artifactId>
-		  <version>2.2.21</version>
 		</dependency>
 	</dependencies>
 

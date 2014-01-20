@@ -23,7 +23,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<xtend.version>2.4.2</xtend.version>
+		<xtend.version>2.5.1-SNAPSHOT</xtend.version>
 	</properties>
 
 	<build>
@@ -86,13 +86,8 @@
 			<version>4.10</version>
 		</dependency>
 		<dependency>
-		  <groupId>com.oracle</groupId>
-		  <artifactId>javafx</artifactId>
-		  <version>2.2.21</version>
-		</dependency>
-		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.standalone</artifactId>
+			<artifactId>org.eclipse.xtend.core</artifactId>
 			<version>${xtend.version}</version>
 		</dependency>
 		<dependency>

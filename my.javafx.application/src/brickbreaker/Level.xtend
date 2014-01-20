@@ -17,6 +17,7 @@ import static brickbreaker.Main.*
 
 import static extension xtendfx.animation.TimelineExtensions.*
 import static extension xtendfx.util.DurationExtensions.*
+import xtendfx.animation.DelegatingAnimationTimer
 
 class Level extends Parent {
 

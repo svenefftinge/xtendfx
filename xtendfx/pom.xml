@@ -23,7 +23,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<xtend.version>2.4.2</xtend.version>
+		<xtend.version>2.5.1-SNAPSHOT</xtend.version>
 	</properties>
 
 	<build>
@@ -87,13 +87,13 @@
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>localhost</groupId>
-			<artifactId>javafx</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>localhost</groupId> -->
+<!-- 			<artifactId>javafx</artifactId> -->
+<!-- 			<version>1.0</version> -->
+<!-- 			<scope>system</scope> -->
+<!-- 			<systemPath>${java.home}/lib/jfxrt.jar</systemPath> -->
+<!-- 		</dependency> -->
 	</dependencies>
 
 </project>

@@ -33,7 +33,7 @@ class Brick extends Parent {
 		switch type {
 			case TYPE_GREY:
 				false
-			case TYPE_GREY: {
+			case TYPE_BROWN: {
 				type = TYPE_BROKEN2
 				false
 			}
