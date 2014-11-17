@@ -31,13 +31,13 @@ FX Beans
 
 Writing JavaFX conformant java beans is super tedious: You need to [declare two fields 
 and three methods per property](http://blog.netopyr.com/2011/05/19/creating-javafx-properties/)!
-With XtendFX you can use the ```@FXBean``` annotation and get the boilerplate eliminated automatically:
+With XtendFX you can use the ```@FXBindable``` annotation and get the boilerplate eliminated automatically:
 
 ```xtend
 /**
  * A login bean written in Xtend.
  */
-@FXBean class LoginBeanXtend {
+@FXBindable class LoginBeanXtend {
   String userName = ""
 	String password
 }
