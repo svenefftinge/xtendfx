@@ -90,7 +90,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 	}
 	
 	def createNoneLazyField(boolean immutableType, MutableFieldDeclaration f, MutableClassDeclaration clazz, String propName, TypeReference propType, String fieldName, TypeReference fieldType, boolean readonly, TypeReference propTypeAPI) {
-		if( f.initializer == null ) {
+		if( f.initializer === null ) {
 			clazz.addField(propName) [
 				type = propType	
 				initializer = ['''new «toJavaCode(propType)»(this, "«fieldName»")''']
@@ -139,7 +139,7 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 
 	def createLazyField(boolean immutableType, MutableFieldDeclaration f, MutableClassDeclaration clazz, String propName, TypeReference propType, String fieldName, TypeReference fieldType, boolean readonly, TypeReference propTypeAPI) {
 		if( immutableType ) {
-			if( f.initializer == null ) {
+			if( f.initializer === null ) {
 				clazz.addField("DEFAULT_" + f.simpleName.toUpperCase) [
 					type = f.type 
 					initializer = [f.type.defaultValue]
@@ -205,11 +205,11 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 	}
 	
 	def boolean readonly(MutableFieldDeclaration field, Type readonlyAnnotation) {
-		return field.findAnnotation(readonlyAnnotation) != null
+		return field.findAnnotation(readonlyAnnotation) !== null
 	}
 	
 	def boolean lazy(MutableFieldDeclaration field, Type noneLazyAnnotation) {
-		return field.findAnnotation(noneLazyAnnotation) == null;
+		return field.findAnnotation(noneLazyAnnotation) === null;
 	}
 	
 	def boolean immutableType (MutableFieldDeclaration field, Type fxImmutableAnnotation, Type dataAnnotation) {
@@ -226,11 +226,11 @@ class FxBeanCompilationParticipant implements TransformationParticipant<MutableC
 			case 'int' : true
 			case 'javafx.collections.ObservableList' :  false
 			default : 
-				if( field.findAnnotation(fxImmutableAnnotation) != null ) {
+				if( field.findAnnotation(fxImmutableAnnotation) !== null ) {
 					return true;
 				} else if( field.type.type instanceof TypeDeclaration ) {
 					val t = field.type.type as TypeDeclaration
-					val rv = t.findAnnotation(fxImmutableAnnotation) != null || t.findAnnotation(dataAnnotation) != null;
+					val rv = t.findAnnotation(fxImmutableAnnotation) !== null || t.findAnnotation(dataAnnotation) != null;
 					return rv;
 				} else {
 					return false;
