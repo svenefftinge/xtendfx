@@ -68,6 +68,12 @@ resumeButton.disableProperty -> (anim.statusProperty != PAUSED)
 stopButton.disableProperty   -> (anim.statusProperty == STOPPED)
 ```
 
+this only needs the correct ```static extension```:
+
+```xtend
+import static extension xtendfx.beans.binding.BindingExtensions.*
+```
+
 More Examples
 =============
 
