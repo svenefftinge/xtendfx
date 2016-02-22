@@ -61,12 +61,10 @@ class FXBindableTest {
 			  
 			  public ValueObject getValue() {
 			    return (this.valueProperty != null)? this.valueProperty.get() : DEFAULT_VALUE;
-			    
 			  }
 			  
 			  public void setValue(final ValueObject value) {
 			    this.valueProperty().set(value);
-			    
 			  }
 			  
 			  public ObjectProperty<ValueObject> valueProperty() {
@@ -74,7 +72,6 @@ class FXBindableTest {
 			    	this.valueProperty = new SimpleObjectProperty<ValueObject>(this, "value", DEFAULT_VALUE);
 			    }
 			    return this.valueProperty;
-			    
 			  }
 			}
 		''');
@@ -103,12 +100,10 @@ class FXBindableTest {
 			  
 			  public DataObject getValue() {
 			    return (this.valueProperty != null)? this.valueProperty.get() : DEFAULT_VALUE;
-			    
 			  }
 			  
 			  public void setValue(final DataObject value) {
 			    this.valueProperty().set(value);
-			    
 			  }
 			  
 			  public ObjectProperty<DataObject> valueProperty() {
@@ -116,7 +111,6 @@ class FXBindableTest {
 			    	this.valueProperty = new SimpleObjectProperty<DataObject>(this, "value", DEFAULT_VALUE);
 			    }
 			    return this.valueProperty;
-			    
 			  }
 			}
 		''');
@@ -137,7 +131,6 @@ class FXBindableTest {
 			import java.util.Currency;
 			import javafx.beans.property.ReadOnlyObjectProperty;
 			import javafx.beans.property.ReadOnlyObjectWrapper;
-			import org.eclipse.xtext.xbase.lib.Functions.Function0;
 			import xtendfx.beans.FXBindable;
 			
 			@FXBindable
@@ -149,7 +142,6 @@ class FXBindableTest {
 			  
 			  public Currency getCurrency() {
 			    return (this.currencyProperty != null)? this.currencyProperty.get() : DEFAULT_CURRENCY;
-			    
 			  }
 			  
 			  public ReadOnlyObjectProperty<Currency> currencyProperty() {
@@ -157,21 +149,14 @@ class FXBindableTest {
 			    	this.currencyProperty = new ReadOnlyObjectWrapper<Currency>(this, "currency", DEFAULT_CURRENCY);
 			    }
 			    return this.currencyProperty.getReadOnlyProperty();
-			    
 			  }
 			  
-			  private final static Currency DEFAULT_CURRENCYWITHDEFAULT = new Function0<Currency>() {
-			    public Currency apply() {
-			      Currency _instance = Currency.getInstance("EUR");
-			      return _instance;
-			    }
-			  }.apply();
+			  private final static Currency DEFAULT_CURRENCYWITHDEFAULT = Currency.getInstance("EUR");
 			  
 			  private ReadOnlyObjectWrapper<Currency> currencyWithDefaultProperty;
 			  
 			  public Currency getCurrencyWithDefault() {
 			    return (this.currencyWithDefaultProperty != null)? this.currencyWithDefaultProperty.get() : DEFAULT_CURRENCYWITHDEFAULT;
-			    
 			  }
 			  
 			  public ReadOnlyObjectProperty<Currency> currencyWithDefaultProperty() {
@@ -179,7 +164,6 @@ class FXBindableTest {
 			    	this.currencyWithDefaultProperty = new ReadOnlyObjectWrapper<Currency>(this, "currencyWithDefault", DEFAULT_CURRENCYWITHDEFAULT);
 			    }
 			    return this.currencyWithDefaultProperty.getReadOnlyProperty();
-			    
 			  }
 			}
 		''');
@@ -207,7 +191,6 @@ class FXBindableTest {
 			import javafx.beans.property.ReadOnlyObjectWrapper;
 			import javafx.beans.property.ReadOnlyStringProperty;
 			import javafx.beans.property.ReadOnlyStringWrapper;
-			import org.eclipse.xtext.xbase.lib.Functions.Function0;
 			import xtendfx.beans.FXBindable;
 			import xtendfx.beans.Readonly;
 			
@@ -218,12 +201,7 @@ class FXBindableTest {
 			  private Currency currency;
 			  
 			  @Readonly
-			  private Currency currencyWithDefault = new Function0<Currency>() {
-			    public Currency apply() {
-			      Currency _instance = Currency.getInstance("EUR");
-			      return _instance;
-			    }
-			  }.apply();
+			  private Currency currencyWithDefault = Currency.getInstance("EUR");
 			  
 			  private final static String DEFAULT_STRINGTYPE = null;
 			  
@@ -231,7 +209,6 @@ class FXBindableTest {
 			  
 			  public String getStringType() {
 			    return (this.stringTypeProperty != null)? this.stringTypeProperty.get() : DEFAULT_STRINGTYPE;
-			    
 			  }
 			  
 			  public ReadOnlyStringProperty stringTypeProperty() {
@@ -239,7 +216,6 @@ class FXBindableTest {
 			    	this.stringTypeProperty = new ReadOnlyStringWrapper(this, "stringType", DEFAULT_STRINGTYPE);
 			    }
 			    return this.stringTypeProperty.getReadOnlyProperty();
-			    
 			  }
 			  
 			  private final static String DEFAULT_STRINGTYPEWITHDEFAULT = "";
@@ -248,7 +224,6 @@ class FXBindableTest {
 			  
 			  public String getStringTypeWithDefault() {
 			    return (this.stringTypeWithDefaultProperty != null)? this.stringTypeWithDefaultProperty.get() : DEFAULT_STRINGTYPEWITHDEFAULT;
-			    
 			  }
 			  
 			  public ReadOnlyStringProperty stringTypeWithDefaultProperty() {
@@ -256,7 +231,6 @@ class FXBindableTest {
 			    	this.stringTypeWithDefaultProperty = new ReadOnlyStringWrapper(this, "stringTypeWithDefault", DEFAULT_STRINGTYPEWITHDEFAULT);
 			    }
 			    return this.stringTypeWithDefaultProperty.getReadOnlyProperty();
-			    
 			  }
 			  
 			  private final static boolean DEFAULT_BOOLEANTYPE = false;
@@ -265,7 +239,6 @@ class FXBindableTest {
 			  
 			  public boolean getBooleanType() {
 			    return (this.booleanTypeProperty != null)? this.booleanTypeProperty.get() : DEFAULT_BOOLEANTYPE;
-			    
 			  }
 			  
 			  public ReadOnlyBooleanProperty booleanTypeProperty() {
@@ -273,7 +246,6 @@ class FXBindableTest {
 			    	this.booleanTypeProperty = new ReadOnlyBooleanWrapper(this, "booleanType", DEFAULT_BOOLEANTYPE);
 			    }
 			    return this.booleanTypeProperty.getReadOnlyProperty();
-			    
 			  }
 			  
 			  private final static boolean DEFAULT_BOOLEANTYPEWITHDEFAULT = false;
@@ -282,7 +254,6 @@ class FXBindableTest {
 			  
 			  public boolean getBooleanTypeWithDefault() {
 			    return (this.booleanTypeWithDefaultProperty != null)? this.booleanTypeWithDefaultProperty.get() : DEFAULT_BOOLEANTYPEWITHDEFAULT;
-			    
 			  }
 			  
 			  public ReadOnlyBooleanProperty booleanTypeWithDefaultProperty() {
@@ -290,14 +261,12 @@ class FXBindableTest {
 			    	this.booleanTypeWithDefaultProperty = new ReadOnlyBooleanWrapper(this, "booleanTypeWithDefault", DEFAULT_BOOLEANTYPEWITHDEFAULT);
 			    }
 			    return this.booleanTypeWithDefaultProperty.getReadOnlyProperty();
-			    
 			  }
 			  
 			  private ReadOnlyObjectWrapper<Currency> currencyProperty;
 			  
 			  public Currency getCurrency() {
 			    return (this.currencyProperty != null)? this.currencyProperty.get() : this.currency;
-			    
 			  }
 			  
 			  public ReadOnlyObjectProperty<Currency> currencyProperty() {
@@ -305,14 +274,12 @@ class FXBindableTest {
 			    	this.currencyProperty = new ReadOnlyObjectWrapper<Currency>(this, "currency", this.currency);
 			    }
 			    return this.currencyProperty.getReadOnlyProperty();
-			    
 			  }
 			  
 			  private ReadOnlyObjectWrapper<Currency> currencyWithDefaultProperty;
 			  
 			  public Currency getCurrencyWithDefault() {
 			    return (this.currencyWithDefaultProperty != null)? this.currencyWithDefaultProperty.get() : this.currencyWithDefault;
-			    
 			  }
 			  
 			  public ReadOnlyObjectProperty<Currency> currencyWithDefaultProperty() {
@@ -320,7 +287,6 @@ class FXBindableTest {
 			    	this.currencyWithDefaultProperty = new ReadOnlyObjectWrapper<Currency>(this, "currencyWithDefault", this.currencyWithDefault);
 			    }
 			    return this.currencyWithDefaultProperty.getReadOnlyProperty();
-			    
 			  }
 			}
 		''')
@@ -357,17 +323,14 @@ class FXBindableTest {
 			  
 			  public String getStringType() {
 			    return this.stringTypeProperty.get();
-			    
 			  }
 			  
 			  public void setStringType(final String stringType) {
 			    this.stringTypeProperty.set(stringType);
-			    
 			  }
 			  
 			  public StringProperty stringTypeProperty() {
 			    return this.stringTypeProperty;
-			    
 			  }
 			  
 			  private SimpleStringProperty stringTypeWithDefaultProperty = new SimpleStringProperty(this, "stringTypeWithDefault",_initStringTypeWithDefault());
@@ -378,68 +341,56 @@ class FXBindableTest {
 			  
 			  public String getStringTypeWithDefault() {
 			    return this.stringTypeWithDefaultProperty.get();
-			    
 			  }
 			  
 			  public void setStringTypeWithDefault(final String stringTypeWithDefault) {
 			    this.stringTypeWithDefaultProperty.set(stringTypeWithDefault);
-			    
 			  }
 			  
 			  public StringProperty stringTypeWithDefaultProperty() {
 			    return this.stringTypeWithDefaultProperty;
-			    
 			  }
 			  
 			  private SimpleBooleanProperty booleanTypeProperty = new SimpleBooleanProperty(this, "booleanType");
 			  
 			  public boolean getBooleanType() {
 			    return this.booleanTypeProperty.get();
-			    
 			  }
 			  
 			  public void setBooleanType(final boolean booleanType) {
 			    this.booleanTypeProperty.set(booleanType);
-			    
 			  }
 			  
 			  public BooleanProperty booleanTypeProperty() {
 			    return this.booleanTypeProperty;
-			    
 			  }
 			  
 			  private SimpleBooleanProperty booleanTypeWithDefaultProperty = new SimpleBooleanProperty(this, "booleanTypeWithDefault");
 			  
 			  public boolean getBooleanTypeWithDefault() {
 			    return this.booleanTypeWithDefaultProperty.get();
-			    
 			  }
 			  
 			  public void setBooleanTypeWithDefault(final boolean booleanTypeWithDefault) {
 			    this.booleanTypeWithDefaultProperty.set(booleanTypeWithDefault);
-			    
 			  }
 			  
 			  public BooleanProperty booleanTypeWithDefaultProperty() {
 			    return this.booleanTypeWithDefaultProperty;
-			    
 			  }
 			  
 			  private SimpleObjectProperty<Currency> currencyProperty = new SimpleObjectProperty<Currency>(this, "currency");
 			  
 			  public Currency getCurrency() {
 			    return this.currencyProperty.get();
-			    
 			  }
 			  
 			  public void setCurrency(final Currency currency) {
 			    this.currencyProperty.set(currency);
-			    
 			  }
 			  
 			  public ObjectProperty<Currency> currencyProperty() {
 			    return this.currencyProperty;
-			    
 			  }
 			  
 			  private SimpleObjectProperty<Currency> currencyWithDefaultProperty = new SimpleObjectProperty<Currency>(this, "currencyWithDefault",_initCurrencyWithDefault());
@@ -451,17 +402,14 @@ class FXBindableTest {
 			  
 			  public Currency getCurrencyWithDefault() {
 			    return this.currencyWithDefaultProperty.get();
-			    
 			  }
 			  
 			  public void setCurrencyWithDefault(final Currency currencyWithDefault) {
 			    this.currencyWithDefaultProperty.set(currencyWithDefault);
-			    
 			  }
 			  
 			  public ObjectProperty<Currency> currencyWithDefaultProperty() {
 			    return this.currencyWithDefaultProperty;
-			    
 			  }
 			}
 		''')
@@ -499,12 +447,10 @@ class FXBindableTest {
 			  
 			  public String getStringTypeWithDefault() {
 			    return (this.stringTypeWithDefaultProperty != null)? this.stringTypeWithDefaultProperty.get() : DEFAULT_STRINGTYPEWITHDEFAULT;
-			    
 			  }
 			  
 			  public void setStringTypeWithDefault(final String stringTypeWithDefault) {
 			    this.stringTypeWithDefaultProperty().set(stringTypeWithDefault);
-			    
 			  }
 			  
 			  public StringProperty stringTypeWithDefaultProperty() {
@@ -512,7 +458,6 @@ class FXBindableTest {
 			    	this.stringTypeWithDefaultProperty = new SimpleStringProperty(this, "stringTypeWithDefault", DEFAULT_STRINGTYPEWITHDEFAULT);
 			    }
 			    return this.stringTypeWithDefaultProperty;
-			    
 			  }
 			  
 			  private final static String DEFAULT_STRINGTYPE = null;
@@ -521,12 +466,10 @@ class FXBindableTest {
 			  
 			  public String getStringType() {
 			    return (this.StringTypeProperty != null)? this.StringTypeProperty.get() : DEFAULT_STRINGTYPE;
-			    
 			  }
 			  
 			  public void setStringType(final String StringType) {
 			    this.StringTypeProperty().set(StringType);
-			    
 			  }
 			  
 			  public StringProperty StringTypeProperty() {
@@ -534,7 +477,6 @@ class FXBindableTest {
 			    	this.StringTypeProperty = new SimpleStringProperty(this, "StringType", DEFAULT_STRINGTYPE);
 			    }
 			    return this.StringTypeProperty;
-			    
 			  }
 			  
 			  private final static boolean DEFAULT_BOOLEANTYPE = false;
@@ -543,12 +485,10 @@ class FXBindableTest {
 			  
 			  public boolean getBooleanType() {
 			    return (this.booleanTypeProperty != null)? this.booleanTypeProperty.get() : DEFAULT_BOOLEANTYPE;
-			    
 			  }
 			  
 			  public void setBooleanType(final boolean booleanType) {
 			    this.booleanTypeProperty().set(booleanType);
-			    
 			  }
 			  
 			  public BooleanProperty booleanTypeProperty() {
@@ -556,14 +496,12 @@ class FXBindableTest {
 			    	this.booleanTypeProperty = new SimpleBooleanProperty(this, "booleanType", DEFAULT_BOOLEANTYPE);
 			    }
 			    return this.booleanTypeProperty;
-			    
 			  }
 			  
 			  private SimpleObjectProperty<Currency> currencyProperty;
 			  
 			  public Currency getCurrency() {
 			    return (this.currencyProperty != null)? this.currencyProperty.get() : this.currency;
-			    
 			  }
 			  
 			  public void setCurrency(final Currency currency) {
@@ -572,7 +510,6 @@ class FXBindableTest {
 			    } else {
 			    	this.currency = currency;
 			    }
-			    
 			  }
 			  
 			  public ObjectProperty<Currency> currencyProperty() {
@@ -580,7 +517,6 @@ class FXBindableTest {
 			    	this.currencyProperty = new SimpleObjectProperty<Currency>(this, "currency", this.currency);
 			    }
 			    return this.currencyProperty;
-			    
 			  }
 			}
 		''')

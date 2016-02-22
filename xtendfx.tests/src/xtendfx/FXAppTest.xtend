@@ -33,7 +33,6 @@ class FXAppTest {
 			  
 			  public static void main(final String[] args) {
 			    Application.launch(args);
-			    
 			  }
 			}
 		''')
