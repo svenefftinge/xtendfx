@@ -14,7 +14,7 @@ import javafx.scene.text.Text
 import javafx.stage.Stage
 import xtendfx.FXApp
 
-import static xtendfx.scene.SceneBuilder.*
+import static extension xtendfx.scene.SceneBuilder.*
 
 import static extension xtendfx.beans.binding.BindingExtensions.*
 import static extension xtendfx.beans.binding.StringExpressionExtensions.*
@@ -23,7 +23,7 @@ import static extension xtendfx.beans.binding.StringExpressionExtensions.*
 
 	val login = new LoginBeanXtend
 	val welcomeMessage = "Welcome ".asProperty + login.userNameProperty + "!"
-	Text actiontarget	
+	Text actiontarget
 
 	/**
 	 * http://docs.oracle.com/javafx/2/get_started/form.htm
@@ -32,7 +32,7 @@ import static extension xtendfx.beans.binding.StringExpressionExtensions.*
 		title = "JavaFX Welcome"
 		width = 300
 		height = 250
-		scene = GridPaneScene [
+		scene = GridedScene [
 			alignment = Pos.CENTER
 			hgap = 10
 			vgap = 10
